@@ -1,0 +1,26 @@
+Agenda: what the team did during the meeting.
+
+– The team presented the slides for the first milestone. 
+- The team provided insights about Tribe Dynamics' business activities.
+- The team described models, data available, downstreem pipeline and performances.
+- The team discussed the contents for the scope of the work.
+
+Next Steps: what the team is doing now.
+
+- The team is defining three baseline models to use as a benchmark for comparison with more sophisticated models.
+- The team is waiting for a new dataset that will allow to train the baseline models and measure their performances.
+- The team is doing research on the Transfer Learning
+
+Common Ground Knowledge: what the team's members agreed on sharing knowledge.
+
+- The team is going to check for a common understanding of the main Natural Language Processing methods and Machine Learning tasks:
+	a) bag of words
+	b) unigram, bigrams, n-grams
+	c) Word Embedding
+	d) Logistic Regression \ Naive Bayes Classifier
+
+Comments: what the team must integrate into the downstream pipeline.
+
+- The team is going to investigate how human being can interact with machine learning in the downstreem pipeline.
+	a) how human interventaion in machine learning tasks can improve the performance and transparency?
+	b) when can we have human providing feedbacks on the task performed?
