@@ -21,3 +21,4 @@ validation/test set analysis and reports metrics.
 7. const.py - All important constant values will reside HERE and HERE ONLY. 
 
 
+Run '''python main.py -toy True -sp True''' to work through the small trial code that we wrote for a simple SVM classifier on IRIS dataset.
