@@ -29,6 +29,7 @@ def PR_Curve(y_true, y_scores, plot = True, save_plot = False, save_filename = '
                   average_precision))
         if save_plot:
             plt.savefig(os.path.join("plots",save_filename+'.png'))
+            print("Precision recall curve saved at plots/", save_filename, '.png')
         else:
             plt.show()
     else:
@@ -51,6 +52,7 @@ def ROC_Curve(y_true, y_scores, plot = True, save_plot = False, save_filename = 
                   roc_auc))
         if save_plot:
             plt.savefig(os.path.join("plots",save_filename+'.png'))
+            print("ROC curve saved at plots/", save_filename, '.png')
         else:
             plt.show()
     else:
