@@ -25,7 +25,7 @@ def PR_Curve(y_true, y_scores, plot = True, save_plot = False, save_filename = '
         plt.ylabel('Precision')
         plt.ylim([0.0, 1.05])
         plt.xlim([0.0, 1.0])
-        plt.title('2-class Precision-Recall curve: AP/AUC={0:0.2f}'.format(
+        plt.title('2-class Precision(tp/tp+fp)-Recall(tp/tp+fn): AP/AUC={0:0.2f}'.format(
                   average_precision))
         if save_plot:
             plt.savefig(os.path.join("plots",save_filename+'.png'))
