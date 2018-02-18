@@ -6,11 +6,11 @@ Created on Sat Feb 17 21:52:50 2018
 """
 
 #We will have all model evaluation related metrics reside here.
-
 import sklearn.metrics as sm
 import matplotlib.pyplot as plt
 from scipy.integrate import trapz, simps
 import os
+from const import * 
 
 #Precision recall curve
 def PR_Curve(y_true, y_scores, plot = True, save_plot = False, save_filename = 'dummy_PR'):
@@ -57,7 +57,7 @@ def ROC_Curve(y_true, y_scores, plot = True, save_plot = False, save_filename = 
         print("AUC  is", roc_auc) 
         
 #Simple accuracy above a threshold.
-def accuracy(y_true,y_scores, threshold=0.5):   
+def accuracy(y_true,y_scores, threshold= DEFAULT_BINOMIAL_ACCURACY):   
     pred_labels = [float(y_score) >= threshold for y_score in y_scores]
     acc = sum([x==y for x,y in zip(pred_labels,y_true)])/len(y_true)
     return acc
