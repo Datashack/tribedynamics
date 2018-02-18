@@ -30,17 +30,20 @@ if args.run_logreg_script:
     df = replace_label_column_in_df(df_full)
     # Extract posts only from specified languages
     df = filter_df_by_languages(df, ['en', 'it']) # CHANGE HERE TO PASS IT BY COMMAND LINE
-
+    # Get array of texts and array of labels
     corpus, y = get_corpus_and_labels(df)
 
+    # Text pre-processing
     corpus = remove_regexp_from_corpus(corpus, 'http\S+', ' ') # Replace links with ' '
-    corpus = encode_from_regexp_on_corpus(corpus, "#(\w+)", "HHHPLACEHOLDERHHH\1") # Hashtags into constant value
-    corpus = encode_from_regexp_on_corpus(corpus, "@(\w+)", "MMMPLACEHOLDERMMM\1")  # Mentions into constant value
-
+    corpus = encode_from_regexp_on_corpus(corpus, "#(\w+)", HASHTAG_PLACEHOLDER + "\1") # Hashtags into constant value
+    corpus = encode_from_regexp_on_corpus(corpus, "@(\w+)", MENTION_PLACEHOLDER + "\1")  # Mentions into constant value
+    # Retrive stopwords from NLTK package
     stopwords_list = get_stopwords_by_language('english') + get_stopwords_by_language('italian')
 
+    # Bag-of-words model through CountVectorizer
     X = get_vectorized_dataset(corpus, stopwords_list, ngrams_tuple=(1,2))
 
+    # Train logistic regression model
     trained_model = train_ngrams_logistic_regression(X, y, predict=True)
     
 

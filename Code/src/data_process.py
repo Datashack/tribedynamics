@@ -48,12 +48,13 @@ def labels_list_unpacking(list_of_label_lists):
 
 def replace_label_column_in_df(df):
     # Converts list of labels into True or False
-    new_labels_arr = labels_list_unpacking(df.labels.values)
+    #new_labels_arr = labels_list_unpacking(df.labels.values) # ERROR: 'DataFrame' object has no attribute 'labels' (Why???)
+    new_labels_arr = labels_list_unpacking(df.iloc[:,0].values)
 
     df['answer'] = new_labels_arr
 
     # Return df without 'labels' column, replaced by 'answer' one
-    return df.drop(columns=['labels'], inplace=False)
+    return df[['lang','link','model_decision','mturker','text','answer']]
 
 def filter_df_by_languages(df, languages_list):
     # Returns rows of only certain languages
