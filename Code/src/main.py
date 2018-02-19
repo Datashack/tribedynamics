@@ -52,6 +52,9 @@ if args.ngrams_logreg:
     df = replace_label_column_in_df(df_full)
     # Extract posts only from specified languages
     df = filter_df_by_languages(df, args.languages)
+    # Imbalance ratio = 1 / (num_minority_class/num_majority_class)
+    print("Imbalance ratio = {:.2f}".format(imbalance_ratio(df.answer.values)))
+
     # Get array of texts and array of labels
     corpus, y = get_corpus_and_labels(df)
 
@@ -74,5 +77,3 @@ if args.ngrams_logreg:
 
     # Train logistic regression model (hold-out)
     trained_model_hold_out = train_ngrams_logistic_regression(X, y, model_param, test_size=args.test_size, predict=True)
-
-

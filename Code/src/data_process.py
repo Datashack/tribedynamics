@@ -99,9 +99,11 @@ def get_vectorized_dataset(corpus, stopwords, ngrams_tuple):
     vectorizer = CountVectorizer(stop_words=stopwords, ngram_range=ngrams_tuple)
     return vectorizer.fit_transform(corpus)
 
-
-
-
-
-
-
+def imbalance_ratio(labels_arr):
+    counter_obj = Counter(labels_arr)
+    num_True = counter_obj[True]
+    num_False = counter_obj[False]
+    if (num_True == 0 and num_False == 0): # Avoid division by zero
+        return 0
+    else:
+        return 1 - (min(num_True, num_False) / max(num_True, num_False))
