@@ -80,6 +80,18 @@ def encode_from_regexp_on_corpus(corpus, regexp, replacement):
         new_corpus.append(re.sub("%r"%regexp, "%r"%replacement, s))
     return np.array(new_corpus)
 
+def encode_hashtags(corpus): # TODO - To remove once substituted with 'encode_from_regexp_on_corpus'
+    new_corpus = []
+    for s in corpus:
+        new_corpus.append(re.sub(r'#(\w+)', r'HHHPLACEHOLDERHHH\1', s))
+    return np.array(new_corpus)
+
+def encode_mentions(corpus): # TODO - To remove once substituted with 'encode_from_regexp_on_corpus'
+    new_corpus = []
+    for s in corpus:
+        new_corpus.append(re.sub(r'@(\w+)', r'MMMPLACEHOLDERMMM\1', s))
+    return np.array(new_corpus)
+
 def get_stopwords_by_language(language):
     return stopwords.words(language)
 

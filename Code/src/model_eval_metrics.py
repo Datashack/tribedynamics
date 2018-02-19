@@ -10,7 +10,9 @@ import sklearn.metrics as sm
 import matplotlib.pyplot as plt
 from scipy.integrate import trapz, simps
 import os
-from const import * 
+from const import *
+from sklearn.metrics import roc_auc_score
+from sklearn.metrics import average_precision_score
 
 #Precision recall curve
 def PR_Curve(y_true, y_scores, plot = True, save_plot = False, save_filename = 'dummy_PR'):
@@ -59,8 +61,13 @@ def ROC_Curve(y_true, y_scores, plot = True, save_plot = False, save_filename = 
         print("AUC  is", roc_auc) 
         
 #Simple accuracy above a threshold.
-def accuracy(y_true,y_scores, threshold= DEFAULT_BINOMIAL_ACCURACY):   
+def accuracy(y_true,y_scores, threshold=DEFAULT_BINOMIAL_ACCURACY):
     pred_labels = [float(y_score) >= threshold for y_score in y_scores]
     acc = sum([x==y for x,y in zip(pred_labels,y_true)])/len(y_true)
     return acc
-    
+
+def roc_auc(y_true, y_score):
+    return roc_auc_score(y_true, y_score)
+
+def average_precision(y_true, y_score):
+    return average_precision_score(y_true, y_score)
