@@ -29,6 +29,8 @@ parser.add_argument('-lang', '--languages',
                     default=['en', 'it']) # default to english and italian if nothing is provided
 # Hold-out size
 parser.add_argument('-ts', '--test_size', type=float, help="Hold-out test size for model evaluation", default=0.2)
+# Cross validation splits
+parser.add_argument('-cv', '--cross_validation_splits', type=int, help="Number of splits for cross validation evaluation", default=0)
 # N-grams logistic regression
 parser.add_argument('-ng_lr', '--ngrams_logreg', type=bool, help="Run n-grams logistic regression script", default=False)
 # Model parameters
@@ -76,4 +78,5 @@ if args.ngrams_logreg:
     model_param = {'C': args.c_value}
 
     # Train logistic regression model (hold-out)
-    trained_model_hold_out = train_ngrams_logistic_regression(X, y, model_param, test_size=args.test_size, predict=True)
+    trained_model_hold_out = train_ngrams_logistic_regression(X, y, model_param, n_splits=args.cross_validation_splits,
+                                                              test_size=args.test_size, predict=True)
