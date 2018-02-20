@@ -73,7 +73,7 @@ if args.ngrams_logreg:
     #corpus = encode_from_regexp_on_corpus(corpus, "@(\w+)", MENTION_PLACEHOLDER + "\1") # Mentions into constant value
 
     # Retrive stopwords from NLTK package
-    stopwords_list = get_stopwords_by_language('english') + get_stopwords_by_language('italian') #TODO do this according to parsed arguments
+    stopwords_list = get_stopwords(args.languages)
 
     # Bag-of-words model through CountVectorizer
     X = get_vectorized_dataset(corpus, stopwords_list, ngrams_tuple=(args.min_n_grams, args.max_n_grams))
@@ -82,5 +82,5 @@ if args.ngrams_logreg:
     model_param = {'C': args.c_value}
 
     # Train logistic regression model (hold-out)
-    trained_model_hold_out = train_ngrams_logistic_regression(X, y, model_param, n_splits=args.cross_validation_splits,
+    trained_model = train_ngrams_logistic_regression(X, y, model_param, n_splits=args.cross_validation_splits,
                                                               test_size=args.test_size, predict=True)

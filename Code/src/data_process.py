@@ -92,8 +92,38 @@ def encode_mentions(corpus): # TODO - To remove once substituted with 'encode_fr
         new_corpus.append(re.sub(r'@(\w+)', r'MMMPLACEHOLDERMMM\1', s))
     return np.array(new_corpus)
 
-def get_stopwords_by_language(language):
-    return stopwords.words(language)
+def map_lang_code_to_language(x):
+    return {
+		'ar':'arabic',
+		#'ca':'Catalan/Valencian',
+		'de':'german',
+		'en':'english',
+		'es':'spanish',
+		'fr':'french',
+		#'id':'Indonesian',
+		'it':'italian',
+		#'ja':'Japanese',
+		#'ko':'Korean',
+		'nl':'dutch',
+		#'pl':'Polish',
+		'pt':'portuguese',
+		'ro':'romanian',
+		'ru':'russian',
+		'sv':'swedish',
+		#'th':'Thai',
+		'tr':'turkish'
+		#'vi':'Vietnamese',
+		#'zh':'Chinese'
+    }.get(x,'NotFound') # 'NotFound' is default if x not found
+
+def get_stopwords(languages_list):
+    stopwords_list = []
+    for lang in languages_list:
+        lang_str = map_lang_code_to_language(lang)
+        # If language is supported by NLTK stopwords, add them to the list of stopwords to remove
+        if (lang_str!='NotFound'):
+            stopwords_list = stopwords_list + stopwords.words(lang_str)
+    return stopwords_list
 
 def get_vectorized_dataset(corpus, stopwords, ngrams_tuple):
     vectorizer = CountVectorizer(stop_words=stopwords, ngram_range=ngrams_tuple)
