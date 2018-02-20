@@ -1,147 +1,182 @@
-text,lang,link,mturker,model_decision,labels,aggregated_label,capstone_label
-"se ne possono creare anche in casa con ingredienti reperibili in cucina che servono a nutrire la chioma e ammorbidirla.
-Lush, Capelli d’angelo. Prezzo: 13,95€
-Un esempio è sicuramente Capelli d’angelo di Lush, da applicare sui capelli asciutti e lasciare agire a lungo. Un altro prodotto ideale per capelli danneggiati sempre di Lush è il trattamento all’olio caldo sempre da applicare sui capelli asciutti lasciandolo agire per circa 20 minuti.
-Lush, trattamento all’olio caldo. Prezzo: 9,95€
-Altrimenti ne potete realizzare uno fai da te a base di Yogurt e miele, entrambi",it,https://blog.cliomakeup.com/2017/05/hair-spa-fatta-casa-step-capelli-meravigliosi/,1,,"[1, 1, 0, 1]",True,
-"Respectissime Mascara Multi-Dimensions | Forza e delicatezza con La Roche-Posay Lo sapevate che il mascara è il prodotto cosmetico più usato dalle donne di tutto il mondo? E che negli ... sensibili, bruciore, lacrime, rossore… come ovviare a questi fastidi senza rinunciare al piacere di ciglia folte e in primo piano? La Roche-Posay, al fianco dei dermatologi da oltre 40 anni, ha studiato una formula arricchita in Siero Rivitalizzante-Ciglia e ha creato il ... farmacie, al prezzo consigliato di 19€. Pronte a provarlo?      The post Respectissime Mascara Multi-Dimensions | Forza e delicatezza con La Roche-Posay appeared first on TheOldNow.",it,http://www.theoldnow.it/mascara.html,1,,"[1, 1, 1, 1]",True,
-"Ragazze, oggi vi presentiamo la nuova acqua micellare #larocheposay, è davvero speciale! :) …",it,https://www.twitter.com/BEAUTYDEAit/statuses/860139088162295808,1,,"[1, 1, 1, 1]",True,
-"perché sarà online il video Sommersa dai Pacchi #2 Tante Novità Cosmetiche! A dopo  #chiore83 #megahaul #novitàcosmetiche  #makeup #beautyvlogger Tagged: @lush_italia, @pixibeauty, @paolap_make_up, @nyxcosmetics_italy, @ecobiobella, @delideabio",it,https://www.instagram.com/p/BW7CxLPFrtF/,1,,"[1, 1, 1]",True,
-top cotone vichy  rouches sulla spalla e fiocchi nella schiena,it,https://www.instagram.com/p/BRG7qW1AAUl/,1,,"[1, 1, 1, 1]",True,
-RT @TheOldNow: #LaRochePosay Respectissime Multi-Dimensions: ciglia forti e belle per occhi sensibili  /…,it,https://www.twitter.com/Laura_theoldnow/statuses/785897167147900929,1,,"[1, 1, 1, 1]",True,
-"cangiante e regalarvi splendidi baci, delicati come petali di fiore! Li trovate in tutti i nostri negozi e su   foto: @lushoxfordstreet",it,https://www.instagram.com/p/BKBEbxUDa-m/,1,,"[1, 1, 1, 1]",True,
-@lush_italia  ieri ho fatto qualche danno  Buongiorno  #lushcosmetics #goodmorning  Milano Centrale,it,https://www.instagram.com/p/BPMoQBtFJkf/,1,,"[1, 1, 0, 0, 1, 1, 1, 1, 1]",True,
-"Sono arrivati in Italia i Collutori Solidi Lush Italia!
+brand_name,text,lang,link,mturker,model_decision,labels,aggregated_label,capstone_label
+Vichy,"un momento critico per la nostra pelle, ma con la giusta beauty routine possiamo restituirle naturalmente energia e luminosità! @nicolettareggio #Vichy #Idealia",it,https://www.instagram.com/p/BSybl-nAlvG/,1,,"[1, 1, 1, 1]",True,
+Lush,"MY BEAUTY PROTOCOLE  
+#pink #girlsnightout #howtobeparisian Ulap Studio Tagged: @ulap, @lushcosmetics, @tataharper, @lamer, @officine_universelle_buly",it,https://www.instagram.com/p/BSWqwr-BQAt/,1,,"[1, 1, 1, 1, 1]",True,
+Lush,"pronto a sciogliersi per amore? Cupido ha scoccato la sua freccia al profumo di rosa, viola e bergamotto... lasciatevi conquistare!  #lushvalentines link in bio! ☝",it,https://www.instagram.com/p/BPXGFwNjIbC/,1,,"[1, 0, 1, 0, 1, 1, 1, 1, 1, 1]",True,
+Vichy,"Sun Pharma. Mentre per mantenere la pelle sempre ben idratata in viaggio c’è il nuovo Doccia Spa Gel Olio di Vichy in formato mini da 100 ml. In formula Acqua Termale Mineralizzante e un mix di oli idratanti.
+LEGGI ANCHERemise en",it,https://www.vanityfair.it/beauty/viso-e-corpo/2017/05/22/io-viaggio-da-sola-con-un-beauty-case-mini,1,,"[1, 1, 1]",True,
+La Roche-Posay,"@avon.italia , Gimme Brow di @benefitcosmeticsitaly e gel fissante di @essence_cosmetics 
 
-Li avete provati? Marco ci racconta come si è trovato con questa novità!",it,https://www.facebook.com/251448664874526/posts/1420892331263481,1,,"[1, 1, 1, 1]",True,
-"#studio #vicandersonmakeup La Porte Space Tagged: @cybism, @vicanderson, @becca_aus, @yslbeauty, @lanolips, @stilacosmetics, @h2dhaircare, @hourglasscosmetics, @networkagency, @modelrocklashes, @tomford, @sachajuan_anz, @lauramercieraus, @hercollective, @larocheposayau, @embryolisseau",it,https://www.instagram.com/p/BRX6pz-hlXA/,1,,"[1, 1, 0, 1]",True,
-"Chamonix OSLO, Norvegia (Autunno/Inverno 2015) — Helly Hansen ama la neve. Essa rappresenta una parte della vita quotidiana in Norvegia dove il brand ha trovato le proprie radici nel 1877. Helly Hansen rende omaggio al suo patrimonio con la sua nuovissima",it,http://thelunchgirls.blogspot.com/2015/11/la-collezione-ullr-di-helly-hansen.html,1,,"[1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]",False,
-"Metaglip Glipizide/Metformin Senza Prescrizione &#8211; Consegna in tutto il mondo (3-7 giorni) 
-In linea Metaglip Glipizide/Metformin Senza Prescrizione
+---
 
-Generico Metaglip
-Dove posso acquistare generico 2.5 mg Metaglip senza ricetta. Metaglip Generico è usato, in combinazione a una dieta appropriata e all’",it,http://www.vivienscreative.com.au/linea-metaglip-glipizidemetformin-senza-prescrizione-consegna-tutto-il-mondo-3-7-giorni/,1,,"[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]",False,
-Dove trovare le più belle canzoni per bambini da scaricare https://t.co/vNmy3VwnIz,it,https://www.twitter.com/bebeblogit/statuses/850275489306484737,1,,"[1, 0, 0, 0]",False,
-"Nuovo video online nel mio canale youtube dove vi parlo dei prodotti terminati nell'ultimo periodo ❤ #mikeligna #michelaparisi #prodottiterminati #beauty #makeup #skincare Tagged: @larocheposay, @benefitcosmeticsitaly, @kikomilano, @omia_lab, @yvesrocheritalia,",it,https://www.instagram.com/p/BSdrzDsgqq7/,1,,"[1, 0, 0, 0, 0]",False,
-"""colosso"" di Nerone che sorgeva a pochi metri dall'anfiteatro. Altri dicono che derivi dalla posizione, perché sorgerebbe su un colle dove un tempo si trovava un tempio di Iside (da cui Collis Isei). Ma c'è anche una leggenda nera secondo cui anticamente era un tempio pagano, dove si adorava il demonio. E alla fine di ogni cerimonia i sacerdoti chiedevano agli adepti: ""Colis Eum?"" (""Adori lui?"").
- Foto",it,https://www.instagram.com/p/BSFDN6KgOnQ/,1,,"[1, 1, 1, 0, 0, 0, 0]",False,
-"Nuovo #outfit sul blog (link in bio), in cui vi parlo un po' di questi pantaloni con balza e stampa vichy che ho cucito io partendo da un cartamodello di @lamiaboutiqueitalia. I primi pantaloni che abbia mai fatto!  #plussize #pluskawaii Tagged:",it,https://www.instagram.com/p/BTqy5-_g5tA/,1,,"[1, 0, 0, 0]",False,
-"#cosmeticibio #cosmesibio #cosmesinaturale #cosmeticinaturali #Cosmeticanaturale #biocosmesi #ecobiocosmesi #cosmeticinaturali #prodottibio #curadellapelle#Cosmesiecobio
-#provacostumenontitemo #provacostume #spignatto #arcipelagolamaddalena #lamaddalena #ricette #isolalamaddalena #isolacapri #isoladicaprera #Caprera #lush #solare #solari 
-#provacostumenontitemo #provacostume #spignatto #arcipelagolamaddalena #lamaddalena  #isolalamaddalena #isolacapri #isoladicaprera #Caprera #ricetta #lush Isola Di Caprera, Sardegna Tagged: @la_sarins89, @flowertales",it,https://www.instagram.com/p/BXxF3-5HXsy/,1,,"[1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0]",False,
-all'inizio del trattamento per cui...to be continue.. vi lascio il sito dell'azienda www.revitalash.it e vi ricordo che con il codice 'VICHY' e inserendo nelle note DONNY.85 avrete il 20% di sconto  #beautifull #cattura_istanti #lovely #happy #fashion #fashionista #fashionlover #happy #style #life,it,https://www.instagram.com/p/BXUxHV1Dg1d/,1,,"[1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0]",False,
-"è un viaggio che ognuno di noi affronta con coraggio e determinazione. E cosa c'è di meglio che un sito dove si possono stampare foto, creare album, quadri e quanto ci viene in mente per dare senso al nostro ritorno? Ci sono",it,http://iviaggidiciopilla.blogspot.com/2014/09/il-ritorno-dalle-vacanze-e-sempre-un.html,1,,"[1, 0, 0, 0, 0, 0, 0]",False,
-"Sta bene ovunque.... 
-Grande creazione di @sijjana per @sh_bysilvianheach 
-#pochette #bag #quadretti #vichy #glam #glamour #stile #style #stiloso #stiliestiletti #blu #blue #today #tagsforlikes #picoftheday #instagram #instamood #instacool #instalove #instalike #instadaily #mano #loveit Tagged:",it,https://www.instagram.com/p/BWscRF1gTjy/,1,,"[1, 0, 0, 0, 0, 0, 0]",False,
-"VICHY LIFTACTIV...   Como estan? Hoy les traigo esta maravilla de VICHY liftactiv, les cuento primero del suero 10 supreme, este suero desafia el tiempo en la piel para combatir 10 signos ... en mi piel. Para todas las mujeres que desean una piel hidratada, suave y con arrugas visiblemente ... Sigue leyendo VICHY LIFTACTIV...",es,https://astridpofficial.com/2017/07/12/vichy-liftactiv/,1,,"[1, 1, 1]",True,
-"Photo: @eugeniorecuenco_oficial en nuestro último Workshop de Fotografía de Moda en Alicante 
-Art Direction: @dove…… https://t.co/XYTdvFO2FH",es,https://www.twitter.com/ws_experience/statuses/877070923014254592,1,,"[1, 1, 0, 1]",True,
-Descubre el #productodelasemana de @larocheposay que te ayuda a protegerte del sol sin importar la temporada  Te contamos en Grazia.mx ✨ #GraziaBellezza #lovelovelove #beauty #musthave,es,https://www.instagram.com/p/BJlp0feBcMq/,1,,"[1, 1, 1, 1]",True,
-"Superstar de L'Oréal Paris tono black
-Mac False Lashes tono False Black
-Labial: Pure Pink de Avon
-Agua termal de La Roche Posay
+Base : Fondotinta Toleriane Idratante n 03 di @larocheposay , Naked Skin correttore Medium Netural di @urbandecaycosmetics , matitone arancione di @purobio_cosmetics , pro Palette Highlight&Contour di @nyxcosmetics_italy 
 
-Brochas
-Stippling Brush, Blush Brush, Contour Blush de Real Techiniques
-Brocha de polvo de Natura
-Pincel duo de MAC para",es,https://www.youtube.com/watch?v=tmXYqRvJhRA,1,,"[1, 1, 1, 1]",True,
-"a la solución instantánea, o sea, el makeup. Las de mayor cobertura funcionarán mejor. El Fluido Corrector 16h Dermablend de Vichy te la dará por hasta 16 horas seguidas con un acabado bastante natural.
+---",it,https://www.facebook.com/1555633388011833/posts/1730064997235337,1,,"[1, 1, 1, 1]",True,
+Lush,"Sappiate che ruberó tutte le foto di ieri  con @eleonoramanni  #gemminasisposa #lushparty Tagged: @lush_italia, @eleonoramanni, @lushromagambero",it,https://www.instagram.com/p/BMJP9bwjFc0/,1,,"[1, 1, 0, 1, 1, 1, 1, 1, 1]",True,
+Lush,"#giveaway 
+Questo giovedì sarà più allegro! 
+In casa @lush_italia oggi è il giorno dei baci!  quindi, che non si dica che abbiamo l'alito pesante... In palio: #pangalatic collutorio (con ... va metti like alla foto ❤ 
+Stasera da uno sguardo alle stories per conoscere il vincitore!
 
-La entrada 3 tips para eliminar las",es,http://www.elle.mx/belleza/2017/06/21/3-tips-eliminar-las-incomodas-lineas-bronceado/,1,,"[1, 1, 0, 1]",True,
-es posible. La fórmula sin jabón de Lipikar Syndet es el mejor aliado para las pieles con tendencia atópica ;) #LaRochePosay #pielatópica Tagged: @lipikar_es,es,https://www.instagram.com/p/BKnZZaUBndu/,1,,"[1, 1, 1, 1, 1, 1, 1]",True,
-"Bioderma* Curative, una crema que reduce la grasa de Biella Carell* Crema facial Idealia para pieles normales y mixtas de Vichy* Crema para piel mixta de Bottega Verde* Fluido luminoso para pieles apagadas de Sesderma (todo tipo de pieles, antimanchas)* B10",es,http://envueltaencrema.blogspot.com/2017/08/crema-de-rosa-de-mosqueta-para-piel.html,1,,"[1, 1, 1]",True,
-"La vida no es de color de rosa, pero puedes hacer que lo sea.
-Encuentra la carita feliz ☺️ Tagged: @lushspain",es,https://www.instagram.com/p/BajyU0FBCF8/,1,,"[1, 1, 1, 1]",True,
-legs!  | Esos momentos que te vuelven loca! Las piernitas de Valentina y sus piecitos! Momentos antes de la  #atenasyvalentina #babydove Tagged: @babydove_cam,es,https://www.instagram.com/p/BYHAH8pA6NF/,1,,"[1, 1, 1, 1]",True,
-Nuevo post en el blog del nuevo peeling nocturno de @Vichy_es de la línea Idéalia,es,https://www.twitter.com/misbrochas/statuses/855332749791477761,1,,"[1, 0, 1, 1, 1, 1]",True,
-"no pueden faltar en tu clóset este Verano: Piezas denim, gafas, pañoleta al cuello, bolsos de paja y los cuadros ""Vichy"".  Tagged: @krewe, @runwaydr, @sophistiqueeboutique, @truccord, @orologimarket",es,https://www.instagram.com/p/BWsrU29hEhB/,1,,"[1, 0, 0, 0, 0, 0, 0]",False,
-"a tratar e hidratar la piel. En este caso esta es la selección de productos que utilizo últimamente.
-Bruma – LA ROCHE POSAY
+Dei prodotti offerti da #lush sto usando lo scrub labbra ( #wow ) e il balsamo labbra ( #doppiowow ). #bacio #kissday #colluttorio 
+PS perché",it,https://www.instagram.com/p/BWMhQu3FsZo/,1,,"[1, 1, 1]",True,
+La Roche-Posay,"Pelle perfetta, libera dalle imperfezioni e a prova di selfie? E’ possibile con Effaclar Duo (+) Unifiant di #LaRochePosay un prodotto a duplice azione che uniforma il colorito e riduce le imperfezioni già dopo 24H di utilizzo. Pronte per selfie sempre al top? Tagged: @larocheposay, @larocheposayit",it,https://www.instagram.com/p/BL0UxHploJa/,1,,"[1, 1, 1, 1, 1, 1, 1, 1]",True,
+La Roche-Posay,Siete pronte a conquistare il vostro lui con uno sguardo magnetico? Il rivoluzionario mascara Respectissime Multi-Dimensions di #LaRochePosay è perfetto per avere occhi accattivanti e ciglia rinforzate grazie alla formula arricchita con il Siero Rivitalizzante-Ciglia  @larocheposay #ad #zagufashion  Are you ready to conquer your mr right with a magnetic  look? The revolutionary mascara Respectissime Multi Dimensioni #larocheposay is perfect to get  captivating eyes and strong eyelashes thanks to this great revitalizing formula with the Revitalizing -Eyelashes Serum  @larocheposay #beauty,it,https://www.instagram.com/p/BKqP-kIgSCn/,1,,"[1, 1, 1, 1, 1, 1, 1]",True,
+Vichy,"Buon sabato ragazze,
+La mia base estiva 
+Solare viso effetto opaco spf 30 vichy;
+Terra essence leggera
+fondotinta l'oreal 
+illuminante discreto wet'n'wild 
+correttore in polvere #nevecosmetics  peach
+mascara they're real",it,https://www.instagram.com/p/BW2E-cQjnel/,1,,"[1, 1, 1, 1, 1]",True,
+Dove,"trattamento completo che consenta risultati migliori in modo decisivo e  rapido, rallentando gli effetti del tempo e andando ad agire dove diete e  palestra non hanno risultato.Frutto di ricerca scientifca e innovazione, Kiemè è una linea di  cosmetici che garantisce la",it,http://www.mundodecaty.com/2015/06/beauty-corner-kieme-lift-firming-cream.html,1,,"[1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0]",False,
+Dove,"Undecyl Alcohol, Parfum, Lecithin, Tetrasodium Glutamate Diacetate, Tocopherol, Ascorbyl Palmitate, Citric Acid.
+Prezzo : 22,50 €
+Quantità : 100 ml
+Dove acquistarlo : QUI",it,http://sofashion.altervista.org/review-burro-struccante-double-b-tailored-beauty/,1,,"[1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0]",False,
+Lush,"mezzo tra i due. Ispira un’allure rètro ed è molto sexy. Laccate anche le unghie con il nuovo smalto Gucci.
+Lush Meadow Tradotto è il verde prato. Ma brillante come lo smeraldo. Da far posare anche sulle ciglia, con il mascara",it,http://www.glamour.it/news/trends-news/2016/09/01/pantone-autunno-2016-nuovi-colori-idee-shopping/,1,,"[1, 0, 0, 0]",False,
+Dove,"oggi sul blog si parla di boyfriends jeans: dove acquistarli e tante idee per indossarli! 
+--> http://www.namelessfashionblog.com/2014/10/boyfriend-jeans-dove-acquistarli-e.html",it,https://www.facebook.com/467448796618160/posts/915240975172271,1,,"[1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0]",False,
+Dove,"Seconda Famiglia #lamiasecondafamiglia #rcsmediagroup #rizzoli #corrieredellasera #gazzettadellosport #lalettura #sette #sportweek #iodonna #amica #oggi #dove #living #abitare #stylemagazineitalia #myplaylistisbetterthanyours #myplaceisbetterthanyours Tagged: @iodonna_it, @livingcorriere, @abitare_magazine, @amicamagazine, @gazzettadellosport, @stylemagazineitalia, @la_lettura, @sportweek_sw",it,https://www.instagram.com/p/BM6gE0uBE32/,1,,"[1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0]",False,
+Dove,Quí dove si ferma il tempo❤ #amazingplace #thankGod in viaggio con @travelgramitalia #furaveri #maldives #instaturisanda #viaggiamopercomunicare #edenviaggi ❤ Tagged: @turisanda.it,it,https://www.instagram.com/p/BSXUQ0LjewI/,1,,"[1, 0, 0, 0]",False,
+Vichy,"Nuovo #outfit sul blog (link in bio), in cui vi parlo un po' di questi pantaloni con balza e stampa vichy che ho cucito io partendo da un cartamodello di @lamiaboutiqueitalia. I primi pantaloni che abbia mai fatto!  #plussize #pluskawaii Tagged:",it,https://www.instagram.com/p/BTqy5-_g5tA/,1,,"[1, 0, 0, 0]",False,
+Vichy,"Paris here I come!  Seguitemi in questa nuova avventura insieme a Vichy ✌️❤
+#Vichy #Mineral89 #GoodMorningHealth #adv Aeroporto di Milano Linate Tagged: @salce197",it,https://www.instagram.com/p/BSgy6SiD3PI/,1,,"[1, 0, 0, 0]",False,
+Dove,"Buon Ferragosto lettori! Dove siete di bello? E, soprattutto, quale libro vi terrà compagnia oggi?",it,https://www.facebook.com/151367591721935/posts/677062542485768,1,,"[1, 0, 0, 0]",False,
+Dove,"cronico"", anzi se ne avete girato uno anche voi segnalatemelo. Verrò a vederlo con tanto piacere :)
+Un bacio :*
 
-Una bruma que alivia las irritaciones de la piel, cuando tengo la piel con imperfecciones utilizo este. Tiene acción purificante",es,http://monicavizuete.com/2017/08/mi-rutina-facial-de-noche-piel-perfecta/,1,,"[1, 0, 0, 0]",False,
-"zona de relajación y spa. Instalaciones de última generación en las que podrás recibir tratamientos como envoltura de chocolate, ducha Vichy y masaje corporal relajante con aromaterapia, entre otros. 
+Dove potete trovarmi:
 
-Teléfono: +34 915 232 248
-Horarios: Lunes a Domingo, de las 10:00",es,https://www.facebook.com/92984504727/posts/10155695328809728,1,,"[1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0]",False,
-"horario y estoy muerta. Podéis ver más sobre este look en el blog •link bio• Buenas noches lindos! 
+♡BLOG
+ /
 
-#angelesydiablillos #fashionblogger #vichy #cuadrosvichy #kissmylook #streetstyle #volantes #ruffles #happyday Murcia, Murcia Tagged: @angelesydiablillos, @chicisimo, @trendtationcom",es,https://www.instagram.com/p/BSJ-5X6hdX2/,1,,"[1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1]",False,
-"el canal enseñándoles mis compras para el postparto! No se lo pierdan! Enlace en la bio! #marilynscloset #fashionblogger #38weeks #pregnant #vichy #shein #ootd #mystyle #streetstyle Tagged: @sheinofficial, @marilynsclosetb",es,https://www.instagram.com/p/BWUfBrrFB2g/,1,,"[1, 0, 0, 0, 0, 0, 0]",False,
-un regalo y hoy a todas las participantes de #SchoolOfBeauty les tocan nuestros favoritos  Lullage Nature's Heart - Terrafertil Blancoco Lush México INNATA Klorane México Zoé Water NUXE The Body Shop Palmer's Clarins,es,https://www.facebook.com/257719154308250/posts/1384982778248543,1,,"[1, 0, 0, 0, 0]",False,
-"Yo sigo con mi verano aunque ya esté currando  por cierto los chicos de @vichycatalan están haciendo un concurso en la última foto que han subido hoy!!! Podéis ganar un vale de 100€ para el Corte Inglés  Yo también soy una #vichycatalanlovers17  Tagged: @kidwithguns, @vichycatalan",es,https://www.instagram.com/p/BYJXa4SH9BN/,1,,"[1, 0, 1, 0, 1, 0, 1, 0]",False,
-"Leñe, qué bien lo hemos pasado estos días!!! Hay que repetir @glorialush!! (Ojo a como mira Bruno de reojillo ) Tobacco Dock Tagged: @bugaboohq, @lucas_locura, @glorialush, @melimaslali",es,https://www.instagram.com/p/BQVD3T_FOuI/,1,,"[1, 0, 0, 0, 0, 0, 0]",False,
-¿Sabes cuál es el secreto de la chica Disney Dove Cameron para tener una piel perfecta? Te lo cuenta @HolaBelleza… https://t.co/SfXTacZkI2,es,https://www.twitter.com/hola/statuses/842208986736795648,1,,"[1, 0, 0, 0]",False,
-Hoy me puse el famoso vestido #vichy rojo de #zarawoman y decidi usar el precioso y querido #manhunt de #nars #narscosmetics que es un rojo súper favorecedor,es,https://www.instagram.com/p/BVYF-RnFHOA/,1,,"[1, 0, 0, 0]",False,
-"3 por 2 e poupe 30%
-Philip Kingsley Poupe 30%
-Mio Poupe 30%
-Grow Gorgeous Poupe 40%
-Jurlique Poupe 20%
-La Roche Posay Poupe 33%
-Vichy Poupe 33%",fr,https://www.facebook.com/110128389065416/posts/1116096998468545,1,,"[1, 1, 1, 1]",True,
-"#SkinMasterClass #3 : dans les laboratoires de La Roche-Posay En juin dernier, pour notre troisième rencontre du programme #SkinMasterClass en partenariat avec La Roche-Posay, nous avons eu la chance de pouvoir visiter les laboratoires du groupe L'Oréal, à Chevilly Larue.
-
-Si vous me lisez",fr,http://www.mercipourlechocolat.fr/2016/09/13/skinmasterclass-laboratoires-larocheposay/,1,,"[1, 1, 1, 1]",True,
-"Sur le blog aujourd'hui on parle acné avec La Roche-Posay : soins, traitements et même maquillage !
+♡ INSTAGRAM
 /
-#SkinMasterClass",fr,https://www.facebook.com/151772791551333/posts/1189364837792118,1,,"[1, 1, 1, 1]",True,
-"soleil planifiée? Voici quatre indispensables à mettre dans sa trousse beauté pour profiter des rayons sans s'inquiéter!  #ELLEaime #ELLEbeauté Tagged: @vichycanada, @skinceuticalsca, @biodermacanada, @valmontnorthamerica",fr,https://www.instagram.com/p/BWgD7mfALqY/,1,,"[1, 1, 1, 1, 1]",True,
-"l'automne pour ma peau  Démaquillant yeux #yvesrocher • Gel moussant purifiant • Crème hydratante • Crème pour réduire les imperfections #larocheposay • Huile prodigieuse #nuxe ✨ J'adore ces produits ✔️ Et vous, quelle est votre routine soin ? Belle soirée mes ... #autumn #products #cosmetics #beauty #essentials #favorite #stars ##silver #white #home #interior #decor #decoration #photography #instagramer #vosges #strasbourg #alsace Tagged: @nuxefrance, @larocheposay, @yvesrocherfr",fr,https://www.instagram.com/p/BMUZko3Fark/,1,,"[1, 1, 1, 1]",True,
-"fin de l'article !
-Avec @monpetitbikini.com, Noholita, Mugler, La Maison du Chocolat, Patrice Mulato, Cinq Mondes - Soins du Spa, Dove, IXXI Cosmetics...
-Bonne soirée ! 
-➡️",fr,https://www.facebook.com/335536963164721/posts/1464438626941210,1,,"[1, 1, 1, 0, 1]",True,
-"Ce soir, Prix Marie Claire avec la team La Roche-Posay #mcpeb2017",fr,https://www.twitter.com/CapucinePiot/statuses/816720691869470721,1,,"[1, 1, 1]",True,
-": http://videos.elle.fr
-Facebook : https://www.facebook.com/elle
-Twitter : https://twitter.com/ELLEfrance
-Pinterest : http://www.pinterest.com/magazineellefr/
+
+♡ FACEBOOK
+ /
+
+♡ TWITTER
 
 
-Clarins - Doux polissant gommage 
-Glamglow - Thirstymud masque 
-Lush - Exfoliant pour les lèvres au chocolat 
-Lush - Masque golden Handshake 
-Lush - Bombe pour le bain Methamorphosis 
-Lush - Flopsy, gelée pour le visage 
+♡ SNAPCHAT
+love.francesca",it,https://www.youtube.com/watch?v=Ai60dfOjlDs,1,,"[1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0]",False,
+Lush,"Facebook: 
+Twitter: 
+Instagram: 
+------------------------------
+Mi código descuento de IHERB: HLG673
+Cámara: Nikon 5100D
+------------------------------
+Productos mencionados:
+Tea Tree Water de Lush
+Pixi Glow Tonic
+Labial Lolita II de Kat Von D
+Tinted Brow Mascara de NYX tono Chocolate
+Máscara Ultimate All-In-One",es,https://www.youtube.com/watch?v=c2bT-kayNH4,1,,"[1, 1, 1]",True,
+La Roche-Posay,"en el Black friday en @pprimor . La famosa agua micelar con aceite de #garnier y el gel effaclar de #larocheposay para probar y todo lo demás, reposiciones. Este año, me he portado..... Toda la culpa de mi coche, estropearse justo",es,https://www.instagram.com/p/BNgp6JFAq6t/,1,,"[1, 1, 1, 1]",True,
+Lush,"Ayer paseo familiar y acabar en lush. .  Yo iba a hacer mi mascarilla back.. pero @c_r_i_s_82 me dijo ""huele el acondicionador corporal Snow fairy""  y acabó viniendo a casa gel y acondicionador  @angiepuravida no ayudaba tampoco . .
+#lushaddicted #snowfairy #lushvalencia #lushspain #lushlove #beauty #beautybloggers #crueltyfree #naturalskincare",es,https://www.instagram.com/p/BMLnECoBAar/,1,,"[1, 1, 0, 1, 1, 1, 1, 1]",True,
+La Roche-Posay,"Mis básicos para la piscina/playa  ¿Cuales son los vuestros?  #larocheposay #deliplus #hawaiiantropic #tangleteezer #chapstick #primark Tagged: @chapstick, @hawaiiantropic.es, @primark, @larocheposay_es",es,https://www.instagram.com/p/BXLGtLBD0DF/,1,,"[1, 1, 1, 1]",True,
+Vichy,"Buenos días! Nuevo post de un producto de @vichy_es, enlace directo en mi perfil",es,https://www.instagram.com/p/BSNurohlSTx/,1,,"[1, 1, 1, 0, 1, 1, 1]",True,
+La Roche-Posay,Cuida tu piel con los productos de nuestra tienda oficial La Roche Posay.,es,https://www.facebook.com/482807178397363/posts/1316761968335209,1,,"[1, 1, 1, 1]",True,
+La Roche-Posay,la rutina y vosotr@s ? Conocéis alguno de estos? #conjuntadasintacones #bloggerlife #sevilla #bloggersevilla #blogger #cosmetics #beauty #consejos #belleza #retos #productos #larocheposay #biotherm #bioderma,es,https://www.instagram.com/p/BQ0BfTnlyJK/,1,,"[1, 1, 1]",True,
+La Roche-Posay,Ya! Hasta las 17hs puede venir al consultorio móvil del #SkinCheckerOnTour  de La Roche-Posay y hacerse un chequeo gratuito de piel . Lo encuentran frente a la Facultad de Derecho de la UBA. No,es,https://www.facebook.com/224335470931350/posts/1607383465959870,1,,"[1, 1, 1, 1]",True,
+Vichy,"de  productos para probar mas novedades en el blog!!! Le tenía unas ganas locas a SENSILIS.. y el contorno de VICHY es la caña!! Habéis probado alguno de los dos productos? @missfarma @sensilisoficial @vichy_es #missfarma #sensilis #vichy #beautyblog #beautyblogger Tagged: @vichy_es, @sensilisoficial, @missfarma",es,https://www.instagram.com/p/BKIsPU5ggRI/,1,,"[1, 1, 1, 1]",True,
+La Roche-Posay,"Les presento el genial UV Patch de @larocheposay_ar . Se trata de un parche electrónico inteligente capaz de medir la radiación UV. El sensor tiene forma de corazón ... También vuelve el #SkinCheckerTour , para que todos controlen sus lunares. Yo lo hice hoy . | #hachebeautyblog #beautyblogger #argentina #LaRochePosay #SkinChecker #skincare #beautyblog #belleza #lifestyle #sun #sunprotection | La mano es de la bella @flaviaflanders ❤️ Palacio Duhau - Park Hyatt Buenos Aires Tagged: @larocheposay_ar",es,https://www.instagram.com/p/BK6FR5gg5oa/,1,,"[1, 1, 1, 1]",True,
+Vichy,"❤️❤️
+.
+#theladyoflovelysmile #vichy #blogger #instagramers #moda #murcia #alicante #mariapascual #jewerly #gold #spanish #itgirl #curvymodel #spanishmodel #fashionblogger #summervibes Torre De La Horadada, Valenciana, Spain",es,https://www.instagram.com/p/BYIxcF5jUJU/,1,,"[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]",False,
+Lush,"tónico no tiene ninguna implicación en dicha regeneración. 
+Contadme que opináis ❤️❤️! #mantoacido #acido #piel #skin #toner #tonico #pH #love #lush",es,https://www.instagram.com/p/BSjIvSpDV88/,1,,"[1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0]",False,
+Lush,"Ayer os enseñaba las compras en lush y hoy toca mostraros mis últimas compras en @sephora_spain 
+Duo de labiales nars (cruella y dolce vita), mini talla de",es,https://www.instagram.com/p/BVT0mRkgjyd/,1,,"[1, 0, 0, 0, 0, 1, 0, 0, 0]",False,
+Vichy,"Como testimonio, es impagable, sobre todo y más que la época librera, me ha llamado la atención esa Francia de Vichy tan compleja en la que llega a depender de terceros, entrelazando historias personales que se adhieren al lector a medida",es,http://entremontonesdelibros.blogspot.com/2017/05/una-libreria-en-berlin-francoise-frenkel.html,1,,"[1, 0, 0, 0]",False,
+Vichy,Ultimas unidades de nuestro vestido vichy #thedesireshop,es,https://www.instagram.com/p/BIxY3BEBqJw/,1,,"[1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]",False,
+Vichy,"la noche.Y ¿cuál es el complemento por excelencia? Para mi el bolso! Clutches, bandoleras, mochilas, shopper… Los podemos encontrar con estampado vichy, brilli brilli, de color rosa... Para ir a la ultima y perfecta en cada momento.1 | 2 | 3 |",es,http://trendsgalleryblog.blogspot.com/2017/05/las-prendas-clave-del-verano-2017-mi.html,1,,"[1, 1, 0, 0, 0, 0, 0, 0]",False,
+Vichy,"Feliz sábado!! Hoy toca bajarse de los tacones, ir cómoda y sin maquillaje  Llevo Lazy Girl T-shirt 9.90€ y Vichy Skirt 14.90€ de www.glorias.es  Madrid, Spain Tagged: @itsglorianatalia, @glorias.es",es,https://www.instagram.com/p/BUUOtf4A0dP/,1,,"[1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1]",False,
+Dove,"""Be humble"", mantra de nuestra estrella de portada de diciembre: @kendricklamar. 
+Foto: Dove Shore 
+#ManAtHisBest #EsquireMx #KendrickLamar",es,https://www.instagram.com/p/BZOb1eSBxVQ/,1,,"[1, 0, 0, 0, 0, 0, 0]",False,
+Vichy,"Un besazo y animo que ya queda menos para el finde y para fiestas de Portugalete!
+#vestiditos #zara #zarawoman #zaradress #vichy #coolway #lalocadelmoño #fotoespejo #outfit #zaraoutfit #zaraaddict #pompones #etnico #botasserraje",es,https://www.instagram.com/p/BXlUp6fFmEq/,1,,"[1, 0, 0, 0]",False,
+Vichy,"Las de vestuario lo tenían claro, para esta escena, @annickweerts llevaría la nueva falda larga ocre con estampado vichy negro. Informal, cómoda, y muy femenina.
+.
+------
+La encontraremos en los próximos mercados de Otoño y ya en la",es,https://www.instagram.com/p/BKY8o8AAEfs/,1,,"[1, 0, 0, 0]",False,
+La Roche-Posay,sais pas par quoi commencer tant il y en a ! La #slowlife d'automne est si douce ! Ville de La Roche-Posay Tagged: @aiglefr,fr,https://www.instagram.com/p/BL56Tg6gUB-/,1,,"[1, 0, 0, 1, 1, 1, 0, 1]",True,
+Lush,"Cocooning du dimanche : rose et jaune  Tagged: @lushfrance, @dopfrance",fr,https://www.instagram.com/p/BRiFiMNhBTa/,1,,"[1, 1, 0, 1, 1, 1]",True,
+La Roche-Posay,"by Chanel
 
-REMERCIEMENTS : 
+Makeup Off products:
 
-Allison de la chaine Youtube """" AllyFantaisies""""
-www.http://allyfantaisies.com/
-https://www.instagram.com/allyfantaisies/
+Eau Micellaire Enchantée à la rose de GARANCIA
+Brumisateur EVIAN
+Crème TOLERIANE ultra nuit de La Roche Posay
+Brosse TANGLE TEEZER compacte
 
-Production : LED",fr,https://www.youtube.com/watch?v=JqgAYeaRWs4,1,,"[1, 0, 1, 1, 0, 1, 1, 1]",True,
-"Cocooning du dimanche : rose et jaune  Tagged: @lushfrance, @dopfrance",fr,https://www.instagram.com/p/BRiFiMNhBTa/,1,,"[1, 1, 0, 1, 1, 1]",True,
-"de Peter Thomas Roth- Lotion tonique Pure Focus de Lancôme- Sérum hydratant Hydrabio de Bioderma- Crème Effaclar Duo + Unifiant de La Roche Posay- Contour des yeux Regard Jeunesse de Dr Pierre Ricaud- Baume à lèvres  (j'en ai plusieurs je varie)Déroulement des opérations ... ... qui est une lotion purifiante et matifiante pour les peaux grasses. Elle bien mais je préfère celle que j'utilise de La Roche Posay.Ensuite, j'utilise mon sérum chouchou de Bioderma (revue ici), qui est tout simplement hydratant, et rien de plus, mais moi c'est ... recherche ! Je l'adore, il est hydratant, la texture légèrement ""gel"" est juste top, et pénètre rapidement.Vient ensuite ma crème La Roche Posay, que j'avais reçu en test  et que j'utilise toujours car elle me convient . Seul hic, je suis obligée de",fr,http://www.beaute-ensoi.fr/2017/01/ma-routine-soin-du-matin.html,1,,"[1, 1, 1, 1]",True,
-"V i c h y 
+
+CRÉDITS:
+
+Tourné à l'hôtel ROYAL d'Evian, France, merciiiii
+
+Montage et vidéo:
+Ronan MBf
+
+Music:
+BENSOUND -...",fr,https://www.youtube.com/watch?v=AlJ7Vz4Qr1Q,1,,"[1, 1, 1, 1]",True,
+Dove,✨ Quelques petits achats ✨ #kruidvat #action #batiste #timotei #fructis #garnier #kneipp #loreal #dove #rimmel #beautyaddict #blogueusebelge #blogbelge #belgianblogger #blogueuse #achats #shopping #shopaholic #haul #instahaul,fr,https://www.instagram.com/p/BShMS_QhKBX/,1,,"[1, 1, 1]",True,
+La Roche-Posay,"J'espère que vous allez bien ce dimanche.
+Pour ma part, je suis ravie de vous annoncer que je rempile avec La Roche-Posay et ses #SkinMasterclass pour 2017 !! :)
+Je vais donc avoir la chance de continuer à me former auprès de ... psoriasis ? L'acné du nourrisson ? Une atopie ?) en me laissant vos commentaires ci-dessous. Je transmettrai tout ça à La Roche Posay et publierai un article sur le blog avec les réponses apportées.
+À vos clavier !
+<3",fr,https://www.facebook.com/257905007587192/posts/1386283998082615,1,,"[1, 1, 1, 1]",True,
+La Roche-Posay,"me gaver d’anticerne, j'ai pratiquement pas dormi de la nuit pour changer ) pour rejoindre le plateau du live avec @larocheposayfr où je serai en direct à partir de 13h !  (pour regarder l’émission, ce sera diffusé en exclu sur la",fr,https://www.instagram.com/p/BQAFZfTgFdS/,1,,"[1, 1, 1, 1]",True,
+La Roche-Posay,"Je serais à la Cure Thermale La Roche Posay avec les copines Feminity and JY, Mister K fighting Kit et Mon réseau cancer du sein pour vous parler du",fr,https://www.facebook.com/1461260497424430/posts/1761719860711824,1,,"[1, 1, 1, 1]",True,
+Lush,/  Le paradis du bain  LUSH France,fr,https://www.facebook.com/317686518269651/posts/1163476463690648,1,,"[1, 1, 1, 1]",True,
+La Roche-Posay,"une réaction et je les approuve!!! PROFITEZ DE L'ACTION qui se déroule dans toutes les pharmacies, à l'achat d'un produit @larocheposay_be un code vous sera offert afin d'imprimer 5 photos gratuitement ;) #larocheposay #lipikar #baumeap #huilelavante #cicaplast #baumeb5 #baume #irritations #exzema #hivers #cold #coldcream #cream #creme #cadeau #giveaway #concours #pharmacie #photo #photos @boucher.charlotte",fr,https://www.instagram.com/p/BOj5a9aBUvI/,1,,"[1, 1, 1, 1]",True,
+La Roche-Posay,Aujourd'hui c'était #SkinMasterClass avec La Roche-Posay autour de l'acné : super intéressant ! Debrief très vite sur le blog,fr,https://www.facebook.com/151772791551333/posts/1153859141342688,1,,"[1, 1, 1, 1]",True,
+Vichy,"Me Old Fashioned Des jeunes filles posent en tenues très à la mode dans les années 40: jupe à volants vichy style paysan et façon Dirndl, sous l'objectif de Peter Stackpole en 1946.",fr,https://www.pinterest.com/pin/14144186313309511/,1,,"[1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]",False,
+Vichy,"http://bit.ly/2umVvTk
+Robe fleurie http://bit.ly/2u7nevX
+2eme robe fleurie http://bit.ly/2v0HHy5
+Robe rayée à volants http://bit.ly/2u7kkYc
+Robe rose http://bit.ly/2umY5so
+Robe tropicale http://bit.ly/2unf7GX
+Chaussures Vichy http://bit.ly/2uYL4FU
+
+Ma box bijoux http://www.maboxbijoux.fr/ MBB10 code promo
+
+Montre Ice watch GOLD https://www.ice-watch.com/fr-fr/collection-ice-time/montre-ice-time-beige-gold-moyenne-013061.htm
+Montre Ice Watch noir et blanc https://www.ice-watch.com/fr-fr/collection-ice-time/montre-ice-time-beige-gold-moyenne-013061.htm",fr,https://www.youtube.com/watch?v=8eVuBCO92-I,1,,"[1, 0, 0, 0]",False,
+Lush,"les Caraïbes et puis c'est tout...Non bon... je l'avoue, je suis juste dans ma baignoire avec une bombe de bain lush  N'empêche qu'on s'y croit vraiment avec ce bleu turquoise et ces petites algues qui flottent  Merci pour tout ces petits",fr,https://www.instagram.com/p/BRgfsdlBXfj/,1,,"[1, 0, 0, 0]",False,
+Vichy,"V i c h y 
 #ootd #outfitoftheday #todayimwearing #details #detailsoftheday #vichy 
 Blouse #mango (new co) - Sac #ps11 #proenzaschouler - Médaille  #prettywire 
 Petits carreaux et épaules dénudées...
 Belle soirée les beautés",fr,https://www.instagram.com/p/BKBpCCjhmsb/,1,,"[1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0]",False,
-Distribution de pochette étanche #arena pour téléphone ! #coulisses #Vichy #Ironman,fr,https://www.instagram.com/p/BJqOi9mAkz0/,1,,"[1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0]",False,
-"Me Old Fashioned Des jeunes filles posent en tenues très à la mode dans les années 40: jupe à volants vichy style paysan et façon Dirndl, sous l'objectif de Peter Stackpole en 1946.",fr,https://www.pinterest.com/pin/14144186313309511/,1,,"[1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]",False,
-"des nouvelles tendances Printemps/Été 2017!#
-
-Bonne soirée à tout le monde #
-
-Ps : vous pouvez toujours participer au concours Lush sur le blog en commentant l'article .#
-
-#haircoloristhenewmakeup #colorfulhair #lorealpro #gerardlaurent #coiffure #pliguet #blogger #instablogger #loveit #rplamerie Casino Barrière Lille",fr,https://www.instagram.com/p/BT4SyPrguWx/,1,,"[1, 0, 1, 0, 0, 0, 0, 0]",False,
-Dîner au @vichycelestinsspahotel  On se régale avec @parisgrenoble ! #VichyCelestinsSpaHotel #ThermesDeVichy Vichy Célestins Spa Hôtel,fr,https://www.instagram.com/p/BGfFSQKOeGx/,1,,"[1, 1, 0, 0, 0, 0, 0, 0, 1, 1]",False,
-"Ici c'est Paris ❤
-Quelques jours de vacances à paris, avant de repartir pour Vichy !
-L'occasion de faire tout ce que j'ai pas le temps de faire d'habitude (En l'occurrence gérer ma phobie admistrative",fr,https://www.instagram.com/p/BYJhDL2hkrs/,1,,"[1, 0, 0, 0]",False,
-"les Caraïbes et puis c'est tout...Non bon... je l'avoue, je suis juste dans ma baignoire avec une bombe de bain lush  N'empêche qu'on s'y croit vraiment avec ce bleu turquoise et ces petites algues qui flottent  Merci pour tout ces petits",fr,https://www.instagram.com/p/BRgfsdlBXfj/,1,,"[1, 0, 0, 0]",False,
-"VICHY DRESS  #stylethebump #ootd #outfit #gotowork #morning #dailylook #outfitoftheday #vichydress #july #summer
-• robe (la petite robe montrée hier dans la story soldée 15€, n•0503166001) #hm
-• sac #lehuitbylancel #Lancel",fr,https://www.instagram.com/p/BWt-5lQg7CB/,1,,"[1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0]",False,
-l'attaque mais ses fans ripostent Il y a quelques jours la chanteuse Ariana Grande partageait une photo de son amie Dove Cameron sur Instagram.Mais visiblement cette photo n'était pas aux goûts de tous. L'actrice Lindsay... Cliquez ici pour voir toutes les,fr,http://www.public.fr/Dossiers/Musique-Cine-Series/Photos/Photos-Ariana-Grande-Lindsay-Lohan-l-attaque-mais-ses-fans-ripostent-1199705,1,,"[1, 0, 0, 0]",False,
-"vestiaire masculin… mais cela ne fait pas de mal de bousculer ses habitudes.
+Vichy,"Ma tenue du meeting d'hier, tout en vichy.  Retrouvez mon look en détail sur le blog (lien dans ma bio), notamment mon nouveau chapeau! 
+C'est officiel, je suis",fr,https://www.instagram.com/p/BTSC3BvDXew/,1,,"[1, 0, 0, 0]",False,
+Vichy,"Si ça te rend heureuse, fais le ! #robe : @rebecca_stella 
+#snapchat : Juliemicheli 
+#robe#vichy#rebeccastella#like#love#follow#noir#black#girl#blondie#blonde#fille#robelongue#operavichy#watch#montre#shoot#shooting#photo#photographie#snap#snapchat#addme#casinovichy Opéra de Vichy Tagged: @rebecca_stella",fr,https://www.instagram.com/p/BJAwrn6BB9R/,1,,"[1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]",False,
+Vichy,"vestiaire masculin… mais cela ne fait pas de mal de bousculer ses habitudes.
 Surtout avec cette robe à gros carreaux Vichy, un vrai bonheur à porter, qui dévoile sans trop dévoiler et camoufle ce qu’il y a à camoufler.
 
 
 
 Je prévois",fr,http://www.tokyobanhbao.com/2017/05/22/robe-imprime-vichy-blanc-close-monshowroom/,1,,"[1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1]",False,
+Vichy,"Nouveau look sur le blog avec ma jupette vichy et mon nouveau sac @lancelofficial ♡ 
+Pic by @virginiezilbermann {lien de l'article dans ma bio}
+
+______________
+#fashion #fashionblogger #latelierdal #ootd #photooftheday #instagood #vichy #lancel #biancabylancel #streetstyle Tagged: @lancelofficial, @somewhereparis",fr,https://www.instagram.com/p/BRdKKO4j_Lb/,1,,"[1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0]",False,
+Vichy,"H E L L O H E L L O ✌️
+Le petit déj' du @vichycelestinsspahotel me manque ce matin!
+Belle journée ❤️
+++ Snapchat => paris-grenoble 
+#VichyCelestinsSpaHotel Vichy Célestins Spa Hôtel Tagged: @vichycelestinsspahotel",fr,https://www.instagram.com/p/BGlit-Elz1j/,1,,"[1, 0, 0, 0, 0, 0, 1, 0, 0]",False,
+Vichy,Distribution de pochette étanche #arena pour téléphone ! #coulisses #Vichy #Ironman,fr,https://www.instagram.com/p/BJqOi9mAkz0/,1,,"[1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0]",False,
