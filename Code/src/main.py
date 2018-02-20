@@ -33,11 +33,15 @@ parser.add_argument('-ts', '--test_size', type=float, help="Hold-out test size f
 parser.add_argument('-cv', '--cross_validation_splits', type=int, help="Number of splits for cross validation evaluation", default=0)
 # N-grams logistic regression
 parser.add_argument('-ng_lr', '--ngrams_logreg', type=bool, help="Run n-grams logistic regression script", default=False)
+
 # Model parameters
+# Low bound n-grams
 parser.add_argument('-min_n', '--min_n_grams', type=int,
                     help="Lower boundary of the range of n-values for different n-grams to be extracted", default=1)
+# High bound n-grams
 parser.add_argument('-max_n', '--max_n_grams', type=int,
                     help="Upper boundary of the range of n-values for different n-grams to be extracted", default=1)
+# Inverse of regularization
 parser.add_argument('-C', '--c_value', type=float, help="Inverse of regularization strength for logistic regression", default=1.0)
 
 # Start parsing
