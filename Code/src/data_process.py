@@ -57,8 +57,11 @@ def replace_label_column_in_df(df):
     return df[['lang','link','model_decision','mturker','text','answer']]
 
 def filter_df_by_languages(df, languages_list):
-    # Returns rows of only certain languages
-    return df[df['lang'].isin(languages_list)]
+    # Returns rows of only certain languages, if specified
+    if len(languages_list)>0:
+        return df[df['lang'].isin(languages_list)]
+    else: # Otherwise, return df with all languages
+        return df
 
 def get_corpus_and_labels(df):
     # Return array of texts and labels (answer)
@@ -116,7 +119,11 @@ def map_lang_code_to_language(x):
 		#'zh':'Chinese'
     }.get(x,'NotFound') # 'NotFound' is default if x not found
 
-def get_stopwords(languages_list):
+def get_stopwords(df, languages_list):
+    # Use all languages if no filter is specified
+    if len(languages_list)==0:
+        languages_list = df.lang.values
+
     stopwords_list = []
     for lang in languages_list:
         lang_str = map_lang_code_to_language(lang)

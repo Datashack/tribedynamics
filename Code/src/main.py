@@ -26,7 +26,7 @@ parser.add_argument('-id', '--brand_id', type=int, help="Brand id of the dataset
 # Languages to filter
 parser.add_argument('-lang', '--languages',
                     nargs='*', # 0 or more values expected => creates a list
-                    default=['en', 'it']) # default to english and italian if nothing is provided
+                    default=[]) # default to all languages (empty list) if nothing is provided
 # Hold-out size
 parser.add_argument('-ts', '--test_size', type=float, help="Hold-out test size for model evaluation", default=0.2)
 # Cross validation splits
@@ -73,7 +73,7 @@ if args.ngrams_logreg:
     #corpus = encode_from_regexp_on_corpus(corpus, "@(\w+)", MENTION_PLACEHOLDER + "\1") # Mentions into constant value
 
     # Retrive stopwords from NLTK package
-    stopwords_list = get_stopwords(args.languages)
+    stopwords_list = get_stopwords(df, args.languages)
 
     # Bag-of-words model through CountVectorizer
     X = get_vectorized_dataset(corpus, stopwords_list, ngrams_tuple=(args.min_n_grams, args.max_n_grams))
