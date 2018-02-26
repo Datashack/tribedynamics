@@ -11,6 +11,9 @@ import argparse
 from train import *
 from predict import *
 from data_process import *
+from pprint import pprint
+from time import time
+from sklearn.model_selection import GridSearchCV
 
 # PARSER
 parser = argparse.ArgumentParser(description='Run AC297 Models')
@@ -34,7 +37,13 @@ parser.add_argument('-cv', '--cross_validation_splits', type=int, help="Number o
 # N-grams logistic regression
 parser.add_argument('-ng_lr', '--ngrams_logreg', type=bool, help="Run n-grams logistic regression script", default=False)
 
+# Grid search for best parameters of logistic regression
+parser.add_argument('-gs', '--grid_search', type=bool, help="Run grid search on logistic regression estimator", default=False)
+
 # Model parameters
+# Stopwords
+parser.add_argument('-stop', '--stop_words', type=bool,
+                    help="Remove or not stopwords from all languages", default=False)
 # Low bound n-grams
 parser.add_argument('-min_n', '--min_n_grams', type=int,
                     help="Lower boundary of the range of n-values for different n-grams to be extracted", default=1)
@@ -73,14 +82,38 @@ if args.ngrams_logreg:
     #corpus = encode_from_regexp_on_corpus(corpus, "@(\w+)", MENTION_PLACEHOLDER + "\1") # Mentions into constant value
 
     # Retrive stopwords from NLTK package
-    stopwords_list = get_stopwords(df, args.languages)
+    stopwords_list = get_stopwords(args.stop_words, df, args.languages)
 
-    # Bag-of-words model through CountVectorizer
-    X = get_vectorized_dataset(corpus, stopwords_list, ngrams_tuple=(args.min_n_grams, args.max_n_grams))
+    if args.grid_search:
+        pipeline, parameters = grid_search_definition(stopwords=stopwords_list)
 
-    # Populate dictionary of parameters for the model
-    model_param = {'C': args.c_value}
+        # multiprocessing requires the fork to happen in a __main__ protected block
+        if __name__ == "__main__":
+            # Finding best parameters for feature extraction and classifier
+            grid_search = GridSearchCV(pipeline, parameters, cv=10, scoring='average_precision', n_jobs=-1, verbose=1)
 
-    # Train logistic regression model (hold-out)
-    trained_model = train_ngrams_logistic_regression(X, y, model_param, n_splits=args.cross_validation_splits,
-                                                              test_size=args.test_size, predict=True)
+            print("Performing grid search...")
+            print("pipeline:", [name for name, _ in pipeline.steps])
+            print("parameters:")
+            pprint(parameters)
+            t0 = time()
+            grid_search.fit(corpus, y)
+            print("done in %0.3fs" % (time() - t0))
+            print()
+
+            print("Best score: %0.3f" % grid_search.best_score_)
+            print("Best parameters set:")
+            best_parameters = grid_search.best_estimator_.get_params()
+            for param_name in sorted(parameters.keys()):
+                print("\t%s: %r" % (param_name, best_parameters[param_name]))
+
+    else:
+        # Bag-of-words model through CountVectorizer
+        X = get_vectorized_dataset(corpus, stopwords_list, ngrams_tuple=(args.min_n_grams, args.max_n_grams))
+
+        # Populate dictionary of parameters for the model
+        model_param = {'C': args.c_value}
+
+        # Train logistic regression model (hold-out)
+        trained_model = train_ngrams_logistic_regression(X, y, model_param, n_splits=args.cross_validation_splits,
+                                                         test_size=args.test_size, predict=True)
