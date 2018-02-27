@@ -56,8 +56,8 @@ parser.add_argument('-gs', '--grid_search', type=bool,
 
 # Model parameters
 # Stopwords
-parser.add_argument('-stop', '--stop_words', type=bool,
-                    help="Remove or not stopwords from all languages", default=False)
+parser.add_argument('-stop', '--stop_words', type=int,
+                    help="Remove or not stopwords from all languages", default=0)
 # Low bound n-grams
 parser.add_argument('-min_n', '--min_n_grams', type=int,
                     help="Lower boundary of the range of n-values for different n-grams to be extracted",
@@ -128,7 +128,8 @@ if args.run_example_script:
         else: # Train and evaluate classifier on hold out
             trained_model = train_model_hold_out(X, y, model_obj=model, test_size=args.test_size, predict=True)
 
-    else:  # Perform grid search to tune hyperparameters (has to happen in main for concurrency)
+    else:
+        # Perform grid search to tune hyperparameters (has to happen in main for concurrency)
         pipeline, parameters = grid_search_definition(stopwords=stopwords_list)
 
         # multiprocessing requires the fork to happen in a __main__ protected block

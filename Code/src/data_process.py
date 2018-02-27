@@ -132,9 +132,7 @@ def map_lang_code_to_language(x):
 
 
 def get_stopwords(remove_stopwords, df, languages_list):
-    if not remove_stopwords:
-        return None
-    else:
+    if remove_stopwords == 1:
         # Use all languages if no filter is specified
         if len(languages_list) == 0:
             languages_list = df.lang.values
@@ -146,10 +144,12 @@ def get_stopwords(remove_stopwords, df, languages_list):
             if lang_str != 'NotFound':
                 stopwords_list = stopwords_list + stopwords.words(lang_str)
         return stopwords_list
+    else:
+        return None
 
 
-def get_vectorized_dataset(corpus, stopwords, ngrams_tuple):
-    vectorizer = CountVectorizer(stop_words=stopwords, ngram_range=ngrams_tuple)
+def get_vectorized_dataset(corpus, stopwords_to_remove, ngrams_tuple):
+    vectorizer = CountVectorizer(stop_words=stopwords_to_remove, ngram_range=ngrams_tuple)
     return vectorizer.fit_transform(corpus)
 
 
