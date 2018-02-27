@@ -9,7 +9,6 @@ Created on Sat Feb 17 21:52:03 2018
 
 import argparse
 from train import *
-from predict import *
 from data_process import *
 from pprint import pprint
 from time import time

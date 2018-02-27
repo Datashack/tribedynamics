@@ -6,12 +6,13 @@ Created on Sat Feb 17 22:57:50 2018
 """
 
 from model_eval_metrics import *
-from const import *
+
 
 def predict_toy_data(X_data, y_true, model):
     probas_ = model.predict_proba(X_data)
     PR_Curve(y_true, probas_[:,1], save_plot=True, save_filename = 'toy_data_SVM_PR')
     print("Accuracy is", accuracy(y_true, probas_[:,1]))
+
 
 def predict_dataset_hold_out(X_test, y_test, model, verbose=False):
     probas_ = model.predict_proba(X_test)
