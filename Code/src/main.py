@@ -125,8 +125,11 @@ if args.run_example_script:
         # Cross validation if number of splits is above 0
         if args.cross_validation_splits > 0:
             cv_evaluation(X, y, n_splits=args.cross_validation_splits, model_obj=model)
-        else: # Train and evaluate classifier on hold out
+        else:  # Train and evaluate classifier on hold out
             trained_model = train_model_hold_out(X, y, model_obj=model, test_size=args.test_size, predict=True)
+            # TODO feature importance implementation
+            #if args.feature_importance:
+            #    compute_feature_importance(trained_model, X_train)
 
     else:
         # Perform grid search to tune hyperparameters (has to happen in main for concurrency)

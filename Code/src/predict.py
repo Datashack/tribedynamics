@@ -13,7 +13,7 @@ from sklearn.model_selection import StratifiedKFold
 def predict_toy_data(X_data, y_true, model):
     probas_ = model.predict_proba(X_data)
     PR_Curve(y_true, probas_[:,1], save_plot=True, save_filename = 'toy_data_SVM_PR')
-    print("Accuracy is", accuracy(y_true, probas_[:,1]))
+    print("Accuracy is", accuracy(y_true, probas_[:, 1]))
 
 
 def compute_eval_metrics(X_test, y_test, model, verbose=False):
