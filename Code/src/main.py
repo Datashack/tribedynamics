@@ -5,7 +5,7 @@ Created on Sat Feb 17 21:52:03 2018
 @author: SrivatsanPC
 """
 
-#Main Entry script to run from command line.
+# Main Entry script to run from command line
 
 import argparse
 from train import *
@@ -17,27 +17,42 @@ from sklearn.model_selection import GridSearchCV
 # PARSER
 parser = argparse.ArgumentParser(description='Run AC297 Models')
 
-## Optional arguments
+# Optional arguments
 # Toy example
-parser.add_argument('-toy', '--run_toy_script', type=bool, help="Run a toy script", default=False)
+parser.add_argument('-toy', '--run_toy_script', type=bool,
+                    help="Run a toy script", default=False)
+# Run an example
+parser.add_argument('-run', '--run_example_script', type=bool,
+                    help="Run an example of classification script", default=True)
 # Save plots option
-parser.add_argument('-sp', '--save_plot', type=bool, help="Save plots or not", default=False)
+parser.add_argument('-sp', '--save_plot', type=bool,
+                    help="Save plots or not", default=False)
 
 # Dataset brand id (default on 'Dove' dataset)
-parser.add_argument('-id', '--brand_id', type=int, help="Brand id of the dataset to retrieve from file", default=14680)
+parser.add_argument('-id', '--brand_id', type=int,
+                    help="Brand id of the dataset to retrieve from file",
+                    default=DOVE_DATASET_ID)
 # Languages to filter
 parser.add_argument('-lang', '--languages',
-                    nargs='*', # 0 or more values expected => creates a list
-                    default=[]) # default to all languages (empty list) if nothing is provided
+                    nargs='*',  # 0 or more values expected => creates a list
+                    help="Two-character ISO 639-1 language code list of languages to keep (None defaults to all)",
+                    default=[])  # default to all languages (empty list) if nothing is provided
 # Hold-out size
-parser.add_argument('-ts', '--test_size', type=float, help="Hold-out test size for model evaluation", default=0.2)
+parser.add_argument('-ts', '--test_size', type=float,
+                    help="Hold-out test size for model evaluation", default=TEST_SET_SIZE)
 # Cross validation splits
-parser.add_argument('-cv', '--cross_validation_splits', type=int, help="Number of splits for cross validation evaluation", default=0)
+parser.add_argument('-cv', '--cross_validation_splits', type=int,
+                    help="Number of splits for cross validation evaluation", default=0)
 # N-grams logistic regression
-parser.add_argument('-ng_lr', '--ngrams_logreg', type=bool, help="Run n-grams logistic regression script", default=False)
+parser.add_argument('-ng_lr', '--ngrams_logreg', type=bool,
+                    help="Run n-grams logistic regression script", default=False)
+# N-grams naive bayes
+parser.add_argument('-ng_nb', '--ngrams_naive_bayes', type=bool,
+                    help="Run n-grams naive bayes script", default=False)
 
 # Grid search for best parameters of logistic regression
-parser.add_argument('-gs', '--grid_search', type=bool, help="Run grid search on logistic regression estimator", default=False)
+parser.add_argument('-gs', '--grid_search', type=bool,
+                    help="Run grid search on logistic regression estimator", default=False)
 
 # Model parameters
 # Stopwords
@@ -45,21 +60,24 @@ parser.add_argument('-stop', '--stop_words', type=bool,
                     help="Remove or not stopwords from all languages", default=False)
 # Low bound n-grams
 parser.add_argument('-min_n', '--min_n_grams', type=int,
-                    help="Lower boundary of the range of n-values for different n-grams to be extracted", default=1)
+                    help="Lower boundary of the range of n-values for different n-grams to be extracted",
+                    default=MIN_NGRAMS)
 # High bound n-grams
 parser.add_argument('-max_n', '--max_n_grams', type=int,
-                    help="Upper boundary of the range of n-values for different n-grams to be extracted", default=1)
+                    help="Upper boundary of the range of n-values for different n-grams to be extracted",
+                    default=MAX_NGRAMS)
 # Inverse of regularization
-parser.add_argument('-C', '--c_value', type=float, help="Inverse of regularization strength for logistic regression", default=1.0)
+parser.add_argument('-C', '--c_value', type=float,
+                    help="Inverse of regularization strength for logistic regression", default=1.0)
 
 # Start parsing
 args = parser.parse_args()
 
 if args.run_toy_script:
-    X,y                 = get_toy_data()
-    trained_model       = train_toy_data(X,y,predict = True)
+    X, y = get_toy_data()
+    trained_model = train_toy_data(X, y, predict=True)
 
-if args.ngrams_logreg:
+if args.run_example_script:
     # Get dataset from file
     df_full = get_dataframe_by_brand_id(args.brand_id)
     # Convert list of labels to True or False values
@@ -74,16 +92,43 @@ if args.ngrams_logreg:
 
     # Text pre-processing
     corpus = remove_regexp_from_corpus(corpus, 'http\S+', ' ') # Replace links with ' '
-    corpus = encode_hashtags(corpus) # Hashtags into constant value
-    corpus = encode_mentions(corpus) # Mentions into constant value
+    corpus = encode_hashtags(corpus)  # Hashtags into constant value
+    corpus = encode_mentions(corpus)  # Mentions into constant value
     # TODO Fix the functions below to make it work as the two functions above
-    #corpus = encode_from_regexp_on_corpus(corpus, "#(\w+)", HASHTAG_PLACEHOLDER + "\1") # Hashtags into constant value
-    #corpus = encode_from_regexp_on_corpus(corpus, "@(\w+)", MENTION_PLACEHOLDER + "\1") # Mentions into constant value
+    # corpus = encode_from_regexp_on_corpus(corpus, "#(\w+)", HASHTAG_PLACEHOLDER + "\1") # Hashtags into constant value
+    # corpus = encode_from_regexp_on_corpus(corpus, "@(\w+)", MENTION_PLACEHOLDER + "\1") # Mentions into constant value
 
-    # Retrive stopwords from NLTK package
+    # Retrieve stopwords from NLTK package
     stopwords_list = get_stopwords(args.stop_words, df, args.languages)
 
-    if args.grid_search:
+    if not args.grid_search:
+        # Bag-of-words model through CountVectorizer
+        X = get_vectorized_dataset(corpus, stopwords_list, ngrams_tuple=(args.min_n_grams, args.max_n_grams))
+
+        # Case statement for classifier selection
+        # Logistic regression
+        if args.ngrams_logreg:
+            # Populate dictionary of parameters for the model
+            model_param = {'C': args.c_value}
+            # Initialize classifier object from models.py
+            model = Logistic_Regression(C=model_param['C'])
+        # Naive Bayes
+        elif args.ngrams_naive_bayes:
+            # Populate dictionary of parameters for the model
+            # model_param = {'C': args.c_value}
+            # Initialize classifier object from models.py
+            model = NaiveBayes()
+        # Default to basic logistic regression if no input provided
+        else:
+            model = Logistic_Regression()
+
+        # Cross validation if number of splits is above 0
+        if args.cross_validation_splits > 0:
+            cv_evaluation(X, y, n_splits=args.cross_validation_splits, model_obj=model)
+        else: # Train and evaluate classifier on hold out
+            trained_model = train_model_hold_out(X, y, model_obj=model, test_size=args.test_size, predict=True)
+
+    else:  # Perform grid search to tune hyperparameters (has to happen in main for concurrency)
         pipeline, parameters = grid_search_definition(stopwords=stopwords_list)
 
         # multiprocessing requires the fork to happen in a __main__ protected block
@@ -105,14 +150,3 @@ if args.ngrams_logreg:
             best_parameters = grid_search.best_estimator_.get_params()
             for param_name in sorted(parameters.keys()):
                 print("\t%s: %r" % (param_name, best_parameters[param_name]))
-
-    else:
-        # Bag-of-words model through CountVectorizer
-        X = get_vectorized_dataset(corpus, stopwords_list, ngrams_tuple=(args.min_n_grams, args.max_n_grams))
-
-        # Populate dictionary of parameters for the model
-        model_param = {'C': args.c_value}
-
-        # Train logistic regression model (hold-out)
-        trained_model = train_ngrams_logistic_regression(X, y, model_param, n_splits=args.cross_validation_splits,
-                                                         test_size=args.test_size, predict=True)
