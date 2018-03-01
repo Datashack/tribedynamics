@@ -98,20 +98,24 @@ if args.run_example_script:
     # corpus = encode_from_regexp_on_corpus(corpus, "#(\w+)", HASHTAG_PLACEHOLDER + "\1") # Hashtags into constant value
     # corpus = encode_from_regexp_on_corpus(corpus, "@(\w+)", MENTION_PLACEHOLDER + "\1") # Mentions into constant value
 
-    # Retrieve stopwords from NLTK package
-    stopwords_list = get_stopwords(args.stop_words, df, args.languages)
+    # Retrieve stopwords from NLTK package, if flag set to 1
+    if args.stop_words:
+        stopwords_list = get_stopwords(df, args.languages)
+    else:
+        stopwords_list = None  # Needed because this parameter is set in CountVectorizer
 
     if not args.grid_search:
-        # Bag-of-words model through CountVectorizer
-        X = get_vectorized_dataset(corpus, stopwords_list, ngrams_tuple=(args.min_n_grams, args.max_n_grams))
+        # Bag-of-words model through CountVectorizer (return vectorizer_obj for further use in the code)
+        X, vectorizer_obj = get_vectorized_dataset(corpus, stopwords_list, ngrams_tuple=(args.min_n_grams, args.max_n_grams))
 
-        # Case statement for classifier selection
+        # CLASSIFIER SELECTION #
+
         # Logistic regression
         if args.ngrams_logreg:
             # Populate dictionary of parameters for the model
             model_param = {'C': args.c_value}
             # Initialize classifier object from models.py
-            model = Logistic_Regression(C=model_param['C'])
+            model = LogisticRegressionWrapper(C=model_param['C'])
         # Naive Bayes
         elif args.ngrams_naive_bayes:
             # Populate dictionary of parameters for the model
@@ -120,16 +124,20 @@ if args.run_example_script:
             model = NaiveBayes()
         # Default to basic logistic regression if no input provided
         else:
-            model = Logistic_Regression()
+            model = LogisticRegressionWrapper()
 
         # Cross validation if number of splits is above 0
         if args.cross_validation_splits > 0:
             cv_evaluation(X, y, n_splits=args.cross_validation_splits, model_obj=model)
         else:  # Train and evaluate classifier on hold out
             trained_model = train_model_hold_out(X, y, model_obj=model, test_size=args.test_size, predict=True)
-            # TODO feature importance implementation
-            #if args.feature_importance:
-            #    compute_feature_importance(trained_model, X_train)
+
+            # TODO Wrap following code in function and appropriate flag from parser
+            importances = np.array(trained_model.coef_).flatten()
+            indices = np.argsort(importances)#[::-1]
+            feature_names = vectorizer_obj.get_feature_names()
+            for i in range(10):
+                print(feature_names[indices[i]], importances[indices[i]])
 
     else:
         # Perform grid search to tune hyperparameters (has to happen in main for concurrency)

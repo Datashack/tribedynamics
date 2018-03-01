@@ -131,26 +131,25 @@ def map_lang_code_to_language(x):
     }.get(x, 'NotFound')  # 'NotFound' is default if x not found
 
 
-def get_stopwords(remove_stopwords, df, languages_list):
-    if remove_stopwords == 1:
-        # Use all languages if no filter is specified
-        if len(languages_list) == 0:
-            languages_list = df.lang.values
+def get_stopwords(df, languages_list):
+    """Retrieve NLTK stopwords list based on the languages provided. If none, use all languages
+    Dataframe needed to retrieve all languages"""
+    # Use all languages if no filter is specified
+    if len(languages_list) == 0:
+        languages_list = df.lang.values
 
-        stopwords_list = []
-        for lang in languages_list:
-            lang_str = map_lang_code_to_language(lang)
-            # If language is supported by NLTK stopwords, add them to the list of stopwords to remove
-            if lang_str != 'NotFound':
-                stopwords_list = stopwords_list + stopwords.words(lang_str)
-        return stopwords_list
-    else:
-        return None
+    stopwords_list = []
+    for lang in languages_list:
+        lang_str = map_lang_code_to_language(lang)
+        # If language is supported by NLTK stopwords, add them to the list of stopwords to remove
+        if lang_str != 'NotFound':
+            stopwords_list = stopwords_list + stopwords.words(lang_str)
+    return stopwords_list
 
 
 def get_vectorized_dataset(corpus, stopwords_to_remove, ngrams_tuple):
     vectorizer = CountVectorizer(stop_words=stopwords_to_remove, ngram_range=ngrams_tuple)
-    return vectorizer.fit_transform(corpus)
+    return vectorizer.fit_transform(corpus), vectorizer
 
 
 def imbalance_ratio(labels_arr):

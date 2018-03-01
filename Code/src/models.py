@@ -24,7 +24,7 @@ class SVM:
         return self.model.predict_proba(x_data)
 
 
-class Logistic_Regression:
+class LogisticRegressionWrapper:
     def __init__(self, C=1.0, random_state=RANDOM_STATE):
         self.classifier = LogisticRegression(C=C, random_state=random_state)
         self.model = None
