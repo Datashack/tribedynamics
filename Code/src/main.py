@@ -53,6 +53,9 @@ parser.add_argument('-ng_nb', '--ngrams_naive_bayes', type=bool,
 # Grid search for best parameters of logistic regression
 parser.add_argument('-gs', '--grid_search', type=bool,
                     help="Run grid search on logistic regression estimator", default=False)
+# Feature importance (how many to print)
+parser.add_argument('-fi', '--features_importance', type=int,
+                    help="Output top-K relevant feature names along with their value", default=0)
 
 # Model parameters
 # Stopwords
@@ -126,19 +129,17 @@ if args.run_example_script:
         else:
             model = LogisticRegressionWrapper()
 
-        # Cross validation if number of splits is above 0
         if args.cross_validation_splits > 0:
+            # Cross validation if number of splits is above 0
             cv_evaluation(X, y, n_splits=args.cross_validation_splits, model_obj=model)
-        else:  # Train and evaluate classifier on hold out
+        else:
+            # Train and evaluate classifier on hold out
             trained_model = train_model_hold_out(X, y, model_obj=model, test_size=args.test_size, predict=True)
-
-            # TODO Wrap following code in function and appropriate flag from parser
-            importances = np.array(trained_model.coef_).flatten()
-            indices = np.argsort(importances)#[::-1]
-            feature_names = vectorizer_obj.get_feature_names()
-            for i in range(10):
-                print(feature_names[indices[i]], importances[indices[i]])
-
+            # Output or retrieve most relevant k features if set (k positive most relevant, k negative less relevant)
+            if args.features_importance != 0:
+                get_most_relevant_features(np.array(trained_model.coef_).flatten(),
+                                           vectorizer_obj.get_feature_names(), k=args.features_importance,
+                                           verbose=True)
     else:
         # Perform grid search to tune hyperparameters (has to happen in main for concurrency)
         pipeline, parameters = grid_search_definition(stopwords=stopwords_list)

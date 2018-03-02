@@ -7,6 +7,7 @@ Created on Sat Feb 17 22:57:50 2018
 from copy import deepcopy
 import numpy as np
 from model_eval_metrics import *
+from sklearn.preprocessing import normalize
 from sklearn.model_selection import StratifiedKFold
 
 
@@ -26,6 +27,31 @@ def compute_eval_metrics(X_test, y_test, model, verbose=False):
         print("ROC curve AUC = {:.5f}".format(results_dict['roc_auc']))
         print("Average precision score = {:.5f}".format(results_dict['average_precision']))
     return results_dict
+
+
+def get_most_relevant_features(importance_values, feature_names, k, normalized=False, verbose=False):
+    if k > 0:  # Most relevant
+        indices = np.argsort(importance_values)[::-1]
+    else:  # Least relevant
+        indices = np.argsort(importance_values)
+
+    if normalized:
+        importance_values = normalize(importance_values[:, np.newaxis], axis=0).ravel()
+
+    top_features = []
+    top_values = []
+
+    k = abs(k)
+    for i in range(k):
+        top_features.append(feature_names[indices[i]])
+        top_values.append(importance_values[indices[i]])
+
+    if verbose:
+        print('Feature name | (Strength value)')
+        for i in range(k):
+            print(top_features[i], top_values[i])
+
+    return top_features, top_values
 
 
 def cv_evaluation(X, y, n_splits, model_obj, random_state=RANDOM_STATE, verbose=False):
