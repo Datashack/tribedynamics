@@ -12,7 +12,7 @@ import numpy as np
 from scipy import interp
 import os
 from const import *
-from sklearn.metrics import roc_curve, auc
+from sklearn.metrics import roc_curve, precision_recall_curve, auc
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import average_precision_score
 
@@ -64,6 +64,8 @@ def ROC_Curve(y_true, y_scores, plot=True, save_plot=False, save_filename='dummy
 def plot_ROC_curve_cv(X, y, classifier, cv, save_filename=None):
     print("Started plotting ROC curve with cross-validation...")
 
+    plt.figure()
+
     tprs = []
     aucs = []
     mean_fpr = np.linspace(0, 1, 100)
@@ -77,6 +79,7 @@ def plot_ROC_curve_cv(X, y, classifier, cv, save_filename=None):
         tprs[-1][0] = 0.0
         roc_auc = auc(fpr, tpr)
         aucs.append(roc_auc)
+        # plt.plot(fpr, tpr, lw=1, alpha=0.3)
         plt.plot(fpr, tpr, lw=1, alpha=0.3,
                  label='ROC fold %d (AUC = %0.2f)' % (i, roc_auc))
 
@@ -108,6 +111,58 @@ def plot_ROC_curve_cv(X, y, classifier, cv, save_filename=None):
     if save_filename is not None:
         plt.savefig(os.path.join('plots', save_filename))
         print("ROC curve with cross validation plot saved at plots/{}".format(save_filename))
+
+
+def plot_precision_recall_curve_cv(X, y, classifier, cv, save_filename=None):
+    # TODO Needs fixing
+    print("Started plotting Precision-Recall curve with cross-validation...")
+    plt.figure()
+
+    precs = []
+    recs = []
+    pr_aucs = []
+
+    i = 1
+    for train, test in cv.split(X, y):
+        probas_ = classifier.train(X[train], y[train]).predict_proba(X[test])
+        # Compute Precision recall curve and area the curve
+        precision, recall, _ = precision_recall_curve(y[test], probas_[:, 1])
+
+        precs.append(precision)
+        recs.append(recall)
+
+        pr_auc = average_precision_score(y[test], probas_[:, 1])
+        pr_aucs.append(pr_auc)
+
+        plt.plot(recall, precision, lw=1, alpha=0.3,
+                 label='Pr-Rec fold %d (AUC = %0.2f)' % (i, pr_auc))
+        i += 1
+
+    mean_prec = np.mean(precs, axis=0)
+    mean_rec = np.mean(recs, axis=0)
+    mean_auc = np.mean(pr_aucs)
+    std_auc = np.std(pr_aucs)
+
+    plt.plot(mean_rec, mean_prec, color='b',
+             label=r'Mean Pr-Rec (AUC = %0.2f $\pm$ %0.2f)' % (mean_auc, std_auc),
+             lw=2, alpha=.8)
+
+    #std_prec = np.std(precs, axis=0)
+    #precs_upper = np.minimum(mean_prec + std_prec, 1)
+    #precs_lower = np.maximum(mean_prec - std_prec, 0)
+    #plt.fill_between(mean_rec, precs_lower, precs_upper, color='grey', alpha=.2,
+    #                 label=r'$\pm$ 1 std. dev.')
+
+    plt.xlim([-0.05, 1.05])
+    plt.ylim([-0.05, 1.05])
+    plt.xlabel('Recall')
+    plt.ylabel('Precision')
+    plt.title('Precision-Recall curve with cross validation')
+    plt.legend(loc="lower left")
+
+    if save_filename is not None:
+        plt.savefig(os.path.join('plots', save_filename))
+        print("Precision-Recall curve with cross validation plot saved at plots/{}".format(save_filename))
 
 
 # Simple accuracy above a threshold

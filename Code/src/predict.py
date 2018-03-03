@@ -66,7 +66,8 @@ def get_most_relevant_features(importance_values, feature_names, k, normalized=F
     return top_features, top_values
 
 
-def cv_evaluation(X, y, n_splits, model_obj, random_state=RANDOM_STATE, verbose=False, plot=False, save_filename=None):
+def cv_evaluation(X, y, n_splits, model_obj, random_state=RANDOM_STATE, verbose=False, plot=False,
+                  save_roc_filename=None, save_pr_rec_filename=None):
     # Apply cross validation
     print("Started {}-folds cross-validation...".format(n_splits))
 
@@ -97,4 +98,6 @@ def cv_evaluation(X, y, n_splits, model_obj, random_state=RANDOM_STATE, verbose=
     print('')
 
     if plot:
-        plot_ROC_curve_cv(X, y, model_obj, folds, save_filename=save_filename)
+        plot_ROC_curve_cv(X, y, model_obj, folds, save_filename=save_roc_filename)
+        #plot_precision_recall_curve_cv(X, y, model_obj, folds, save_filename=save_pr_rec_filename)
+
