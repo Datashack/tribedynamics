@@ -106,6 +106,14 @@ def encode_mentions(corpus):  # TODO - To remove once substituted with 'encode_f
     return np.array(new_corpus)
 
 
+def replace_placeholder(arr, string_to_replace, replacer):
+    """Replace the fixed placeholder with its original value"""
+    new_arr = []
+    for s in arr:
+        new_arr.append(s.replace(string_to_replace, replacer))
+    return np.array(new_arr)
+
+
 def map_lang_code_to_language(x):
     return {
         'ar': 'arabic',
@@ -152,11 +160,37 @@ def get_vectorized_dataset(corpus, stopwords_to_remove, ngrams_tuple):
     return vectorizer.fit_transform(corpus), vectorizer
 
 
-def imbalance_ratio(labels_arr):
+def count_labels_types(labels_arr):
     counter_obj = Counter(labels_arr)
-    num_true = counter_obj[True]
-    num_false = counter_obj[False]
+    return counter_obj[True], counter_obj[False]
+
+
+def imbalance_ratio(num_true, num_false):
     if (num_true == 0) and (num_false == 0):  # Avoid division by zero
         return 0
     else:
         return 1 - (min(num_true, num_false) / max(num_true, num_false))
+
+
+def statistics_per_language(df_lang):
+    num_true, num_false = count_labels_types(df_lang.answer.values)
+    imbalance = imbalance_ratio(num_true, num_false)
+    return df_lang.shape[0], num_true, num_false, imbalance
+
+
+def output_dataset_statistics(df):
+    print('*** DATASET STATISTICS ***')
+
+    print('Total number of posts: {}'.format(df.shape[0]))
+    num_true, num_false = count_labels_types(df.answer.values)
+    print('True labels: {}'.format(num_true))
+    print('False labels: {}'.format(num_false))
+    print('Imbalance ratio: {:.2f}'.format(imbalance_ratio(num_true, num_false)))
+
+    languages = np.unique(df.lang.values)
+    print("Languages: {}".format(languages))
+    # Per language statistics
+    for lang in languages:
+        n, t, f, i = statistics_per_language(df[df.lang == lang])
+        print('- {} language: {} posts ({} true, {} false, imbalance-ratio={:.2f})'.format(lang, n, t, f, i))
+    print('')

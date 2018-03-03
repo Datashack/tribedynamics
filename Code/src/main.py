@@ -87,8 +87,9 @@ if args.run_example_script:
     df = replace_label_column_in_df(df_full)
     # Extract posts only from specified languages
     df = filter_df_by_languages(df, args.languages)
-    # Imbalance ratio = 1 / (num_minority_class/num_majority_class)
-    print("Imbalance ratio = {:.2f}".format(imbalance_ratio(df.answer.values)))
+
+    # Print some statistics about the dataset
+    output_dataset_statistics(df)
 
     # Get array of texts and array of labels
     corpus, y = get_corpus_and_labels(df)
@@ -139,7 +140,7 @@ if args.run_example_script:
             if args.features_importance != 0:
                 get_most_relevant_features(np.array(trained_model.coef_).flatten(),
                                            vectorizer_obj.get_feature_names(), k=args.features_importance,
-                                           verbose=True)
+                                           save_file=True)
     else:
         # Perform grid search to tune hyperparameters (has to happen in main for concurrency)
         pipeline, parameters = grid_search_definition(stopwords=stopwords_list)

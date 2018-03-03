@@ -6,7 +6,9 @@ Created on Sat Feb 17 22:57:50 2018
 """
 from copy import deepcopy
 import numpy as np
+import pandas as pd
 from model_eval_metrics import *
+from data_process import *
 from sklearn.preprocessing import normalize
 from sklearn.model_selection import StratifiedKFold
 
@@ -23,33 +25,43 @@ def compute_eval_metrics(X_test, y_test, model, verbose=False):
                     'roc_auc': roc_auc(y_test, probas_[:, 1]),
                     'average_precision': average_precision(y_test, probas_[:, 1])}
     if verbose:
+        print('*** MODEL PERFORMANCE ***')
         print("Accuracy = {:.5f}".format(results_dict['accuracy']))
         print("ROC curve AUC = {:.5f}".format(results_dict['roc_auc']))
         print("Average precision score = {:.5f}".format(results_dict['average_precision']))
+        print('')
     return results_dict
 
 
-def get_most_relevant_features(importance_values, feature_names, k, normalized=False, verbose=False):
+def get_most_relevant_features(importance_values, feature_names, k, normalized=False, verbose=False, save_file=True):
+    # Sort by
     if k > 0:  # Most relevant
         indices = np.argsort(importance_values)[::-1]
     else:  # Least relevant
         indices = np.argsort(importance_values)
 
-    if normalized:
+    if normalized:  # Normalize coefficients if set
         importance_values = normalize(importance_values[:, np.newaxis], axis=0).ravel()
 
-    top_features = []
-    top_values = []
+    # Convert to ndarray to apply mask indexing
+    feature_names = np.array(feature_names)
 
-    k = abs(k)
-    for i in range(k):
-        top_features.append(feature_names[indices[i]])
-        top_values.append(importance_values[indices[i]])
+    # Replace placholder to show mentions and hashtags
+    top_features = replace_placeholder(feature_names[indices], 'mmmplaceholdermmm', '@')
+    top_features = replace_placeholder(top_features, 'hhhplaceholderhhh', '#')
+
+    top_values = importance_values[indices]
 
     if verbose:
-        print('Feature name | (Strength value)')
+        print('Word | Coefficient')
         for i in range(k):
             print(top_features[i], top_values[i])
+
+    if save_file:
+        d = {'word': top_features, 'coefficient': top_values}
+        df = pd.DataFrame(data=d, columns=['word', 'coefficient'])
+        df.to_csv('csv/feature_importance_logistic_regression.csv', index=False)
+        print('Feature importance saved to csv file in the src/csv folder')
 
     return top_features, top_values
 
@@ -82,3 +94,4 @@ def cv_evaluation(X, y, n_splits, model_obj, random_state=RANDOM_STATE, verbose=
     print("Mean Accuracy = {:.3f} +/- {:.3f}".format(np.mean(acc_scores), np.std(acc_scores)))
     print("Mean ROC curve AUC = {:.3f} +/- {:.3f}".format(np.mean(auc_scores), np.std(auc_scores)))
     print("Mean Average precision score = {:.3f} +/- {:.3f}".format(np.mean(ap_scores), np.std(ap_scores)))
+    print('')
