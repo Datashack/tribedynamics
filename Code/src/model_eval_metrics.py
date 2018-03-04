@@ -75,8 +75,9 @@ def plot_ROC_curve_cv(X, y, classifier, cv, save_filename=None):
         probas_ = classifier.train(X[train], y[train]).predict_proba(X[test])
         # Compute ROC curve and area the curve
         fpr, tpr, thresholds = roc_curve(y[test], probas_[:, 1])
+
         tprs.append(interp(mean_fpr, fpr, tpr))
-        tprs[-1][0] = 0.0
+        tprs[-1][0] = 0.0  # First element of the last array which was added, set it to 0.0
         roc_auc = auc(fpr, tpr)
         aucs.append(roc_auc)
         # plt.plot(fpr, tpr, lw=1, alpha=0.3)
@@ -114,13 +115,13 @@ def plot_ROC_curve_cv(X, y, classifier, cv, save_filename=None):
 
 
 def plot_precision_recall_curve_cv(X, y, classifier, cv, save_filename=None):
-    # TODO Needs fixing
     print("Started plotting Precision-Recall curve with cross-validation...")
     plt.figure()
 
     precs = []
-    recs = []
     pr_aucs = []
+
+    mean_recall = np.linspace(0, 1, 100)
 
     i = 1
     for train, test in cv.split(X, y):
@@ -128,30 +129,27 @@ def plot_precision_recall_curve_cv(X, y, classifier, cv, save_filename=None):
         # Compute Precision recall curve and area the curve
         precision, recall, _ = precision_recall_curve(y[test], probas_[:, 1])
 
-        precs.append(precision)
-        recs.append(recall)
+        precs.append(interp(mean_recall, recall, precision)) # WHY DOES THIS ALWAYS RETURN 100 VALUES AT 1?
+        precs[-1][0] = 1.0  # First element of the last array which was added, set it to 1.0
 
         pr_auc = average_precision_score(y[test], probas_[:, 1])
         pr_aucs.append(pr_auc)
 
-        plt.plot(recall, precision, lw=1, alpha=0.3,
-                 label='Pr-Rec fold %d (AUC = %0.2f)' % (i, pr_auc))
+        plt.plot(recall, precision, lw=1, alpha=0.3, label='Pr-Rec fold %d (AUC = %0.2f)' % (i, pr_auc))
         i += 1
 
     mean_prec = np.mean(precs, axis=0)
-    mean_rec = np.mean(recs, axis=0)
+    #mean_prec[-1] = 0.0 # Last point of the blue curve where it needs to be on y-axis
     mean_auc = np.mean(pr_aucs)
     std_auc = np.std(pr_aucs)
+    plt.plot(mean_recall, mean_prec, color='b',
+             label=r'Mean Pr-Rec (AUC = %0.2f $\pm$ %0.2f)' % (mean_auc, std_auc), lw=2, alpha=.8)
 
-    plt.plot(mean_rec, mean_prec, color='b',
-             label=r'Mean Pr-Rec (AUC = %0.2f $\pm$ %0.2f)' % (mean_auc, std_auc),
-             lw=2, alpha=.8)
-
-    #std_prec = np.std(precs, axis=0)
-    #precs_upper = np.minimum(mean_prec + std_prec, 1)
-    #precs_lower = np.maximum(mean_prec - std_prec, 0)
-    #plt.fill_between(mean_rec, precs_lower, precs_upper, color='grey', alpha=.2,
-    #                 label=r'$\pm$ 1 std. dev.')
+    std_prec = np.std(precs, axis=0)
+    precs_upper = np.minimum(mean_prec + std_prec, 1)
+    precs_lower = np.maximum(mean_prec - std_prec, 0)
+    plt.fill_between(mean_recall, precs_lower, precs_upper, color='grey', alpha=.2,
+                     label=r'$\pm$ 1 std. dev.')
 
     plt.xlim([-0.05, 1.05])
     plt.ylim([-0.05, 1.05])

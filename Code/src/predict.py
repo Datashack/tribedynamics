@@ -99,5 +99,5 @@ def cv_evaluation(X, y, n_splits, model_obj, random_state=RANDOM_STATE, verbose=
 
     if plot:
         plot_ROC_curve_cv(X, y, model_obj, folds, save_filename=save_roc_filename)
-        #plot_precision_recall_curve_cv(X, y, model_obj, folds, save_filename=save_pr_rec_filename)
+        plot_precision_recall_curve_cv(X, y, model_obj, folds, save_filename=save_pr_rec_filename)
 

@@ -187,7 +187,7 @@ def output_dataset_statistics(df):
     print('False labels: {}'.format(num_false))
     print('Imbalance ratio: {:.2f}'.format(imbalance_ratio(num_true, num_false)))
 
-    languages = np.unique(df.lang.values)
+    languages = np.unique(list(filter(None.__ne__, df.lang.values)))  # Exclude None values from list of languages
     print("Languages: {}".format(languages))
     # Per language statistics
     for lang in languages:

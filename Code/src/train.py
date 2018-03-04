@@ -39,22 +39,22 @@ def grid_search_definition(stopwords):
     # Pipeline definition
     pipeline = Pipeline([
         ('vect', CountVectorizer()),
-        ('tfidf', TfidfTransformer()),
+        #('tfidf', TfidfTransformer()),
         ('clf', LogisticRegression(random_state=RANDOM_STATE)),
     ])
     # Parameters to test
     parameters = {
-        # 'vect__max_df': (0.5, 0.75, 1.0),
-        # 'vect__min_df': (0.5, 0.75, 1.0),
-        # 'vect__max_features': (None, 5000, 10000, 50000),
-        'vect__ngram_range': ((1, 2), (1,3)),  # unigrams or bigrams
+        'vect__max_df': (0.5, 0.75, 1.0),
+        'vect__min_df': (0.5, 0.75, 1.0),
+        'vect__max_features': (None, 5000, 10000, 50000, 75000, 100000),
+        'vect__ngram_range': ((1, 2), (1, 3)),  # unigrams or bigrams
         'vect__stop_words': (stopwords, None),
-        # 'vect__lowercase': (True, False),
-        # 'vect__binary': (False, True),
-        'tfidf__use_idf': (True, False),
-        'tfidf__norm': ('l1', 'l2'),
+        'vect__lowercase': (True, False),
+        'vect__binary': (False, True),
+        #'tfidf__use_idf': (True, False),
+        #'tfidf__norm': ('l1', 'l2'),
         'clf__C': (1e-1, 1, 1e1),
         'clf__penalty': ('l2', 'l1'),
-        # 'clf__n_iter': (10, 50, 80),
+        'clf__n_iter': (10, 50, 80)
     }
     return pipeline, parameters
