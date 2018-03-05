@@ -133,7 +133,7 @@ if args.run_example_script:
         if args.cross_validation_splits > 0:
             # Cross validation if number of splits is above 0
             cv_evaluation(X, y, n_splits=args.cross_validation_splits, model_obj=model,
-                          plot=True, save_roc_filename='roc_curve_cv.svg', save_pr_rec_filename='pr_rec_curve_cv.svg')
+                          plot=False, save_roc_filename='roc_curve_cv.svg', save_pr_rec_filename='pr_rec_curve_cv.svg')
         else:
             # Train and evaluate classifier on hold out
             trained_model = train_model_hold_out(X, y, model_obj=model, test_size=args.test_size, predict=True)

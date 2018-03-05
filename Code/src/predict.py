@@ -92,9 +92,9 @@ def cv_evaluation(X, y, n_splits, model_obj, random_state=RANDOM_STATE, verbose=
         i = i + 1
 
     print("Overall performance on {}-folds cross-validation:".format(n_splits))
-    print("Mean Accuracy = {:.3f} +/- {:.3f}".format(np.mean(acc_scores), np.std(acc_scores)))
-    print("Mean ROC curve AUC = {:.3f} +/- {:.3f}".format(np.mean(auc_scores), np.std(auc_scores)))
-    print("Mean Average precision score = {:.3f} +/- {:.3f}".format(np.mean(ap_scores), np.std(ap_scores)))
+    print("Mean Accuracy = {:.2f} +/- {:.2f}".format(np.mean(acc_scores), np.std(acc_scores)))
+    print("Mean ROC curve AUC = {:.2f} +/- {:.2f}".format(np.mean(auc_scores), np.std(auc_scores)))
+    print("Mean Average precision score = {:.2f} +/- {:.2f}".format(np.mean(ap_scores), np.std(ap_scores)))
     print('')
 
     if plot:
