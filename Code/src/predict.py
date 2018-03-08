@@ -5,8 +5,6 @@ Created on Sat Feb 17 22:57:50 2018
 @author: SrivatsanPC
 """
 from copy import deepcopy
-import numpy as np
-import pandas as pd
 from model_eval_metrics import *
 from data_process import *
 from sklearn.preprocessing import normalize
@@ -23,12 +21,14 @@ def compute_eval_metrics(X_test, y_test, model, verbose=False):
     probas_ = model.predict_proba(X_test)
     results_dict = {'accuracy': accuracy(y_test, probas_[:, 1]),
                     'roc_auc': roc_auc(y_test, probas_[:, 1]),
-                    'average_precision': average_precision(y_test, probas_[:, 1])}
+                    'average_precision': average_precision(y_test, probas_[:, 1]),
+                    'f1': f1_score(y_test, probas_[:, 1].round())}  # Change round to set different threshold
     if verbose:
         print('*** MODEL PERFORMANCE ***')
         print("Accuracy = {:.5f}".format(results_dict['accuracy']))
         print("ROC curve AUC = {:.5f}".format(results_dict['roc_auc']))
         print("Average precision score = {:.5f}".format(results_dict['average_precision']))
+        print("F1 score = {:.5f}".format(results_dict['f1']))
         print('')
     return results_dict
 
@@ -74,6 +74,7 @@ def cv_evaluation(X, y, n_splits, model_obj, random_state=RANDOM_STATE, verbose=
     acc_scores = []
     auc_scores = []
     ap_scores = []
+    f1_scores = []
 
     folds = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=random_state)
 
@@ -89,12 +90,14 @@ def cv_evaluation(X, y, n_splits, model_obj, random_state=RANDOM_STATE, verbose=
         acc_scores.append(results_dict['accuracy'])
         auc_scores.append(results_dict['roc_auc'])
         ap_scores.append(results_dict['average_precision'])
+        f1_scores.append(results_dict['f1'])
         i = i + 1
 
     print("Overall performance on {}-folds cross-validation:".format(n_splits))
     print("Mean Accuracy = {:.3f} +/- {:.3f}".format(np.mean(acc_scores), np.std(acc_scores)))
     print("Mean ROC curve AUC = {:.3f} +/- {:.3f}".format(np.mean(auc_scores), np.std(auc_scores)))
     print("Mean Average precision score = {:.3f} +/- {:.3f}".format(np.mean(ap_scores), np.std(ap_scores)))
+    print("Mean F1 score = {:.3f} +/- {:.3f}".format(np.mean(f1_scores), np.std(f1_scores)))
     print('')
 
     if plot:

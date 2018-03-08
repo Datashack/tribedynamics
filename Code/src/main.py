@@ -87,9 +87,11 @@ if args.run_example_script:
     df = replace_label_column_in_df(df_full)
     # Extract posts only from specified languages
     df = filter_df_by_languages(df, args.languages)
+    # Remove duplicated rows, if any
+    df = remove_duplicated_rows(df)
 
     # Print some statistics about the dataset
-    output_dataset_statistics(df)
+    output_dataset_statistics(df, args.languages)
 
     # Get array of texts and array of labels
     corpus, y = get_corpus_and_labels(df)
@@ -110,7 +112,11 @@ if args.run_example_script:
 
     if not args.grid_search:
         # Bag-of-words model through CountVectorizer (return vectorizer_obj for further use in the code)
-        X, vectorizer_obj = get_vectorized_dataset(corpus, stopwords_list, ngrams_tuple=(args.min_n_grams, args.max_n_grams))
+        X, vectorizer_obj = get_vectorized_dataset(corpus, stopwords_list,
+                                                   ngrams_tuple=(args.min_n_grams, args.max_n_grams))
+
+        # TF-IDF weighting
+        # X = TfidfTransformer(norm='l2', use_idf=True).fit_transform(X)
 
         # CLASSIFIER SELECTION #
 

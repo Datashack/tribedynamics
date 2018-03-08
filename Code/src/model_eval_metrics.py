@@ -12,7 +12,7 @@ import numpy as np
 from scipy import interp
 import os
 from const import *
-from sklearn.metrics import roc_curve, precision_recall_curve, auc
+from sklearn.metrics import roc_curve, precision_recall_curve, auc, f1_score
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import average_precision_score
 

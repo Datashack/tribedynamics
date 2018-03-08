@@ -13,6 +13,7 @@ from collections import Counter
 import re
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics import accuracy_score, roc_auc_score, average_precision_score, f1_score
 
 
 def get_toy_data():
@@ -178,14 +179,35 @@ def statistics_per_language(df_lang):
     return df_lang.shape[0], num_true, num_false, imbalance
 
 
-def output_dataset_statistics(df):
-    print('*** DATASET STATISTICS ***')
+def has_model_decision(df):
+    counter = Counter(df.model_decision.values)
+    if len(counter) > 1:  # If Counter has more than one key = it's not just None values
+        return True
+    else:
+        return False
+
+
+def output_performance_metrics(y_true, y_pred):
+    print("Tribe's model performance:")
+    print("- Accuracy = {:.3f}".format(accuracy_score(y_true, y_pred)))
+    print("- ROC curve AUC = {:.3f}".format(roc_auc_score(y_true, y_pred)))
+    print("- Average precision score = {:.3f}".format(average_precision_score(y_true, y_pred)))
+    print("- F1 score = {:.3f}".format(f1_score(y_true, y_pred)))
+
+
+def output_dataset_statistics(df, languages_list):
+    if len(languages_list) > 0:
+        print('*** DATASET STATISTICS (filtered by selected languages) ***')
+    else:
+        print('*** DATASET STATISTICS ***')
+
+    df = filter_df_by_languages(df, languages_list)
 
     print('Total number of posts: {}'.format(df.shape[0]))
     num_true, num_false = count_labels_types(df.answer.values)
-    print('True labels: {}'.format(num_true))
-    print('False labels: {}'.format(num_false))
-    print('Imbalance ratio: {:.2f}'.format(imbalance_ratio(num_true, num_false)))
+    print('- True labels: {}'.format(num_true))
+    print('- False labels: {}'.format(num_false))
+    print('- Imbalance ratio: {:.2f}'.format(imbalance_ratio(num_true, num_false)))
 
     languages = np.unique(list(filter(None.__ne__, df.lang.values)))  # Exclude None values from list of languages
     print("Languages: {}".format(languages))
@@ -193,4 +215,20 @@ def output_dataset_statistics(df):
     for lang in languages:
         n, t, f, i = statistics_per_language(df[df.lang == lang])
         print('- {} language: {} posts ({} true, {} false, imbalance-ratio={:.2f})'.format(lang, n, t, f, i))
+
+    if has_model_decision(df):
+        y_true = df.answer.values
+        y_pred = df.model_decision.values
+        output_performance_metrics(y_true, y_pred)
+    else:
+        print("This dataset does not have Tribe's model predictions")
     print('')
+
+
+def remove_duplicated_rows(df):
+    # Count how many duplicated rows are present
+    n_dup = Counter(df.duplicated())[True]
+    if n_dup > 0:
+        return df.drop_duplicates()
+    else:
+        return df
