@@ -137,7 +137,10 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratif
 
 model = BoWClassifier(NUM_LABELS, VOCAB_SIZE)
 loss_function = nn.NLLLoss()
-optimizer = optim.SGD(model.parameters(), lr=0.1)
+# Stochastic gradient descent
+# optimizer = optim.SGD(model.parameters(), lr=0.1)
+# RMSPROP optimization
+optimizer = optim.RMSprop(model.parameters())
 
 ### TRAINING ###
 
