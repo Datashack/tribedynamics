@@ -1,26 +1,10 @@
 import numpy as np
 from sklearn.manifold import TSNE
-import matplotlib.pyplot as plt
 import os
 
-# Change here the language if needed
-fp = open("../../../data_not_committed/wiki.en.vec")
-
-word_to_vec = {}
-
-header_line = fp.readline().split()
-num_words = int(header_line[0])
-dimensions = int(header_line[1])
-
-# Fill the dictionary of words and vectors
-for i in range(num_words):
-    line = fp.readline().split()
-    word_to_vec[line[0]] = np.array(line[1:], dtype=float).tolist()
-
-fp.close()
-
-# Change the name of the file based on the language
-plot_filename = 'tsne_en.png'
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 
 
 def tsne_plot(word_to_vec_dict):
@@ -56,4 +40,24 @@ def tsne_plot(word_to_vec_dict):
     print("TSNE plot saved at plots/{}".format(plot_filename))
 
 
+# Constants definition
+lang = 'it'
+weight_matrix_filename = "../../../data_not_committed/pretrained_weights_" + lang + ".npy"
+vocab_filename = "../../../data_not_committed/vocab_" + lang + ".npy"
+plot_filename = "tsne_" + lang + ".png"
+MAX_NUM_WORDS = 100
+
+
+# Load data
+weight_matrix = np.load(weight_matrix_filename)
+vocab = np.load(vocab_filename)
+
+
+# Create a dictionary to map words to their vector
+word_to_vec = {}
+for i in range(MAX_NUM_WORDS):  # Bounded to ease plotting
+    word_to_vec[vocab[i]] = weight_matrix[i]
+
+
+# Generate TSNE plot
 tsne_plot(word_to_vec)

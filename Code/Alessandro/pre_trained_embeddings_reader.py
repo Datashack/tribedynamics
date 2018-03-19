@@ -1,37 +1,20 @@
 import numpy as np
+from gensim.models import KeyedVectors
 
-fp = open("../../../data_not_committed/wiki.en.vec")
+# Change here language on which to filter
+lang = "en"
+input_embeddings_filename = "../../../data_not_committed/wiki." + lang + ".vec"
+weight_matrix_filename = "../../../data_not_committed/pretrained_weights_" + lang + ".npy"
+vocab_filename = "../../../data_not_committed/vocab_" + lang + ".npy"
 
-MAX_NUM_ROWS = 101  # Add one to count for header line
-DIMENSIONS = 300
+# Load vectors from file
+word_vectors = KeyedVectors.load_word2vec_format(input_embeddings_filename, binary=False)
 
-vocabulary = []
-# -1 because we skip the first line (header line)
-matrix = np.zeros(shape=(MAX_NUM_ROWS - 1, DIMENSIONS), dtype=float)
+# Save weight matrix
+np.save(weight_matrix_filename, word_vectors.vectors)
 
-for row, line_str in enumerate(fp):
-    if row == 0:
-        vec = line_str.split()
-        print("Vocabulary size = {}".format(vec[0]))
-        print("Number of dimensions = {}".format(vec[1]))
+# vocab is ordered according to the weight matrix (don't change order of any of the two)
+vocab = list(word_vectors.vocab.keys())
 
-    elif row < MAX_NUM_ROWS:
-        vec = line_str.split()
-        vocabulary.append(vec[0])
-        matrix[row-1] = np.array(vec[1:], dtype=float)
-
-    elif row > MAX_NUM_ROWS:
-        break
-
-fp.close()
-
-# TODO Extract just first 100 words and save index (as list) and numpy matrix (.npy) file as 100x300 matrix
-# TODO so that I can try to see how to combine them together with PyTorch
-
-print(vocabulary)
-print(matrix)
-print(matrix.shape)
-
-np.save("../../../data_not_committed/saved_array/en_vocab.npy", np.array(vocabulary, dtype=str))
-np.save("../../../data_not_committed/saved_array/en_weight_matrix.npy", matrix)
-
+# Save vocab
+np.save(vocab_filename, np.array(vocab))
