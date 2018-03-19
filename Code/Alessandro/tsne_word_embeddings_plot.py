@@ -1,6 +1,5 @@
 import numpy as np
 from sklearn.manifold import TSNE
-import os
 
 import matplotlib
 matplotlib.use("Agg")
@@ -25,7 +24,7 @@ def tsne_plot(word_to_vec_dict):
         x.append(value[0])
         y.append(value[1])
 
-    plt.figure(figsize=(16, 16))
+    plt.figure(figsize=(20, 20))
     for i in range(len(x)):
         plt.scatter(x[i], y[i])
         plt.annotate(words[i],
@@ -34,18 +33,17 @@ def tsne_plot(word_to_vec_dict):
                      textcoords='offset points',
                      ha='right',
                      va='bottom')
-    #plt.show()
 
-    plt.savefig(os.path.join('plots', plot_filename))
-    print("TSNE plot saved at plots/{}".format(plot_filename))
+    plt.savefig(plot_filename)
+    print("TSNE plot saved".format(plot_filename))
 
 
 # Constants definition
 lang = 'it'
 weight_matrix_filename = "../../../data_not_committed/pretrained_weights_" + lang + ".npy"
 vocab_filename = "../../../data_not_committed/vocab_" + lang + ".npy"
-plot_filename = "tsne_" + lang + ".png"
-MAX_NUM_WORDS = 100
+plot_filename = "../../../data_not_committed/plots/tsne_" + lang + ".png"
+MAX_NUM_WORDS = 500
 
 
 # Load data
