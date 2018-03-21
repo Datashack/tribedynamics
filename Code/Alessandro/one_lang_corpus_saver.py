@@ -7,7 +7,7 @@ BRANDS_CORPUS_FILENAME = "../../../data_not_committed/CSE_20180215+KateTokyo_" +
 MERGED_CORPUS_FILENAME = "../../../data_not_committed/all_" + LANGUAGE + "_texts.npy"
 
 # Read archive df dropping all rows which have a NaN value
-df_archive = pd.read_csv(ARCHIVE_FILENAME, encoding='utf-8', dtype=str, nrows=2).dropna(axis=0, how='any')
+df_archive = pd.read_csv(ARCHIVE_FILENAME, encoding='utf-8', dtype=str).dropna(axis=0, how='any')
 archive_corpus = df_archive.post_message.values
 
 # Read brands df dropping all rows which have a NaN value
