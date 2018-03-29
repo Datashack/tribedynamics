@@ -11,9 +11,12 @@ import codecs
 import json
 from collections import Counter
 import re
+from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import accuracy_score, roc_auc_score, average_precision_score, f1_score
+from const import *
+from utils import *
 
 
 def get_toy_data():
@@ -159,6 +162,61 @@ def get_stopwords(df, languages_list):
 def get_vectorized_dataset(corpus, stopwords_to_remove, ngrams_tuple):
     vectorizer = CountVectorizer(stop_words=stopwords_to_remove, ngram_range=ngrams_tuple)
     return vectorizer.fit_transform(corpus), vectorizer
+
+
+def get_words_from_string(string, stopwords_to_remove):
+    # NLTK tokenizer to retrieve words
+    words_list = word_tokenize(string)  # TODO Add language with detection for English or Italian (better tokenization)
+    if stopwords_to_remove is None:
+        return words_list
+    else:
+        # Convert stopwords list to set to improve performance
+        stopwords_set = set(stopwords_to_remove)
+        return [word for word in words_list if word not in stopwords_set]
+
+
+def load_embeddings_from_file(embed_filename, dict_filename):
+    return np.load(embed_filename), load_pickle_obj_from_file(dict_filename)
+
+
+def get_embedding_from_word(word, embed_mat, word_to_ix_dict, unknown_key=UNKNOWN_KEY):
+    # If word in the dictionary, return its index in the matrix, otherwise return '<UNKNOWN>'
+    word_index = word_to_ix_dict.get(word, unknown_key)
+    # If the word is not found, return the index of the word <UNKNOWN>
+    if word_index == unknown_key:
+        word_index = word_to_ix_dict[unknown_key]
+    # Return the embedding vector of the given word
+    return embed_mat[word_index]
+
+
+def get_document_embedding(doc, embeddings_mat, word_to_ix, stopwords_to_remove=None):
+    # Retrieve a list of all the words in the document (without stopwords)
+    doc_words = get_words_from_string(doc, stopwords_to_remove)
+
+    # Initialize array to hold all the embeddings of all the words in the document
+    vectorized_words_arr = np.empty(shape=(len(doc_words), embeddings_mat.shape[1]), dtype=float)
+
+    # Fill up the array with the embedding of each word, filled per row
+    for i in range(vectorized_words_arr.shape[0]):
+        vectorized_words_arr[i] = get_embedding_from_word(doc_words[i], embeddings_mat, word_to_ix)
+
+    # Sum over rows to return a "flattened" array which sums all the embeddings of the words in the document
+    return np.sum(vectorized_words_arr, axis=0)
+
+
+def get_embeddings_dataset(corpus_arr, embeddings_filename, word_to_ix_filename, stopwords_to_remove=None):
+    # Load embeddings and dictionary to index it
+    embeddings_matrix, word_to_ix_dict = load_embeddings_from_file(embeddings_filename, word_to_ix_filename)
+
+    # Empty array: documents on row and embeddings on columns
+    X = np.empty(shape=(len(corpus_arr), embeddings_matrix.shape[1]), dtype=float)
+
+    # Loop over all rows
+    for i in range(X.shape[0]):
+        # Set the row to the vector embedding of the document
+        X[i] = get_document_embedding(doc=corpus_arr[i], embeddings_mat=embeddings_matrix,
+                                      word_to_ix=word_to_ix_dict, stopwords_to_remove=stopwords_to_remove)
+    return X
 
 
 def count_labels_types(labels_arr):
