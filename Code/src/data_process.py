@@ -9,6 +9,7 @@ import numpy as np
 import pandas as pd
 import codecs
 import json
+import html
 from collections import Counter
 import re
 from nltk.tokenize import word_tokenize
@@ -290,3 +291,74 @@ def remove_duplicated_rows(df):
         return df.drop_duplicates()
     else:
         return df
+
+
+###### BELOW FUNCTIONS TO CLEAN CORPUS FOR EMBEDDINGS, MIGHT BE REMOVED OR MERGED WITH PREVIOUS ONES #####
+def lowercase_string(input_string):
+    return input_string.lower()
+
+
+def escape_html_entities_from_string(input_string):
+    return html.unescape(input_string)
+
+
+def remove_regexp_from_string(input_string, regexp_str, replacement):
+    # Compile the regexp
+    regex = re.compile(regexp_str)
+    # Return string with replaced multiple white spaces
+    return ' '.join(regex.sub(replacement, input_string).split())
+
+
+def encode_social_media_entity(input_string, regexp_str, placeholder):
+    # Get '#' or '@' from first char of the regexp
+    special_char = regexp_str[0]
+    # Entity = hashtag or mention
+    regex = re.compile(regexp_str)
+    matched_entities = regex.findall(input_string)  # Returns list, without the special char in front
+    for entity in matched_entities:
+        input_string = input_string.replace(special_char + entity, placeholder + entity)
+    return input_string
+
+
+def clean_corpus_for_embeddings(corpus_arr, encode_social_chars):
+    # Preprocess each string in the corpus (inline to save memory)
+    for i in range(len(corpus_arr)):
+        doc = corpus_arr[i]
+
+        # Lowercase string
+        doc = lowercase_string(doc)
+
+        # Replace html entities (like &amp; &lt; ...)
+        doc = escape_html_entities_from_string(doc)
+
+        # Remove HTML tags
+        doc = remove_regexp_from_string(doc, r"<[^>]*>", " ")
+
+        # Remove URL links
+        doc = remove_regexp_from_string(doc, r"http\S+", " ")
+
+        if encode_social_chars:
+            doc = encode_social_media_entity(doc, r"#(\w+)", "HASHTAG")
+            doc = encode_social_media_entity(doc, r"@(\w+)", "MENTION")
+
+        # Strip off punctuation (except: ' - / _ )
+        doc = remove_regexp_from_string(doc, r"[!\"#$%&()*+,.:;<=>?@\[\]^`{|}~]", " ")
+
+        # Remove multiple occurrences of the only non alphabetic characters that we kept
+        doc = remove_regexp_from_string(doc, r"-{2,}|'{2,}|_{2,}", " ")
+
+        # Remove cases of "alone" special characters, like: " - " or " _   "
+        doc = remove_regexp_from_string(doc, r"( {1,}- {1,})|( {1,}_ {1,})|( {1,}' {1,})", " ")
+
+        # Remove all words that containt characters which are not the ones in this list: a-zàèéìòóù '-_
+        doc = remove_regexp_from_string(doc, r"[A-Za-zàèéìòóù]*[^A-Za-zàèéìòóù \'\-\_]\S*", " ")
+
+        # Clean mistakes like: 'word -word _word -> word
+        doc = remove_regexp_from_string(doc, r"(^| )[(\')|(\-)|(\_)]", " ")
+
+        # Clean mistakes like: word' word- word_ -> word
+        doc = remove_regexp_from_string(doc, r"[(\')|(\-)|(\_)]($| )", " ")
+
+        corpus_arr[i] = doc
+
+    return corpus_arr

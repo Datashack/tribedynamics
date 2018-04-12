@@ -198,7 +198,7 @@ if args.run_embedding_script:
     corpus, y = get_corpus_and_labels(df)
 
     # TODO Apply here the same preprocessing that was done on the corpus to train the embeddings
-    corpus = remove_regexp_from_corpus(corpus, 'http\S+', ' ')  # Replace links with ' '
+    corpus = clean_corpus_for_embeddings(corpus, encode_social_chars=False)
 
     # Retrieve stopwords from NLTK package, if flag set to 1
     if args.stop_words:
