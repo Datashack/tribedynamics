@@ -1,6 +1,32 @@
 ---
 layout: default
 ---
+###### TABLE OF CONTENTS:
+1.  [Abstract](#1-abstract)
+2.  [Introduction](#2-introduction)
+3.  [Problem Statement and Methods](#3-problem-statement-and-methods)
+4.  [Procedures and Methods](#4-procedures-and-methods)
+5.  [Mathematical Modeling](#5-mathematical-modeling)
+6.  [Analysis](#6-analysis)
+7.  [Conclusion](#7-conclusion)
+8.  [Acknowledgements](#8-acknowledgements)
+9.  [References](#9-references)
+
+# 1. Abstract
+# 2. Introduction
+# 3. Problem Statement and Methods
+# 4. Procedures and Methods
+# 5. Mathematical Modeling
+# 6. Analysis
+# 7. Conclusion
+# 8. Acknowledgements
+# 9. References
+
+<hr>
+<hr>
+<hr>
+
+# LEGEND
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
