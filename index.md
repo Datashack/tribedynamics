@@ -1,6 +1,41 @@
 ---
 layout: default
 ---
+
+# 1. Abstract
+Tribe Dynamics is a San Francisco-based consulting company that measures social media engagement for beauty, fashion and lifestyle brands. The company provides software, data, and consulting services to some of the most well-known brands, private equity firms and Fortune 500 companies in the space. Tribe initiated its business from English data, since the company started from tracking brands in the U.S. As the company expands internationally to Europe and Asia, it must be able to build the same classification tools for other languages, aiming to the same performances achieved in the English language, while also taking advantage of its wide amount of English training data. In this study, we present two approaches that we used to try to solve this problem. The first one, through neural network language modeling, learns monolingual word embedding representations which, through an appropriate transformation, can be mapped to a shared vector space, thus producing multilingual word vectors that can be used for any text classification purpose.
+The second one, addressing the task of cross-lingual text classification, trains a classification model in the source language and ports the model to the target language, with the translation knowledge learned using an Expectation Maximization algorithm, resulting in a very effective way to take advantage of Tribe's conspicuous availability of English data.
+
+
+# 2. Scope and Project Outline
+
+
+# 3. Methodologies
+
+## 3.1 Bilingual Word Embeddings
+
+### 3.1.1 Data Preprocessing
+
+### 3.1.2 Word Embeddings
+#### 3.1.2.1 Neural Network Language Modeling
+#### 3.1.2.2 Alignment
+
+### 3.1.3 Performance Evaluation
+#### 3.1.3.1 Binomial Text Classification
+#### 3.1.3.2 Visualization Tool
+
+## 3.2 Cross-Lingual Latent Model
+
+# 4. Conclusion and Future Work
+
+
+
+<hr>
+<hr>
+<hr>
+
+# LEGEND
+
 ###### TABLE OF CONTENTS:
 1.  [Abstract](#1-abstract)
 2.  [Introduction](#2-introduction)
@@ -12,21 +47,7 @@ layout: default
 8.  [Acknowledgements](#8-acknowledgements)
 9.  [References](#9-references)
 
-# 1. Abstract
-# 2. Introduction
-# 3. Problem Statement and Methods
-# 4. Procedures and Methods
-# 5. Mathematical Modeling
-# 6. Analysis
-# 7. Conclusion
-# 8. Acknowledgements
-# 9. References
-
-<hr>
-<hr>
-<hr>
-
-# LEGEND
+[comment]: <> (https://jekyllrb.com/docs/themes/#overriding-theme-defaults)
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
