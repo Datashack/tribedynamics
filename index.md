@@ -2,15 +2,24 @@
 layout: default
 ---
 
-# 1. Abstract
+# Abstract
 Tribe Dynamics is a San Francisco-based consulting company that measures social media engagement for beauty, fashion and lifestyle brands. The company provides software, data, and consulting services to some of the most well-known brands, private equity firms and Fortune 500 companies in the space. Tribe initiated its business from English data, since the company started from tracking brands in the U.S. As the company expands internationally to Europe and Asia, it must be able to build the same classification tools for other languages, aiming to the same performances achieved in the English language, while also taking advantage of its wide amount of English training data. In this study, we present two approaches that we used to try to solve this problem. The first one, through neural network language modeling, learns monolingual word embedding representations which, through an appropriate transformation, can be mapped to a shared vector space, thus producing multilingual word vectors that can be used for any text classification purpose.
 The second one, addressing the task of cross-lingual text classification, trains a classification model in the source language and ports the model to the target language, with the translation knowledge learned using an Expectation Maximization algorithm, resulting in a very effective way to take advantage of Tribe's conspicuous availability of English data.
 
+# 1. Introduction
+Tribe Dynamics is a consulting company that provides measurements of social media engagement for beauty, fashion and lifestyle brands. They have been consulting, mostly in the American market, for the last four years, providing web-based tools and periodic reports to their clients, to track their social media engagement. Their marquee offering is a metric called Earned Media Value (EMV) which is derived out of various engagement markers (e.g. likes, comments, shares, etc.) collected from their clients’ social media posts.
+
+To calculate these metrics, they collect textual posts by scraping popular social media platforms (e.g. Facebook, Twitter, Instagram, Youtube, etc.) using customized search phrases that are provided by their in-house experts. Once these posts have been collected and appropriately cleaned, it is imperative to filter them, identifying if a post is talking about a particular brand or a particular class of product. Tribe has been highly successful in this task with American brands, whose posts are mostly in English, with their proprietary classification model.
+
+Over the last couple of years, they have been rapidly expanding into the European and Asian markets. Naturally, the language repertoire of their posts has been growing accordingly. Their model does not perform with the same efficiency, achieved on the English text classification, across these new languages. In particular, their model needs sufficient training data in these new languages before being able to train correctly. This problem is at the center of what our project tries to accomplish - provide a model that scales well across different languages with limited amount of training data, while exploiting the structural similarity across languages.
 
 # 2. Scope and Project Outline
+The fundamental goal of the project is to improve upon Tribe’s proprietary classification model to essentially develop a brand ~~and vertical~~ classification model that scales well across languages with limited amount of training data. The model is expected to learn and adapt the latent linguistic structure, present in the social media domain, across different languages. To this extent, we investigated two approaches that could take on this challenging task. First, we trained multi-language aligned word embedding representations, to evaluate a technique which aims at overcoming the cumbersomeness of the n-grams representation which is currently in place in Tribe's proprietary model. Additionaly, we developed an evaluation framework of these word embeddings representation, through a web-based visualization tool that serves as a facilitator for Tribe's developers to join the human-in-the-loop pipeline to directly assess the quality of the representation and devise where to act in case something needs to be improved. Lastly, by means of a cross-lingual latent generative model, we demonstrate an approach that shows how Tribe could transfer its model's knowledge, developed on its rich English training data, across other languages, while having to maintain only one model, leveraging its generative nature that does not require a lot of training data in the target language.
 
 
 # 3. Methodologies
+[comment]: <> (SPIEGARE QUI CHE ABBIAMO SCELTO DI FARE SOLO ITALIANO E INGLESE)
+
 
 ## 3.1 Bilingual Word Embeddings
 
