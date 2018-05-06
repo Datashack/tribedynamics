@@ -16,26 +16,93 @@ Over the last couple of years, they have been rapidly expanding into the Europea
 # 2. Scope and Project Outline
 The fundamental goal of the project is to improve upon Tribe’s proprietary classification model to essentially develop a brand ~~and vertical~~ classification model that scales well across languages with limited amount of training data. The model is expected to learn and adapt the latent linguistic structure, present in the social media domain, across different languages. To this extent, we investigated two approaches that could take on this challenging task. First, we trained multi-language aligned word embedding representations, to evaluate a technique which aims at overcoming the cumbersomeness of the n-grams representation which is currently in place in Tribe's proprietary model. Additionaly, we developed an evaluation framework of these word embeddings representation, through a web-based visualization tool that serves as a facilitator for Tribe's developers to join the human-in-the-loop pipeline to directly assess the quality of the representation and devise where to act in case something needs to be improved. Lastly, by means of a cross-lingual latent generative model, we demonstrate an approach that shows how Tribe could transfer its model's knowledge, developed on its rich English training data, across other languages, while having to maintain only one model, leveraging its generative nature that does not require a lot of training data in the target language.
 
+# 3. Procedures and methods
+## 3.1 Data Exploration
+### 3.1.1 Labelled Data
+For our study, Tribe provided us 106 datasets (one dataset per brand) in which entries are specified as follows:
 
-# 3. Methodologies
-[comment]: <> (SPIEGARE QUI CHE ABBIAMO SCELTO DI FARE SOLO ITALIANO E INGLESE)
+| brand_id | brand_name | text | lang | model_decision | labels | mturker | link |
+|:---------|:-----------|:-----|:-----|:---------------|:-------|:--------|:-----|
+| 8009     | Caudalie   | Favorites Summer Crushes - $30 This is another ...     | en | 1        | [1, 0, 1, 1]                                                        | 1 | https://www.twitter.com/Sephora/statuses/46565...      |
+
+These datasets are used to serve the task of binomial classification, which means determining whether a particular social media post is about a specific brand or not. Each of the entries in the datasets represent a social media post that was gathered querying social media platforms, according to keywords provided by Tribe's in-house experts. Most of these features are self explanatory. Following is a brief description of the less immediate ones:
+
+*   *mturker*: being a supervised classification task, labeling is required. A value of 1 in this feature indicates that the labeling was performed by one (or more) individuals from Amazon MTurk. A value of 0 would indicate that the labeling was performed by one (or more) Tribe's employees.
+*   *labels*: list of labels that indicates which class each of the labelers assigned to the provided post. Eventually, these labels will be aggregated into a single value according to majority voting (if a tie is present, it will be mapped to 0 to reduce false positives presence).
+
+In order to provide a more accurate understanding of the pipeline which we wanted to deploy, we decided to focus our attention only on **English and Italian languages**. First, because three components of our group are native Italian speakers, which simplifies the process of manual evaluation of the provided text. Furthermore, Tribe wants to expand internationally to Europe. Italian is a Latin language, so it shares with Spanish and French - two of the most common idioms of the European continent - the same linguistic structure, thus enabling the possibility of transfering the same ideas that were applicable in Italian, to the other mentioned languages.
+
+It is important to notice that, on this reduced datasets, the disparity between the number of English training instances and Italian ones is substantial. Moreover, we identified a considerable class imbalance among all datasets, which greately impacts the performance of the classification and will force us to use other performance metrics, instead of accuracy, to evaluate the results.
+
+### 3.1.2 Unlabelled Data
+For the purpose of training the word embeddings, Tribe also provided us two large sized datasets (7'739'316 instances for the Italian dataset, 9'154'680 for the English one), which gathered a set of scraped social media posts, without any data preprocessing or labeling previously performed on them. The csv files simply look like this:
+
+| index | post_message                                       |
+|:------|:---------------------------------------------------|
+| 0     | Un bellissimo scatto del mio amico fashion_pro...  |
+| 1     | Uno staff da paura 😍😍 #evento #moda #tourleade... |
+
+[comment]: <> (Italian: 2.0 GB)
+[comment]: <> (English: 1.2 GB)
+
+To make the computations feasible and reduce the amount of noise present in the data, we had to perform some data cleaning procedures, which we will detail in this upcoming chapter.
+
+## 3.2 Data Cleaning
+Before performing the cleaning of each post in the unlabelled datasets, we perform a sentence tokenization of the entire corpus, through the NTLK sentence tokenizer. This facilitates the cleaning process with regular expressions and avoids merging together multiple sentences, after punctuation is removed, which would result in an undesired behavior if we want to use this data for language modeling purposes.
 
 
-## 3.1 Bilingual Word Embeddings
+Inspired by the [preprocessing Perl script](https://github.com/facebookresearch/fastText/blob/master/wikifil.pl) that was used to train the FastText Wikipedia embeddings - which we will detail later on - each of the sentence tokenized posts is processed with the following instructions:
 
-### 3.1.1 Data Preprocessing
+```python
+# Lowercase string
+doc = lowercase_string(doc)
+# Replace html entities (like &amp; &lt; ...)
+doc = escape_html_entities_from_string(doc)
+# Remove HTML tags
+doc = remove_regexp_from_string(doc, r"<[^>]*>", " ")
+# Remove URL links
+doc = remove_regexp_from_string(doc, r"http\S+", " ")
+# Strip off punctuation (except: ' - / _ )
+doc = remove_regexp_from_string(doc, r"[!\"#$%&()*+,.:;<=>?@\[\]^`{|}~]", " ")
+# Remove multiple occurrences of the only non alphabetic characters that we kept
+doc = remove_regexp_from_string(doc, r"-{2,}|'{2,}|_{2,}", " ")
+# Remove cases of "alone" special characters (like: " - " or " _   ")
+doc = remove_regexp_from_string(doc, r"( {1,}- {1,})|( {1,}_ {1,})|( {1,}' {1,})", " ")
+# Remove all words that containt characters which are not the ones in this list: a-zàèéìòóù '-_
+doc = remove_regexp_from_string(doc, r"[A-Za-zàèéìòóù]*[^A-Za-zàèéìòóù \'\-\_]\S*", " ")
+# Clean "mistakes" like: 'word -word _word -> word
+doc = remove_regexp_from_string(doc, r"(^| )[(\')|(\-)|(\_)]", " ")
+# Clean "mistakes" like: word' word- word_ -> word
+doc = remove_regexp_from_string(doc, r"[(\')|(\-)|(\_)]($| )", " ")
+```
 
-### 3.1.2 Word Embeddings
-#### 3.1.2.1 Neural Network Language Modeling
-#### 3.1.2.2 Alignment
+`remove_regexp_from_string(input_string, regexp_str, replacement)` using regular expressions Python's package `re`,replaces each match of the regular expression in the input string, with the replacement parameter, eventually producing a cleaned string that can be used as a building block of the word embeddings training corpus.
 
-### 3.1.3 Performance Evaluation
-#### 3.1.3.1 Binomial Text Classification
-#### 3.1.3.2 Visualization Tool
+## 3.3 Computational Resources
+The primary programming language that was used in this project is Python. To process the data, we took advantage of Pandas and NLTK. For statistical modeling, we used scikit-learn and PyTorch, as the deep learning framework to learn the embeddings, because of its strong GPU acceleration capabilities. The web-based visualization tool was built using HTML, CSS and Javascript, by means of its data visualization library D3. Amazon Web Services was used to train the embeddings on the cloud, taking advantage of an NVIDIA GPU. Finally, GitHub was used for project collaboration and version control.
 
-## 3.2 Cross-Lingual Latent Model
+# 4. Mathematical Modeling
 
-# 4. Conclusion and Future Work
+## 4.1 Bilingual Word Embeddings
+
+### 4.1.1 Data Preparation
+[comment]: <> (Aggregate all datasets, get rid of labels ,pad sequences for batch)
+
+### 4.1.2 Word Embeddings
+#### 4.1.2.1 Neural Network Language Modeling
+#### 4.1.2.2 Alignment
+
+### 4.1.3 Performance Evaluation
+#### 4.1.3.1 Binomial Text Classification
+#### 4.1.3.2 Visualization Tool
+
+## 4.2 Cross-Lingual Latent Model
+
+# 5. Conclusion and Future Work
+
+# References
+*   FastText
+
 
 
 
