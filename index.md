@@ -92,7 +92,8 @@ In order for the neural network to learn the embeddings, it has to receive input
 
 ### 4.1.2 Word Embeddings
 #### 4.1.2.1 Neural Network Language Modeling
-Mettere qui che input e output sono semplicemente la sequenza meno 1
+[comment]: <> (Mettere qui che input e output sono semplicemente la sequenza meno 1)
+
 #### 4.1.2.2 Alignment
 
 ### 4.1.3 Performance Evaluation
