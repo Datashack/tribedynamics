@@ -91,13 +91,43 @@ In order for the neural network to learn the embeddings, it has to receive input
 [comment]: <> (Esempio di come è una sentence? Come http://deeplearning.net/tutorial/rnnslu.html)
 
 ### 4.1.2 Word Embeddings
+Word embeddings are dense vectors of real numbers, one for each word in the vocabulary. The purpose of word embeddings is to represent each word to efficiently encode its semantic information, in a way that might be relevant to the task at hand. To compute these dense vectors of real numbers, we decided to learn them through a language modeling task. The details of the approach are presented in the upcoming chapter.
+
 #### 4.1.2.1 Neural Network Language Modeling
-[comment]: <> (Mettere qui che input e output sono semplicemente la sequenza meno 1)
+A statistical language model is a probability distribution over sequences of words. Given such a sequence, say of length m, it assigns a probability **P(w1,...,wm)**
+to the whole sequence. In our case, we have trained a Recurrent Neural Network word-level language model. That is, we gave to the RNN - precisely an LSTM (Long Short-Term Memory) - a sequence of words, coming from a social media post, and asked it to model the probability distribution of the next word in the sequence given a sequence of previous words, repeating this process for each post in our training corpus. In terms of inputs and expected output, for each padded sequence - detailed in chapter 4.1.1 - the neural network takes as input all the words in the sequence, but the last one, while the target is all the words in the sequence, but the first one. This way, for each word in input, the neural network tries to predict the next work in the sentence in output.
+
+[comment]: <> (Show example here)
+
+Our primary task remains learning word embeddings. Because of this, the LSTM, instead of taking in input a one-hot-encoded version of each word, it is actually fed with 300 dimensional word embeddings. In this way, the NN is also able to tune these parameters so that each word's semantic information is encoded in the vectorial representation, which is the main expectation that we have on our model.
+
+The reason why we used 300 dimensional word embeddings is because we have decided to enhance the quality of our representation with state-of-the-art embeddings coming from FastText, a library for efficient learning of word representations and sentence classification developed at Facebook.
+
+To do such enhancement, we performed a customization of our neural network setting. Precisely, we turned it into a multi-channel neural network. The idea behind multi-channel neural networks is to split the network in two parts - known as static and dynamic channels - and perform backpropagation only on the dynamic channel, thus keeping unchanged the parameters on the static one. To adapt it to our framework, we set up two embedding layers:
+* **Static**: initialized with FastText word embeddings. These parameters will be unchanged for the entire learning process. No backpropagation is performed on them;
+* **Dynamic**: initialized with FastText word embeddings, but changed dynamically through backpropagation on each training iteration.
+
+With this approach, in the neural network, each word is represented by two embeddings, one coming from the static embedding and one from the dynamic one. The expected outcome of this approach is to leverage the quality of pre-trained embeddings - learned on Wikipedia text - and adapt it to the fashion and cosmetics domain.
+
+[comment]: <> (Check if there are other things to say here)
+
 
 #### 4.1.2.2 Alignment
+Once we have the two dynamic embeddings ....
+
 
 ### 4.1.3 Performance Evaluation
+Detail here:
+* Corpus size
+* Parameters (lr, ...)
+* Loss function
+* Optimizer
+* Training epoch
+* ...
+
+detail parameters for training
 #### 4.1.3.1 Binomial Text Classification
+Logistic regression
 #### 4.1.3.2 Visualization Tool
 
 ## 4.2 Cross-Lingual Latent Model
