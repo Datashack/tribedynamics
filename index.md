@@ -86,10 +86,13 @@ The primary programming language that was used in this project is Python. To pro
 ## 4.1 Bilingual Word Embeddings
 
 ### 4.1.1 Data Preparation
-[comment]: <> (Aggregate all datasets, get rid of labels ,pad sequences for batch)
+In order for the neural network to learn the embeddings, it has to receive inputs and targets according to a specific format. Because of this, additional operations needed to be performed on the training corpus for the NN to be able to process the data. After having tokenized all the sentences in the corpus, to each of them the `<BOS>` and `<EOS>` tokens were added - respectively at the beginning and at the end of the sentence - to indicate were each sequence was respectively starting and ending. Then, to limit both spatial and temporal computational complexity, we reduced the vocabulary to incorporate only words that had a minimum number of occurrences equal to 10, thus mapping all of the infrequent ones to the `<UNK>` tag. Since training the neural network in batches is a physical necessity - unless we could fit the entire training corpus in memory at once - we had to design a way to reduce all sentences to have the same length. A common approach that is used in the literature is what is called padded sequences. This technique, deployed mostly when dealing with time series data, simply consists in setting the size of each sequence to be as long as the longest sequence in the corpus, thus repeating the concatenation of a padding token - which in our case was `<PAD>` - to the end of each sequence, until it matches the length of the longest sequence availabile. Once we applied this preprocessing step, we realized that the dataset was becoming unnecessarily large. A more accurate analysis, revealed that some of these tokenized posts had a sequence length that was in the order of thousands of words per post, which was totally unrealistic for a sentence tokenized piece of text. Having recognized this problem, we decided to prune sentences that contained more than 52 tokens - including `<BOS>` and `<EOS>` - in order to have the dimensionality of the sequence into a manageable size. Finally, since the neural network accepts only numerical input tensors, each word was mapped to an index value, which simply reflected the postition of the word inside the vocabulary.
+
+[comment]: <> (Esempio di come è una sentence? Come http://deeplearning.net/tutorial/rnnslu.html)
 
 ### 4.1.2 Word Embeddings
 #### 4.1.2.1 Neural Network Language Modeling
+Mettere qui che input e output sono semplicemente la sequenza meno 1
 #### 4.1.2.2 Alignment
 
 ### 4.1.3 Performance Evaluation
