@@ -94,7 +94,7 @@ In order for the neural network to learn the embeddings, it has to receive input
 Word embeddings are dense vectors of real numbers, one for each word in the vocabulary. The purpose of word embeddings is to represent each word to efficiently encode its semantic information, in a way that might be relevant to the task at hand. To compute these dense vectors of real numbers, we decided to learn them through a language modeling task. The details of the approach are presented in the upcoming chapter.
 
 #### 4.1.2.1 Neural Network Language Modeling
-A statistical language model is a probability distribution over sequences of words. Given such a sequence, say of length m, it assigns a probability **P(w1,...,wm)**
+A statistical language model is a probability distribution over sequences of words. Given such a sequence, say of length m, it assigns a probability <span><img src="http://latex.codecogs.com/gif.latex?P(w_1,...,w_m)" title="P(w_1,...,w_m)" /></span>
 to the whole sequence. In our case, we have trained a Recurrent Neural Network word-level language model. That is, we gave to the RNN - precisely an LSTM (Long Short-Term Memory) - a sequence of words, coming from a social media post, and asked it to model the probability distribution of the next word in the sequence given a sequence of previous words, repeating this process for each post in our training corpus. In terms of inputs and expected outputs, for each padded sequence - detailed in chapter 4.1.1 - the neural network takes as input all the words in the sequence, but the last one, while the target is all the words in the sequence, but the first one. This way, for each word in input, the neural network tries to predict the next word in the sentence in output.
 
 [comment]: <> (Show example here)
@@ -115,17 +115,17 @@ With this approach, in the neural network, each word is represented by two embed
 
 Once these word embeddings have been learned separately, both in English and Italian, they are ready to be aligned in the same vector space.
 
-#### 4.1.2.2 Alignment
+#### 4.1.2.2 Alignment<span></span>
 Monolingual word vectors embed language in a high-dimensional vector space, such that the similarity of two words is defined by their proximity in this space. They enable
 us to train sophisticated classifiers but they require independent models to be trained for each language. Crucially, training text obtained in one language
-cannot improve the performance of classifiers trained in another, unless the text is explicitly translated. Because of this, increasing interest is now focused on bilingual vectors, in which words are aligned by their meaning, irrespective of the language of origin. The idea is that, starting from two sets of word vectors in different languages - in our case, the previously computed English and Italian embeddings - we learn a linear matrix *W*, trained using a dictionary of shared words between the two languages, to then map word vectors from the "source" language into the "target" language.
+cannot improve the performance of classifiers trained in another, unless the text is explicitly translated. Because of this, increasing interest is now focused on bilingual vectors, in which words are aligned by their meaning, irrespective of the language of origin. The idea is that, starting from two sets of word vectors in different languages - in our case, the previously computed English and Italian embeddings - we learn a linear matrix <span><img src="http://latex.codecogs.com/gif.latex?W" title="W" /></span>, trained using a dictionary of shared words between the two languages, to then map word vectors from the "source" language into the "target" language.
 
-As stated above, our method requires a training dictionary of paired vectors, which is used to infer the linear mapping *W*. Typically this dictionary is obtained by translating common source words into the target language using Google Translate, which was constructed using expert human knowledge. However most European languages share a large number of words composed of identical character strings (e.g. words like "Boston", "DNA", "pizza", etc.). It is probable that identical strings across two languages share similar meanings. Following this reasoning, we extracted these strings to form a "pseudo-dictionary", compiled without any expert bilingual knowledge, containing words that appeared both in the English vocabulary and the Italian vocabulary.
+As stated above, our method requires a training dictionary of paired vectors, which is used to infer the linear mapping <span><img src="http://latex.codecogs.com/gif.latex?W" title="W" /></span>. Typically this dictionary is obtained by translating common source words into the target language using Google Translate, which was constructed using expert human knowledge. However most European languages share a large number of words composed of identical character strings (e.g. words like "Boston", "DNA", "pizza", etc.). It is probable that identical strings across two languages share similar meanings. Following this reasoning, we extracted these strings to form a "pseudo-dictionary", compiled without any expert bilingual knowledge, containing words that appeared both in the English vocabulary and the Italian vocabulary.
 
-Once this "pseudo-dictionary" has been computed, we can find the actual transformation matrix by means of the Singular Value Decomposition (SVD), a linear algebra technique used to factorize a matrix into 3 sub-matrices. In our case, SVD is performed on a square matrix *M* with the same dimensionality as the word embeddings. This matrix is computed from the product of two ordered matrices - *Xd* and *Yd* - formed from the "pseudo-dictionary" - such that the *i-th* row of {*Xd*,*Yd*} corresponds to the source and target language word vectors of the *i-th* pair in the dictionary. Mathematically wise, it looks like this: *M = Y D T X D = U ΣV T*
-This SVD step is highly efficient, since *M* is a square matrix with the same dimensionality as the word vectors. *U* and *V* are composed of columns of orthonormal vectors, while *Σ* is a diagonal matrix containing the singular values.
+Once this "pseudo-dictionary" has been computed, we can find the actual transformation matrix by means of the Singular Value Decomposition (SVD), a linear algebra technique used to factorize a matrix into 3 sub-matrices. In our case, SVD is performed on a square matrix <span><img src="http://latex.codecogs.com/gif.latex?M" title="M" /></span> with the same dimensionality as the word embeddings. This matrix is computed from the product of two ordered matrices - <span><img src="http://latex.codecogs.com/gif.latex?X_D" title="X_D" /></span> and <span><img src="http://latex.codecogs.com/gif.latex?Y_D" title="Y_D" /></span> - formed from the "pseudo-dictionary" - such that the <span><img src="http://latex.codecogs.com/gif.latex?i^{th}" title="i^{th}" /></span> row of {<span><img src="http://latex.codecogs.com/gif.latex?X_D" title="X_D" /></span>,<span><img src="http://latex.codecogs.com/gif.latex?Y_D" title="Y_D" /></span>} corresponds to the source and target language word vectors of the <span><img src="http://latex.codecogs.com/gif.latex?i^{th}" title="i^{th}" /></span> pair in the dictionary. Mathematically wise, it looks like this: <span><img src="http://latex.codecogs.com/gif.latex?M&space;=&space;X_D^{T}Y_D&space;=&space;U\Sigma&space;V^{T}" title="M = X_D^{T}Y_D = U\Sigma V^{T}" /></span>
+This SVD step is highly efficient, since <span><img src="http://latex.codecogs.com/gif.latex?M" title="M" /></span> is a square matrix with the same dimensionality as the word vectors. <span><img src="http://latex.codecogs.com/gif.latex?U" title="U" /></span> and <span><img src="http://latex.codecogs.com/gif.latex?V" title="V" /></span> are composed of columns of orthonormal vectors, while <span><img src="http://latex.codecogs.com/gif.latex?\Sigma" title="\Sigma" /></span> is a diagonal matrix containing the singular values.
 
-The last step of the algorithm consists in multiplying back together the two submatrices *U* and *V*, discarding *Σ*, to obtain the final desired linear matrix *W* needed to perform the mapping from source to target space.
+The last step of the algorithm consists in multiplying back together the two submatrices <span><img src="http://latex.codecogs.com/gif.latex?U" title="U" /></span> and <span><img src="http://latex.codecogs.com/gif.latex?V" title="V" /></span>, discarding <span><img src="http://latex.codecogs.com/gif.latex?\Sigma" title="\Sigma" /></span>, to obtain the final desired linear matrix <span><img src="http://latex.codecogs.com/gif.latex?W" title="W" /></span> needed to perform the mapping from source to target space.
 
 The overall procedure is outlined in the following "pythonic" pseudocode:
 
@@ -133,13 +133,13 @@ The overall procedure is outlined in the following "pythonic" pseudocode:
 def align_embeddings(source_emb_matrix, target_emb_matrix, bilingual_vocab):
     Xd, Yd = keep_rows_in_bilingual_vocab(source_emb_matrix, target_emb_matrix, bilingual_vocab)  # Xd, Yd rectangular matrices, same size
     Xd_T = transpose(Xd)
-    M = Xd_T x Xd  # M square matrix
+    M = Xd_T x Yd  # M square matrix
     U, _, V_T = SVD(M)
     W = U x V_T  # W square matrix
     source_aligned_matrix = source_emb_matrix x W
     return source_aligned_matrix
 ```
-It is important to notice that in our case, we performed all of the computations moving from English to Italian, which means that we have always applied the linear transformation *W* to the English embeddings matrix. Theoretically, given that some words in English can translate to either male or female form of the Italian word, should always be the approach to follow.
+It is important to notice that in our case, we performed all of the computations moving from English to Italian, which means that we have always applied the linear transformation <span><img src="http://latex.codecogs.com/gif.latex?W" title="W" /></span> to the English embeddings matrix. Theoretically, given that some words in English can translate to either male or female form of the Italian word, should always be the approach to follow.
 
 
 ### 4.1.3 Performance Evaluation
@@ -230,6 +230,12 @@ Following, is a set of screenshots gathered from the actual tool to provide to t
 ## 4.2 Cross-Lingual Latent Model
 
 **[Srivatsan text here]**
+
+<img src="http://latex.codecogs.com/gif.latex?\begin{aligned}&space;P(d)&space;&=&space;\sum_{c}&space;P(c)&space;\sum_{d'}&space;P(d|d',c)&space;P(d'|c)&space;\\[10pt]&space;&=&space;\Large{\sum_c}&space;P(c)&space;\sum_{d'}&space;\prod_{i=1}^l&space;P(w_i|w_i',c)&space;P(w_i',c)&space;\end{aligned}" title="\begin{aligned} P(d) &= \sum_{c} P(c) \sum_{d'} P(d|d',c) P(d'|c) \\[10pt] &= \Large{\sum_c} P(c) \sum_{d'} \prod_{i=1}^l P(w_i|w_i',c) P(w_i',c) \end{aligned}" />
+
+Expectation Maximization used to learn <span><img src="http://latex.codecogs.com/gif.latex?P(w_i|w_i',c)" title="P(w_i|w_i',c)" /></span>
+
+<img src="http://latex.codecogs.com/gif.latex?\hat{C}&space;=&space;\arg\max_{c&space;\in&space;C}&space;\prod_{i=1}^V&space;\sum_{j=1}^{n_i}P(w_t^{ij}&space;|w_s^i,c)&space;e^{\lambda_{w_s^i}&space;f_t(w_t^{ij},c)}" title="\hat{C} = \arg\max_{c \in C} \prod_{i=1}^V \sum_{j=1}^{n_i}P(w_t^{ij} |w_s^i,c) e^{\lambda_{w_s^i} f_t(w_t^{ij},c)}" />
 
 **Mixture of Word Translations**
 
