@@ -134,7 +134,7 @@ def align_embeddings(source_emb_matrix, target_emb_matrix, bilingual_vocab):
     Xd, Yd = keep_rows_in_bilingual_vocab(source_emb_matrix, target_emb_matrix, bilingual_vocab)  # Xd, Yd rectangular matrices, same size
     Xd_T = transpose(Xd)
     M = Xd_T x Xd  # M square matrix
-    U, Σ, V_T = SVD(M)
+    U, _, V_T = SVD(M)
     W = U x V_T  # W square matrix
     source_aligned_matrix = source_emb_matrix x W
     return source_aligned_matrix
@@ -143,27 +143,97 @@ It is important to notice that in our case, we performed all of the computations
 
 
 ### 4.1.3 Performance Evaluation
-Detail here:
-* Corpus size
-* Parameters (lr, ...)
-* Loss function
-* Optimizer
-* Training epoch
-* ...
+In this chapter, we outline all the parameters that we have set to perform our evaluation.
+- Word Embeddings:
+  - Training corpus: aggregation of all the data availabile (labeled and unlabeled data)
+    - 1% random sample of the availabile training instances
+      - English training instances: 103 840 (word emb. to learn = 192 839)
+      - Italian training instances: 117 312 (word emb. to learn = 271 571)
+  - Embeddings dimension: 300 (imposed by FastText pre-trained embeddings)
+  - LSTM hidden dimensions: 128
+  - Training epochs: 10
+  - Batch size: 32
+  - Loss function: Cross Entropy Loss
+  - Optimizer: Adam
+    - Learning rate: 0.001
+    - Betas: (0.9, 0.999)
+    - Eps: 1e-07
+- Alignment:
+  - Bilingual vocabulary: 20 000 instances
 
-detail parameters for training
+
+We encountered severe limitations due to to the computing power needed to perform an appropriate training, which forced us to reduce the amount of training instances and the size of the batches, in order for us to come up with a feasible training time for each epoch (i.e. about 1 hour each, for both Italian and English embeddings)
+
+
 #### 4.1.3.1 Binomial Text Classification
-Logistic regression
+The primary goal of learning a dense compact representation of words with context was to overcome the cumbersomeness and non-scalability of the n-grams representation. To evaluate if this approach is capable of doing so, we had to put them to test into what is one of Tribe's necessities: determine if a social media post, is or is not about a particular brand - also known as binomial classification.
+
+In order for us to compare the two representations equally, we used the same classifier that Tribe is currently using, which is Logistic Regression.
+
+Hence, the comparison has been made with the following two framewords:
+- Bag-of-Words + Logistic Regression
+- Word Embeddings + Logistic Regression
+
+For the Bag-of-Words representation, only unigrams and bigrams were considered, as adding more grams proved to generate too much sparsity that decreased the performance of the model. To produce the representation, sklearn's CountVectorizer was used (ngrams paramter set to (1,2)).  
+Instead, for what concerns the embeddings, the input vector, for each of the training instance of the dataset, was computed summing up all the word embeddings of the words inside the post.
+
+The training data, before being vectorized, has all been cleaned with the same cleaning procedure described in chapter 3.2. Stopwords have not been removed.
+
+The Logistic Regression classifier is sklearn's one, with default parameters.
+
+The performance evaluation is on 20% of the data available for each brand - thanks to the 80-20 train test split - and accuracy was not used as a metric for the evaluation, as the majority of the datasets are extremely imbalanced.
+
+Since the problem is binomial, which means we have to consider one brand at-a-time to evaluate the performance, the following results represent an average performance over all the performances of the classification on each single brand dataset.
+
+
+**Monolingual Word Embeddings**
+
+| head1        | head two          | three |
+|:-------------|:------------------|:------|
+| ok           | good swedish fish | nice  |
+| out of stock | good and plenty   | nice  |
+| ok           | good `oreos`      | hmm   |
+| ok           | good `zoute` drop | yumm  |
+
+**Bilingual Word Embeddings**
+
+| head1        | head two          | three |
+|:-------------|:------------------|:------|
+| ok           | good swedish fish | nice  |
+| out of stock | good and plenty   | nice  |
+| ok           | good `oreos`      | hmm   |
+| ok           | good `zoute` drop | yumm  |
+
+As we can see from these two tables, the performance with the embeddings is comparable on all metrics with the bag-of-words representation. Considering that the embeddings were trained on a subset of the data, there is a lot of room for improvement.
+
 #### 4.1.3.2 Visualization Tool
 
 ## 4.2 Cross-Lingual Latent Model
 
+**[Srivatsan text here]**
+
+**Mixture of Word Translations**
+
+| head1        | head two          | three |
+|:-------------|:------------------|:------|
+| ok           | good swedish fish | nice  |
+| out of stock | good and plenty   | nice  |
+| ok           | good `oreos`      | hmm   |
+| ok           | good `zoute` drop | yumm  |
+
 # 5. Conclusion and Future Work
-
-# References
-*   FastText
+**[Srivatsan text here]**
 
 
+[Notes:]
+- Training on more data rather than more epochs (limited by time and GPU memory)
+- Different classifier from Logistic regression might be more effective with word embeddings
+- No hyper-parameter tuning  
+
+
+# References [to fix]
+* FastText
+* Offline Bilingual Word Vectors, Orthogonal Transformations and Inverted Softmax
 
 
 <hr>
