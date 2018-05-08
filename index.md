@@ -95,25 +95,51 @@ Word embeddings are dense vectors of real numbers, one for each word in the voca
 
 #### 4.1.2.1 Neural Network Language Modeling
 A statistical language model is a probability distribution over sequences of words. Given such a sequence, say of length m, it assigns a probability **P(w1,...,wm)**
-to the whole sequence. In our case, we have trained a Recurrent Neural Network word-level language model. That is, we gave to the RNN - precisely an LSTM (Long Short-Term Memory) - a sequence of words, coming from a social media post, and asked it to model the probability distribution of the next word in the sequence given a sequence of previous words, repeating this process for each post in our training corpus. In terms of inputs and expected output, for each padded sequence - detailed in chapter 4.1.1 - the neural network takes as input all the words in the sequence, but the last one, while the target is all the words in the sequence, but the first one. This way, for each word in input, the neural network tries to predict the next work in the sentence in output.
+to the whole sequence. In our case, we have trained a Recurrent Neural Network word-level language model. That is, we gave to the RNN - precisely an LSTM (Long Short-Term Memory) - a sequence of words, coming from a social media post, and asked it to model the probability distribution of the next word in the sequence given a sequence of previous words, repeating this process for each post in our training corpus. In terms of inputs and expected outputs, for each padded sequence - detailed in chapter 4.1.1 - the neural network takes as input all the words in the sequence, but the last one, while the target is all the words in the sequence, but the first one. This way, for each word in input, the neural network tries to predict the next word in the sentence in output.
 
 [comment]: <> (Show example here)
 
-Our primary task remains learning word embeddings. Because of this, the LSTM, instead of taking in input a one-hot-encoded version of each word, it is actually fed with 300 dimensional word embeddings. In this way, the NN is also able to tune these parameters so that each word's semantic information is encoded in the vectorial representation, which is the main expectation that we have on our model.
+Our primary task remains learning word embeddings. Because of this, the LSTM, instead of taking in input a one-hot-encoded version of each word, it is actually fed with 300 dimensional word embeddings. In this way, the NN is also able to tune these parameters so that each word's semantic information is encoded in the vectorial representation, which is the main expectation that we have for our model.
 
-The reason why we used 300 dimensional word embeddings is because we have decided to enhance the quality of our representation with state-of-the-art embeddings coming from FastText, a library for efficient learning of word representations and sentence classification developed at Facebook.
+The reason why we used 300 dimensional word embeddings is because we have decided to enhance the quality of our representation with state-of-the-art embeddings coming from FastText, a library for efficient learning of word representations and sentence classification, developed at Facebook.
 
-To do such enhancement, we performed a customization of our neural network setting. Precisely, we turned it into a multi-channel neural network. The idea behind multi-channel neural networks is to split the network in two parts - known as static and dynamic channels - and perform backpropagation only on the dynamic channel, thus keeping unchanged the parameters on the static one. To adapt it to our framework, we set up two embedding layers:
+To do such enhancement, we performed a customization of our neural network setting. Precisely, we turned it into a multi-channel neural network. The idea behind multi-channel neural networks is to split the network in two parts - known as static and dynamic channels - and perform backpropagation only on the dynamic channel, thus keeping unchanged the parameters of the static one. To adapt it to our framework, we set up two embedding layers:
 * **Static**: initialized with FastText word embeddings. These parameters will be unchanged for the entire learning process. No backpropagation is performed on them;
 * **Dynamic**: initialized with FastText word embeddings, but changed dynamically through backpropagation on each training iteration.
+
+![Multi-channel Neural Network]({{ site.url }}/assets/images/multi-channel-NN.png)
 
 With this approach, in the neural network, each word is represented by two embeddings, one coming from the static embedding and one from the dynamic one. The expected outcome of this approach is to leverage the quality of pre-trained embeddings - learned on Wikipedia text - and adapt it to the fashion and cosmetics domain.
 
 [comment]: <> (Check if there are other things to say here)
 
+Once these word embeddings have been learned separately, both in English and Italian, they are ready to be aligned in the same vector space.
 
 #### 4.1.2.2 Alignment
-Once we have the two dynamic embeddings ....
+Monolingual word vectors embed language in a high-dimensional vector space, such that the similarity of two words is defined by their proximity in this space. They enable
+us to train sophisticated classifiers but they require independent models to be trained for each language. Crucially, training text obtained in one language
+cannot improve the performance of classifiers trained in another, unless the text is explicitly translated. Because of this, increasing interest is now focused on bilingual vectors, in which words are aligned by their meaning, irrespective of the language of origin. The idea is that, starting from two sets of word vectors in different languages - in our case, the previously computed English and Italian embeddings - we learn a linear matrix *W*, trained using a dictionary of shared words between the two languages, to then map word vectors from the "source" language into the "target" language.
+
+As stated above, our method requires a training dictionary of paired vectors, which is used to infer the linear mapping *W*. Typically this dictionary is obtained by translating common source words into the target language using Google Translate, which was constructed using expert human knowledge. However most European languages share a large number of words composed of identical character strings (e.g. words like "Boston", "DNA", "pizza", etc.). It is probable that identical strings across two languages share similar meanings. Following this reasoning, we extracted these strings to form a "pseudo-dictionary", compiled without any expert bilingual knowledge, containing words that appeared both in the English vocabulary and the Italian vocabulary.
+
+Once this "pseudo-dictionary" has been computed, we can find the actual transformation matrix by means of the Singular Value Decomposition (SVD), a linear algebra technique used to factorize a matrix into 3 sub-matrices. In our case, SVD is performed on a square matrix *M* with the same dimensionality as the word embeddings. This matrix is computed from the product of two ordered matrices - *Xd* and *Yd* - formed from the "pseudo-dictionary" - such that the *i-th* row of {*Xd*,*Yd*} corresponds to the source and target language word vectors of the *i-th* pair in the dictionary. Mathematically wise, it looks like this: *M = Y D T X D = U ΣV T*
+This SVD step is highly efficient, since *M* is a square matrix with the same dimensionality as the word vectors. *U* and *V* are composed of columns of orthonormal vectors, while *Σ* is a diagonal matrix containing the singular values.
+
+The last step of the algorithm consists in multiplying back together the two submatrices *U* and *V*, discarding *Σ*, to obtain the final desired linear matrix *W* needed to perform the mapping from source to target space.
+
+The overall procedure is outlined in the following "pythonic" pseudocode:
+
+```python
+def align_embeddings(source_emb_matrix, target_emb_matrix, bilingual_vocab):
+    Xd, Yd = keep_rows_in_bilingual_vocab(source_emb_matrix, target_emb_matrix, bilingual_vocab)  # Xd, Yd rectangular matrices, same size
+    Xd_T = transpose(Xd)
+    M = Xd_T x Xd  # M square matrix
+    U, Σ, V_T = SVD(M)
+    W = U x V_T  # W square matrix
+    source_aligned_matrix = source_emb_matrix x W
+    return source_aligned_matrix
+```
+It is important to notice that in our case, we performed all of the computations moving from English to Italian, which means that we have always applied the linear transformation *W* to the English embeddings matrix. Theoretically, given that some words in English can translate to either male or female form of the Italian word, should always be the approach to follow.
 
 
 ### 4.1.3 Performance Evaluation
