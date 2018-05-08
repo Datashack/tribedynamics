@@ -207,6 +207,25 @@ Since the problem is binomial, which means we have to consider one brand at-a-ti
 As we can see from these two tables, the performance with the embeddings is comparable on all metrics with the bag-of-words representation. Considering that the embeddings were trained on a subset of the data, there is a lot of room for improvement.
 
 #### 4.1.3.2 Visualization Tool
+One of the primary objective of this project was to build a human-in-the-loop pipeline for training a foreign language text classifier. According to Wikipedia, human-in-the-loop is defined as a model that requires human interaction. To accomplish this task, we decided to set up a visualization tool to visualize word embeddings, providing to the user the capability to actively evaluate them.
+
+##### 4.1.3.2.1 Scatter Plot
+The major problem of word embeddings, with respect to bag-of-words or other representations, is that it loses interpretability. In fact, each word of the vocabulary is mapped to a high-dimensional vector of apparently random numbers. The purpose of the scatter plot, which we designed, is to try to overcome this interpretability issue, reducing the dimensionality of the 300-dimensional embeddings - which can not be depicted physically - to a 2-dimensional one, by means of a very popular dimensionality reduction technique known as TSNE. Since the vector is now 2-dimensional, it can be put on a xy-plane and similarity between words can be conceived quite easily (e.g. euclidean distance between dot points).
+
+Unfortunately, as it happens with any dimensionality reduction technique, a lot of information is lost along the way. In fact, a consequence of this approach, is that now, what we see in 2 dimensions might not be true in 300 dimensions. Precisely, two words that are close in 2 dimensions might not be that close in 300 dimensions. To warn the user/developer of this, we introduced a color gradient. This color gradient is computed as the absolute delta between the cosine similarity of two words in 2 dimensions and the cosine similarity of two words in 300 dimensions. If a dot color is dark, it means that the delta is small and what the user is seeing is considered as a reliable representation. In the opposite case, the user should be warned that what he is seeing, is true only thanks to the dimensionality reduction.
+
+Lastly, the size of each dot is not given by chance. Logistic regression - which is the classifier that Tribe uses for its classification tasks - if trained with a bag of words representation, is able to output a set of coefficients that represent the influency that each feature (i.e. word) has on the discrimination of an instance to belong to the positive class or not. Along these lines, we decided to set the size of each dot in the scatter plot proportionally to this value. This means that if a word has a lot of influency in the classification, its dot size should be high. Oppositely, if it does not. The purpose of this is to focus the attention of the user to all the words that are most impactful in the classification, thus highlighting in which neighborhood of the plot, the embeddings should behave correctly.
+
+##### 4.1.3.2.2 Line Plot
+The second important feature of this visualization tool is the line plot. Once a word is selected, a set of rectangles get plotted on it. Each of this rectangles represents a word in the vocabulary, ordered on this line according to the actual cosine similarity in 300 dimensions that this word has with respect to the selected one. The purpose of this plot is to actually show on an ordered line, which are the most similar words with respect to a selected one, according to its true similarity, since it is computed in 300 dimensions. The color of the rectangles, in this case, does not encode a special meaning. Its purpose is just to relate directly with the dot that represents the same word on the scatter plot, thus not confusing the user with two different colors when considering the same word.
+
+##### 4.1.3.2.3 Screenshots
+Following, is a set of screenshots gathered from the actual tool to provide to the reader a quick guide to its usage.
+
+[picture]
+
+[picture]
+
 
 ## 4.2 Cross-Lingual Latent Model
 
