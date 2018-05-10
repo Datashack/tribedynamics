@@ -1,4 +1,3 @@
-# tribedynamics
+# Tribe Dynamics - Cross-Lingual Text Classifiers
 
-Interesting Repos : https://github.com/Babylonpartners/fastText_multilingual
-https://github.com/facebookresearch/fastText/blob/master/pretrained-vectors.md
+Our project report can be found here - https://datashack.github.io/tribedynamics/
