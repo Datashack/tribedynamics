@@ -227,15 +227,61 @@ Following, is a set of screenshots gathered from the actual tool to provide to t
 [picture]
 
 
-## 4.2 Cross-Lingual Latent Model
+## 4.2 Model 2 : Mixture of Word Translations
+Our earlier claim about Tribe Dynamics' baseline models is that the model did not leverage the knowledge learned in one language on to another. Aligned word embeddings that we saw earlier was able to achieve it through pre-training and aligning embeddings so that all what the classifier learns in English, similar knowledge is encoded into Italian too. 
 
-**[Srivatsan text here]**
+This model attempts to transfer knowledge by basing itself on this fundamental question.
+<b> Why don't we translate all the foreign text to English and use our base classifier's core competency in English ?</b>
+
+Translation at sentence level requires a neural or statistical machine translation system which has operational costs. Given that our baseline classifier uses bag of words assumption which anyway gets rid of the context within sentence, we resorted to word-level translations between Italian(our proof of concept language) and English. But, word level translations sometimes suffer from ambiguity. For instance, the word "Frank" in English could either mean a name or the adjective. Similarly, in our dataset for brand Dove, the word "Dove" could either mean "where" or the brand "Dove" in Italian. So, we need to learn a model first to learn the probability scores of these word level translations between plausible alternatives. 
+
+This model needs a good bilingual lexicon with multiple possible translations of each of our vocabularies and the quality of lexicon and word tokenization is key to the performance of this model. There are two possible alternatives for this lexicon - direct downloadable files if they exist or Python's vocabulary package which has a translation module which is a wrapper around a machine translation query and returns multiple translations of a given word. Thus, we construct lexicons translating both ways as two python dictionary files.
+
+Now consider two phrases in Italian "Amo Dove"(Love Dove - the brand), "Dove Sei"(Where are you?). If the model has no additional information, in both cases it is logical to translate "dove" into dove and where with 50% chance. But, if we know that the phrase is talking about the brand or not taling about the brand, then the translation probabilities vary drastically. So, here the class variable C(brand or not) has useful information that will help the model to translate better. We want to capture this idea using a simple directed graphical model. In this approach, we use a generative model that generates a new document D in our target language(Italian). The document D could be simply viewed as a bag of words based on our naive assumptions. Similarly, let us call the corresponding source document D'. The graphical model could be seen in Figure 
+
+USE THE GRAPHICAL MODEL FIGURE FROM THE POSTER OVERLEAF DOCUMENT.
+
+We can write the following conditional probabilities for inference directly from the graphical models.
 
 <img src="http://latex.codecogs.com/gif.latex?\begin{aligned}&space;P(d)&space;&=&space;\sum_{c}&space;P(c)&space;\sum_{d'}&space;P(d|d',c)&space;P(d'|c)&space;\\[10pt]&space;&=&space;\Large{\sum_c}&space;P(c)&space;\sum_{d'}&space;\prod_{i=1}^l&space;P(w_i|w_i',c)&space;P(w_i',c)&space;\end{aligned}" title="\begin{aligned} P(d) &= \sum_{c} P(c) \sum_{d'} P(d|d',c) P(d'|c) \\[10pt] &= \Large{\sum_c} P(c) \sum_{d'} \prod_{i=1}^l P(w_i|w_i',c) P(w_i',c) \end{aligned}" />
 
-Expectation Maximization used to learn <span><img src="http://latex.codecogs.com/gif.latex?P(w_i|w_i',c)" title="P(w_i|w_i',c)" /></span>
+In this approach, we then use Expectation Maximization to perform latent variable inference which involves training an iterative algorithm that oscillates between these two steps.
 
+ 1. Expectation - P(w',C|w) = P(C,w',w) / P(w) = P(w|w',C) P(w',C) / &Sigma;<sub>w'</sub> &Sigma;<sub>C</sub>  P(w|w',C) P(w',C)
+ 2. Maximization - P(w|w', C) = f(w) * P(w',C|w) / &Sigma;<sub>w</sub> f(w) * P(w',C|w)
+
+Once this iterative algorithm reaches convergence, we can save our conditional word translation probabilities P(w|w',C)
+
+Our next step is to do model transfer from one language to another. For the sake of simplicity sake, we are going to use a Max Entropy Classifier/Softmax Regression which degenerates to logistic regression or bianry classification tasks as ours is. We can formally define the classifier as
+
+P(c|D) = &Pi;<sub>w</sub> e <sup> &lambda;<sub>w</sub> f(w,C)</sup> /Z(d) where the deonminator is just a proability normalization term.
+
+Under our bag of words assumption, our model transfer can be derived as the following equation(For a slightly detailed derivation, check the paper "Cross Language Text Classification by Model Translation and Semi-Supervised Learning".)
 <img src="http://latex.codecogs.com/gif.latex?\hat{C}&space;=&space;\arg\max_{c&space;\in&space;C}&space;\prod_{i=1}^V&space;\sum_{j=1}^{n_i}P(w_t^{ij}&space;|w_s^i,c)&space;e^{\lambda_{w_s^i}&space;f_t(w_t^{ij},c)}" title="\hat{C} = \arg\max_{c \in C} \prod_{i=1}^V \sum_{j=1}^{n_i}P(w_t^{ij} |w_s^i,c) e^{\lambda_{w_s^i} f_t(w_t^{ij},c)}" />
+
+We have a simple expression that is easy to maximize over our 2 classes. The term that is being maximized works under bag of words assumption(leading to the outer product on each word of the vocabulary) and has a clean interpretation - It is the classification score of each translation of a word weighed by its conditional translation probability that we learned via Expectation Maximization. Thus, we learn a simple inference model that helps us perform model translation via mixture of word translations.
+
+***RESULTS TABLE FROM GOOGLE SLIDES
+
+
+
+We can see that our Mixture of Word Translations model is able to perform competitively as compared to the baselines with full English data and very little labeled data in Italian(only for supervision) whereas the baselines struggle relatively with less amount of data. We note that our lexicon is still under-constructed and definitely has a lot of scope for improvement. Thus, we have been able to train a model that is data-efficient and performs knowledge transfer to leverage our baseline's model's core capabilities in English.
+
+Now let us discuss the merits and demerits of this model.
+1. It requires only a bilingual lexicon for training.
+2. It builds and maintains only one single classifier on English vocabulary, thus preventing the problem of vocabulary explosion when many languages are in play.
+3. It is interpretable and adaptible to any classifier.
+4. Saves data costs significantly as you do not need labeled data in target language apart from cases where you want further semi-supervised training.
+
+The potential concerns(along with possible extensions) with this model include
+1. Training the EM algorithm is time consuming - each iteration is O(V<sup>2</sup>) where V is vocabulary size. We can use sampling based inference or approximate inference such as variational inference for quick and efficient inference in this setting.
+2. Generating quality lexicon is not easy. This is because we do not have access to good quality clean data but few common languages has lexicons from other sources that are reliable to an extent and the users can further manually fine-tune the lexicon. Having said that, the lexicon is a one-time cost for each new langauge and the model works seamlessly after getting a good lexicon.
+
+
+
+
+
+
 
 **Mixture of Word Translations**
 
@@ -247,8 +293,12 @@ Expectation Maximization used to learn <span><img src="http://latex.codecogs.com
 | ok           | good `zoute` drop | yumm  |
 
 # 5. Conclusion and Future Work
-**[Srivatsan text here]**
 
+We set out with addressing the main issue that Tribe Dynamics' classification model faces - lot of data and a well-trained model in English posts, little data and hence poorer model in other languages.  We wished to leverage the cross-lingual similarities and build models that are able to transfer knowledge learned in one language to the other so as to boost efficiency of learning new langauges. Also, there were other overheads such as growing bag of words with more languages and expanding vocabularies which we wished to address.
+
+The classifier on aligned word embeddings performs this transfer learning by pre-training embeddings and aligning them such that any useful features for the classifier is learned jointly by English and Italian in the embedded space. It also provides a compact dense representation of word vectors and encodes word similarity in its neighborhood which promotes better context perception of the model. Besides it is flexible with any classifier and thus helps address the concerns we wished to address with Tribe Dynamics' baselines.  On the other hand, the mixture of word translation models performs transfer learning by word translations. Learning conditional translation probabilities from data helps it translate with less ambiguity. Successful word translation from Italian to English naturally takes advantage of the features learned by the classifier in English, thus accomplishing knowledge transfer. Again, it is a single model limited to english vocabulary only, interpretable and flexible across any classifier thus satisfying all the constraints we had with the baseline model. 
+
+When we pit these two alternatives against each other, the classifier with aligned word embeddings is a more scalable solution particularly when the business is looking to rapidly expand its operations across several countries as it is learned end-to-end and in an unsupervised setting without any specific domain knowledge imposed on the model, a critical advantage which the other model cannot guarantee. In today's era of deep learning, such embedding based models can be easily trained and maintained without causing significant operational costs for the business. With all these advantages in perspective, we conclude with recommending the usage of the classifier built on dynamically trained aligned word embeddings for cross lingual text classification.
 
 [Notes:]
 - Training on more data rather than more epochs (limited by time and GPU memory)
