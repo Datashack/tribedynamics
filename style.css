@@ -44,9 +44,7 @@ color: red;
 
 .center {
     display: block;
-    margin-left: auto;
-	margin-top: 20px;
-    margin-right: auto;
+    margin: 20px auto;
 }
 
 

@@ -38,7 +38,7 @@
 					<br>Datashack Program
 				</div>
 				<div class="col-6 introTeam">
-					Team: Alessandro Bianchi - Andrea Porelli - Srivatsan Srinivasan - Ginevra Terenghi<br><a href="https://github.com/Datashack/tribedynamics/" target="_blank">View on GitHub</a>
+					Team: Andrea Porelli, Srivatsan Srinivasan [IACS, Harvard University] | Alessandro Bianchi, Ginevra Terenghi [Politecnico di Milano]<br><a href="https://github.com/Datashack/tribedynamics/" target="_blank">View on GitHub</a>
 				</div>
 			</div>
 
@@ -57,10 +57,10 @@
 				<div class="domanda blue">Abstract</div>
 				<div class="row justify-content-center">
 					<div class="col-9 spazioCentro">
-						<div class="rispostaCentro">Tribe Dynamics is a San Francisco-based consulting company that measures social media engagement for beauty, fashion and lifestyle brands and uses these engagement metrics to suggest better social media marketing strategies.<br> In this process, they use text classfiers to perform natural language understanding to decipher whether a particular post is talking about a brand or not.<br>With a large client base in USA, Tribe has begun to expand operations across the globe.<br>Their classifier currently underperforms when understanding posts in Non-English languages naturally because of parsimonious data available and certain language structures being hard to learn.<br> In this project, we target at developing classifier models that scale well across languages. Crucially, our models are able to transfer knowledge garnered in one language on to the other which makes us strongly leverage the data and model's core strengths in English.
+						<div class="rispostaCentro">Tribe Dynamics is a San Francisco-based consulting company that measures social media engagement for beauty, fashion and lifestyle brands and uses these engagement metrics to suggest better social media marketing strategies. In this process, they use text classfiers to perform natural language understanding to decipher whether a particular post is talking about a brand or not.With a large client base in USA, Tribe has begun to expand operations across the globe. Their classifier currently underperforms when understanding posts in Non-English languages naturally because of parsimonious data available and certain language structures being hard to learn. In this project, we target at developing classifier models that scale well across languages. Crucially, our models are able to transfer knowledge garnered in one language on to the other which makes us strongly leverage the data and model's core strengths in English.
 						</div>
 
-						<div class="rispostaCentro">In this study, we present two approaches that we used to try to solve this problem.<br>The first one, through neural network language modeling, learns monolingual word embedding representations(that represents words on some compact vector space) which, through appropriate transformations can be aligned across languages to create a shared context vector space. <br> We can build any classifier on this shared vector space and the model is able to learn features from language-agnostic data, thus virtually creating a universal language.<br>The second model attempts to translate all posts into source language(English), trains a classification model only in the source language and is able to transfer the model to other languages through purely word translation probabilities.<br>We learn word translation probabilities through a mixture model and perform inference via Expectation Maximization.
+						<div class="rispostaCentro">In this study, we present two approaches that we used to try to solve this problem. The first one, through neural network language modeling, learns monolingual word embedding representations(that represents words on some compact vector space) which, through appropriate transformations can be aligned across languages to create a shared context vector space. We can build any classifier on this shared vector space and the model is able to learn features from language-agnostic data, thus virtually creating a universal language. The second model attempts to translate all posts into source language(English), trains a classification model only in the source language and is able to transfer the model to other languages through purely word translation probabilities. We learn word translation probabilities through a mixture model and perform inference via Expectation Maximization.
 						</div>
 						<img src="assets/photo1.png" style="width:75%; height: auto" class="center">
 					</div>
@@ -187,13 +187,13 @@
 			<div class="domanda2">3.3 Computational resources</div>
 			<div class="row justify-content-center spazioCentro">
 				<div class="col-9 spazioCentro risposta">
-					The primary programming language that was used in this project is Python. To process the data, we took advantage of Pandas and NLTK. For statistical modeling, we used scikit-learn and PyTorch, as the deep learning framework to learn the embeddings, because of its strong GPU acceleration capabilities. The web-based visualization tool was built using HTML, CSS and Javascript, by means of its data visualization library D3. Amazon Web Services was used to train the embeddings on the cloud, taking advantage of an NVIDIA GPU. Finally, GitHub was used for project collaboration and version control.
+					The primary programming language that was used in this project is Python. To process the data, we took advantage of Pandas and NLTK. For statistical modeling, we used scikit-learn and PyTorch, as the deep learning framework to learn the embeddings, because of its strong GPU acceleration capabilities. The web-based visualization tool was built using HTML, CSS and Javascript, by means of its data visualization library D3. Amazon Web Services was used to train the embeddings on the cloud, taking advantage of an NVIDIA GK210GL (Tesla K80) GPU. Finally, GitHub was used for project collaboration and version control.
 				</div>
 			</div>
 		</div>
 
 		<div class="etichetta">
-			<div class="domanda blue"> 4. Model 1 : Cross-Lingual Aligned Word Embeddings</div>
+			<div class="domanda blue"> 4. Model 1: Cross-Lingual Aligned Word Embeddings</div>
 			<div class="domanda2">4.1 Bilingual word embeddings</div>
 			<div class="domanda3 green">4.1.1 Data preparation</div>
 			<div class="row justify-content-center spazioCentro">
@@ -214,7 +214,14 @@
 			<div class="domanda3 green">4.1.2 Word embeddings</div>
 			<div class="row justify-content-center">
 				<div class="col-9 spazioCentro risposta">
-					Word embeddings are dense vectors of real numbers, one for each word in the vocabulary. The purpose of word embeddings is to represent each word to efficiently encode its semantic information, in a way that might be relevant to the task at hand. To compute these dense vectors of real numbers, we decided to learn them through a language modeling task. The details of the approach are presented in the upcoming chapter.
+					Before diving into the gory details of how we were able to train our embeddings, let's first define what word embeddings are. Word embeddings, by definition, is the collective name for a set of language modeling and feature learning techniques in natural language processing (NLP) where words or phrases from the vocabulary are mapped to vectors of real numbers. Conceptually it involves a mathematical embedding from a space with one dimension per word to a continuous vector space with much higher dimension. The idea behind word embeddings is that words are clustered by meaning in this multi-dimensional vectorial space. A model - in our case a neural network - to learn this representation, it must rely on a fundamental linguistic assumption: words appearing in similar contexts are related to each other semantically, also known as the distributional hypothesis.
+				</div>
+				<div class="col-9 spazioCentro risposta">
+					<img src="assets/embeddings.png" style="width:70%; height: auto" class="center">
+				</div>
+
+				<div class="col-9 spazioCentro risposta">
+					To compute these dense vectors of real numbers, we decided to learn them through a language modeling task. The details of the approach are presented in the upcoming chapter.
 				</div>
 			</div>
 		</div>
@@ -223,16 +230,19 @@
 			<div class="domanda4">4.1.2.1 Neural network language modeling</div>
 			<div class="row justify-content-center spazioCentro">
 				<div class="col-9 spazioCentro risposta">
-					A language model is a probability distribution over sequences of words. Given such a sequence, say of length m, it assigns a probability <span><img src="http://latex.codecogs.com/gif.latex?P(w_1,...,w_m)" title="P(w_1,...,w_m)" /></span> to the whole sequence. In our case, we have trained a Recurrent Neural Network word-level language model. That is, we gave to the RNN - precisely an LSTM (Long Short-Term Memory) - a sequence of words, coming from a social media post, and asked it to model the probability distribution of the next word in the sequence given a sequence of previous words, repeating this process for each post in our training corpus. In terms of inputs and expected outputs, for each padded sequence - detailed in chapter 4.1.1 - the neural network takes as input all the words in the sequence, but the last one, while the target is all the words in the sequence, but the first one. This way, for each word in input, the neural network tries to predict the next word in the sentence in output. The reason why this model is suitable for learning word embeddings is the argument that if the model is able to learn a language(able to predict next word), its hidden layers should be able to map the context behind the words. Hence, we use the hidden layer vectors as our embeddings.
+					A language model is a probability distribution over sequences of words. Given such a sequence, say of length m, it assigns a probability <span><img src="http://latex.codecogs.com/gif.latex?P(w_1,...,w_m)" title="P(w_1,...,w_m)" /></span> to the whole sequence. In our case, we have trained a Recurrent Neural Network word-level language model. That is, we gave to the RNN - precisely an LSTM (Long Short-Term Memory) - a sequence of words, coming from a social media post, and asked it to model the probability distribution of the next word in the sequence given a sequence of previous words, repeating this process for each post in our training corpus. In terms of inputs and expected outputs, for each padded sequence - detailed in chapter 4.1.1 - the neural network takes as input all the words in the sequence, but the last one, while the target is all the words in the sequence, but the first one. This way, for each word in input, the neural network tries to predict the next word in the sentence in output. The reason why this model is suitable for learning word embeddings is the argument that if the model is able to learn a language (able to predict next word), its hidden layers should be able to map the context behind the words. Hence, we use the hidden layer vectors as our embeddings.
 				</div>
 				<div class="col-9 spazioCentro risposta">
-					Our primary task remains learning word embeddings. Because of this, the LSTM, instead of taking in input a one-hot-encoded version of each word, it is actually fed with 300 dimensional word embeddings. In this way, the NN is also able to tune these parameters so that each word’s semantic information is encoded in the vectorial representation, which is the main expectation that we have for our model.
+					As a matter of fact, because our primary task remains to learn this word embedding representation, words are fed into the just mentioned hidden layer, which is able to learn - through training - a representation, for these words, into a multi-dimensional vector space. The output of this hidden layer acts as the input for the remaining part of the model, which is an LSTM, that represents the recurrent neural network which is able to tune its weights in order to achieve the task of language modeling. Through this pipeline, word embeddings are learnt along the way, with the expectation that, once the training is over, the model was able to encode, in a vectorial representation, the semantic information of each word encountered in the training corpus.
 				</div>
 				<div class="col-9 spazioCentro risposta">
-					The reason why we used 300 dimensional word embeddings is because we have decided to enhance the quality of our representation with state-of-the-art embeddings coming from FastText, a library for efficient learning of word representations and sentence classification, developed at Facebook.
+					The reason why we used 300 dimensional word embeddings is because we have decided to enhance the quality of our representation with state-of-the-art embeddings coming from <a href="https://github.com/facebookresearch/fastText" target="_blank">FastText</a>, a library for efficient learning of word representations and sentence classification, developed at Facebook.
 				</div>
 				<div class="col-9 spazioCentro risposta">
-					To do such enhancement, we performed a customization of our neural network setting. Precisely, we turned it into a multi-channel neural network. The idea behind multi-channel neural networks is to split the network in two parts - known as static and dynamic channels - and perform backpropagation only on the dynamic channel, thus keeping unchanged the parameters of the static one. To adapt this concept to our framework, we set up two embedding layers:
+					To do such enhancement, we performed a customization of our neural network setting. Precisely, we turned it into a multi-channel neural network. The idea behind multi-channel neural networks is to split the network in two parts - known as static and dynamic channels - and perform backpropagation only on the dynamic channel, thus keeping unchanged the parameters of the static one. One would think, why do such thing? The purpose of deploying a multi-channel neural network is that we wanted to levearge the quality of pre-trained embeddings - learned on Wikipedia text - that are already able to accurately model words with their semantic information, and adapt this representation to the fashion and cosmetics domain. This way, we expect our embeddings to perform better once used into Tribe's classification tasks.
+				</div>
+				<div class="col-9 spazioCentro risposta">
+					To adapt this concept to our framework, we set up two embedding layers:
 					<div class="row">
 						<div class="col-2 formula1"><i><b>static</b>:</i></div>
 						<div class="col-8 formula2">initialized with FastText word embeddings. These parameters will be unchanged for the entire learning process. No backpropagation is performed on them;
@@ -241,11 +251,10 @@
 						<div class="col-8 formula2">initialized with FastText word embeddings, but changed dynamically through backpropagation on each training iteration.
 						</div>
 					</div>
-				</div>
-				
-				<div class="col-9 spazioCentro risposta">
+				</div>				
+				<!--<div class="col-9 spazioCentro risposta">
 					With this approach, in the neural network, each word is represented by two embeddings, one coming from the static embedding and one from the dynamic one. The expected outcome of this approach is to leverage the quality of pre-trained embeddings - learned on Wikipedia text - and adapt it to the fashion and cosmetics domain.
-				</div>
+				</div>-->
 				<div class="col-9 spazioCentro risposta">
 					<img src="assets/multichannel_NN.png" style="width:70%; height: auto" class="center">
 				</div>
@@ -317,8 +326,7 @@
 		</div>
 
 		<div class="etichetta">
-			<div class="domanda4">4.1.3.1 Binomial text classification
-			</div>
+			<div class="domanda4">4.1.3.1 Binomial text classification</div>
 			<div class="row justify-content-center">
 				<div class="col-9 spazioCentro risposta">
 					The primary goal of learning a dense compact representation of words with context was to overcome the cumbersomeness and non-scalability of the n-grams representation. To evaluate if this approach is capable of doing so, we had to put them to test into what is one of Tribe’s necessities: determine if a social media post, is or is not about a particular brand - also known as binomial classification.
@@ -332,35 +340,35 @@
 					For the Bag-of-Words representation, only unigrams and bigrams were considered, as adding more grams proved to generate too much sparsity that decreased the performance of the model. To produce the representation, sklearn’s <code>CountVectorizer</code> was used (ngrams parameter set to (1,2)). Instead, for what concerns the embeddings, the input vector, for each of the training instance of the dataset, was computed summing up all the word vectors of the words inside the post.
 				</div>
 				<div class="col-9 spazioCentro risposta">
-					<img src="assets/tweet_bag_emb.png" style="width:70%; height: auto" class="center">
+					<img src="assets/tweet_bag_emb.png" style="width:70%; height: auto; margin: 0px auto;" class="center">
 				</div>
 				<div class="col-9 spazioCentro risposta">
-					The training data, before being vectorized, has all been cleaned with the same cleaning procedure described in chapter 3.2. Stopwords have not been removed.
+					The training data, before being vectorized, has all been cleaned with the same cleaning procedure described in chapter 3.2. Stopwords have not been removed.<br>The Logistic Regression classifier is sklearn's one, with default parameters.<br>The performance evaluation is on 20% of the data available for each brand - thanks to the 80-20 train-test-split - and accuracy was not used as a metric for the evaluation, as the majority of the datasets are extremely imbalanced.<br>Since the problem is binomial, which means we have to consider one brand at-a-time to evaluate the performance, the following results represent an average performance over all the performances of the classification on each single brand dataset.<br>
 				</div>
-				<div class="col-9 spazioCentro risposta">
-					The Logistic Regression classifier is sklearn's one, with default parameters.
-				</div>
-				<div class="col-9 spazioCentro risposta">
-					The performance evaluation is on 20% of the data available for each brand - thanks to the 80-20 train-test-split - and accuracy was not used as a metric for the evaluation, as the majority of the datasets are extremely imbalanced.
-				</div>
-				<div class="col-9 spazioCentro risposta">
-					Since the problem is binomial, which means we have to consider one brand at-a-time to evaluate the performance, the following results represent an average performance over all the performances of the classification on each single brand dataset.
-				</div>
-			</div>
-
-			<div class="row justify-content-center">
 				<div class="col-9 spazioCentro risposta">
 					<div class="row">
-
-						<div class="col-6 spazioSinistra"> <img src="assets/results_mono.png" style="width:90%; height:auto" class="center"></div>
-						<div class="col-6 spazioDestra"><img src="assets/results_multi.png" style="width:90%; height:auto" class="center"></div>
+						<div class="col-6 spazioSinistra">
+							<img src="assets/results_mono.png" style="width:90%; height:auto" class="center">
+						</div>
+						<div class="col-6 spazioDestra">
+							<img src="assets/results_multi.png" style="width:90%; height:auto" class="center">
+						</div>
 					</div>
 				</div>
-			</div>
-
-			<div class="row justify-content-center spazioCentro">
 				<div class="col-9 spazioCentro risposta">
-					As we can see from these two tables, the performance with the embeddings is comparable on all metrics with the bag-of-words representation. Considering that the embeddings were trained on a subset of the data, there is a lot of room for improvement.
+					As we can see from these two tables, the performance with the embeddings is comparable on all metrics with the bag-of-words representation. Considering that the embeddings were trained on a subset of the data, there is a lot of room for improvement. To wrap this discussion, let's outline the principal advantages of this modeling technique:
+					<ol>
+						<li><b>One-time cost</b>: for each new language, training and aligning has to only be performed once. Retraining is infrequent;</li>
+						<li><b>Knowledge transfer</b>: the model is able to transfer knowledge at the embedding level;</li>
+						<li><b>Singular model</b>: one single model across languages;</li>
+						<li><b>Generalizable</b>: it works with any classification model on the embedded space (e.g. Logistic Regression, Feedforward neural networks, ConvNets, etc.);</li>
+						<li><b>Data boost</b>: being an unsupervised technique, the number of effective data points for model training increases, as there is no necessity to collect labeled data to train the embeddings.</li>
+					</ol>
+					On the other hand, potential concerns related to this technique are the following:
+					<ol>
+						<li><b>Training time</b>: training well performing embeddings involves a lot of training time;</li>
+						<li><b>Tokenization</b>: the quality of the embeddings is sensitive to the tokenization (e.g. tokenizing "New York" instead of "New" "York" can make a big difference).</li>
+					</ol>
 				</div>
 			</div>
 		</div>
@@ -376,7 +384,7 @@
 					One of the primary objective of this project was to build a human-in-the-loop pipeline for training a foreign language text classifier. According to Wikipedia, human-in-the-loop is defined as a model that requires human interaction. To accomplish this task, we decided to set up a visualization tool to visualize word embeddings, providing to the user the capability to actively evaluate them.
 				</div>
 			</div>
-			<img src="assets/tool1.png" style="width:70%; height: auto" class="center">
+			<img src="assets/tool1.png" style="width:70%; height: auto; margin: 0px auto;" class="center">
 		</div>
 
 		<div class="etichetta">
@@ -456,7 +464,10 @@
 					Our next step is to do model transfer from one language to another. For the sake of simplicity, we are going to use a Max Entropy Classifier/Softmax Regression which degenerates to logistic regression or binary classification tasks as ours is. We can formally define the classifier as:
 				</div>
 				<div class="col-9 spazioCentro risposta">
-					[Formula nel box]
+					<ol>
+						<li><b>Expectation</b>: <span><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;P(w',C|w)&space;&=&space;\frac{P(w',C,w)}{P(w)}&space;=&space;\frac{P(w|w',C)&space;P(w',C)}{\sum_C&space;\sum_{w'}&space;P(w|w',C)&space;P(w',C)&space;}&space;\quad&space;\end{align*}" title="\begin{align*} P(w',C|w) &= \frac{P(w',C,w)}{P(w)} = \frac{P(w|w',C) P(w',C)}{\sum_C \sum_{w'} P(w|w',C) P(w',C) } \quad \end{align*}" /></span></li>
+						<li style="margin-top: 10px;"><b>Maximization</b>: <span><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;P(w|w',C)&space;&=&space;\frac{f(w)P(w',C|w)}{\sum_{w&space;\in&space;K}&space;f(w)P(w',C|w)}&space;\end{align*}" title="\begin{align*} P(w|w',C) &= \frac{f(w)P(w',C|w)}{\sum_{w \in K} f(w)P(w',C|w)} \end{align*}" /></span></li>
+					</ol>
 				</div>
 				<div class="col-9 spazioCentro risposta">
 					Under our bag-of-words assumption, our model transfer can be derived as the following equation (for a slightly detailed derivation, check the paper "Cross Language Text Classification by Model Translation and Semi-Supervised Learning"):
