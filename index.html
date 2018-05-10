@@ -38,7 +38,7 @@
 					<br>Datashack Program
 				</div>
 				<div class="col-6 introTeam">
-					Team: Andrea Porelli, Srivatsan Srinivasan [IACS, Harvard University] | Alessandro Bianchi, Ginevra Terenghi [Politecnico di Milano]<br><a href="https://github.com/Datashack/tribedynamics/" target="_blank">View on GitHub</a>
+					Team: Alessandro Bianchi - Andrea Porelli - Srivatsan Srinivasan - Ginevra Terenghi<br><a href="https://github.com/Datashack/tribedynamics/" target="_blank">View on GitHub</a>
 				</div>
 			</div>
 
@@ -57,10 +57,10 @@
 				<div class="domanda blue">Abstract</div>
 				<div class="row justify-content-center">
 					<div class="col-9 spazioCentro">
-						<div class="rispostaCentro">Tribe Dynamics is a San Francisco-based consulting company that measures social media engagement for beauty, fashion and lifestyle brands.<br>The company provides software, data, and consulting services to some of the most well-known brands, private equity firms and Fortune 500 companies in the space.<br>Tribe initiated its business from English data, since the company started from tracking brands in the U.S. As the company expands internationally to Europe and Asia, it must be able to build the same classification tools for other languages, aiming to the same performances achieved in the English language, while also taking advantage of its wide amount of English training data.
+						<div class="rispostaCentro">Tribe Dynamics is a San Francisco-based consulting company that measures social media engagement for beauty, fashion and lifestyle brands and uses these engagement metrics to suggest better social media marketing strategies.<br> In this process, they use text classfiers to perform natural language understanding to decipher whether a particular post is talking about a brand or not.<br>With a large client base in USA, Tribe has begun to expand operations across the globe.<br>Their classifier currently underperforms when understanding posts in Non-English languages naturally because of parsimonious data available and certain language structures being hard to learn.<br> In this project, we target at developing classifier models that scale well across languages. Crucially, our models are able to transfer knowledge garnered in one language on to the other which makes us strongly leverage the data and model's core strengths in English.
 						</div>
 
-						<div class="rispostaCentro">In this study, we present two approaches that we used to try to solve this problem.<br>The first one, through neural network language modeling, learns monolingual word embedding representations which, through an appropriate transformation, can be mapped to a shared vector space, thus producing multilingual word vectors that can be used for any text classification purpose.<br>The second one, addressing the task of cross-lingual text classification, trains a classification model in the source language and ports the model to the target language, with the translation knowledge learned using an Expectation Maximization algorithm, resulting in a very effective way to take advantage of Tribe’s conspicuous availability of English data.
+						<div class="rispostaCentro">In this study, we present two approaches that we used to try to solve this problem.<br>The first one, through neural network language modeling, learns monolingual word embedding representations(that represents words on some compact vector space) which, through appropriate transformations can be aligned across languages to create a shared context vector space. <br> We can build any classifier on this shared vector space and the model is able to learn features from language-agnostic data, thus virtually creating a universal language.<br>The second model attempts to translate all posts into source language(English), trains a classification model only in the source language and is able to transfer the model to other languages through purely word translation probabilities.<br>We learn word translation probabilities through a mixture model and perform inference via Expectation Maximization.
 						</div>
 						<img src="assets/photo1.png" style="width:75%; height: auto" class="center">
 					</div>
@@ -334,10 +334,16 @@
 					<img src="assets/tweet_bag_emb.png" style="width:70%; height: auto" class="center">
 				</div>
 				<div class="col-9 spazioCentro risposta">
-					The training data, before being vectorized, has all been cleaned with the same cleaning procedure described in chapter 3.2. Stopwords have not been removed.<br>
-					The Logistic Regression classifier is sklearn's one, with default parameters.<br>
-					The performance evaluation is on 20% of the data available for each brand - thanks to the 80-20 train-test-split - and accuracy was not used as a metric for the evaluation, as the majority of the datasets are extremely imbalanced.<br>
-					Since the problem is binomial, which means we have to consider one brand at-a-time to evaluate the performance, the following results represent an average performance over all the performances of the classification on each single brand dataset.<br>
+					The training data, before being vectorized, has all been cleaned with the same cleaning procedure described in chapter 3.2. Stopwords have not been removed.
+				</div>
+				<div class="col-9 spazioCentro risposta">
+					The Logistic Regression classifier is sklearn's one, with default parameters.
+				</div>
+				<div class="col-9 spazioCentro risposta">
+					The performance evaluation is on 20% of the data available for each brand - thanks to the 80-20 train-test-split - and accuracy was not used as a metric for the evaluation, as the majority of the datasets are extremely imbalanced.
+				</div>
+				<div class="col-9 spazioCentro risposta">
+					Since the problem is binomial, which means we have to consider one brand at-a-time to evaluate the performance, the following results represent an average performance over all the performances of the classification on each single brand dataset.
 				</div>
 			</div>
 
@@ -449,10 +455,7 @@
 					Our next step is to do model transfer from one language to another. For the sake of simplicity, we are going to use a Max Entropy Classifier/Softmax Regression which degenerates to logistic regression or binary classification tasks as ours is. We can formally define the classifier as:
 				</div>
 				<div class="col-9 spazioCentro risposta">
-					<ol>
-						<li></li>
-						<li></li>
-					</ol>
+					[Formula nel box]
 				</div>
 				<div class="col-9 spazioCentro risposta">
 					Under our bag-of-words assumption, our model transfer can be derived as the following equation (for a slightly detailed derivation, check the paper "Cross Language Text Classification by Model Translation and Semi-Supervised Learning"):
