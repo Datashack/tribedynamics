@@ -1,0 +1,286 @@
+/*! ------------------------------------------  rules.html ------------------------------------------ */
+@font-face {
+	font-family: ariah;
+	src: url(./assets/font/ariah.ttf);
+	
+}
+
+.magia {
+/*	intro for paragraph*/
+	font-size: 40pt;
+	font-family: 'ariah';
+	margin-left:15px;
+}
+
+.h1 {
+	/*intro for paragraph*/
+	font-family: 'ariah';
+}
+
+.intro {
+	/*intro for paragraph*/
+	font-size: 12pt;
+	font-family: 'Inconsolata', sans-serif;
+	margin-top:20px;
+	margin-left:30px;
+	margin-bottom:20px;
+	color:black;
+	
+}
+.introTeam {
+	/*intro for paragraph*/
+	font-size: 10pt;
+	font-family: 'Inconsolata', sans-serif;
+	margin-top:24px;
+	margin-bottom:20px;
+	margin-right:30px;
+	color:black;
+    text-align: right;
+}
+
+.red {
+color: red;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+	margin-top: 20px;
+    margin-right: auto;
+}
+
+
+.logo {
+/*	background: yellow;*/
+	margin-top:30px;
+	margin-left:70px;
+}
+
+.photo1 {
+/*	background: yellow;*/
+	margin-top:30px;
+	margin-left:70px;
+}
+
+
+.centrato {
+/*	background: yellow;*/
+	height: 10vh;
+	margin-left:600px;
+}
+
+.copertina {
+	background: white;
+	margin-left: 15px;
+	margin-right: 15px;
+	margin-top: 20px;
+}
+
+.spazioCentro {
+/*	background: pink;*/
+
+}
+
+.spazioSinistra {
+}
+
+.spazioDestra {
+}
+
+.nomeFooter {
+	height: 30vh;
+}
+
+.etichetta {
+	background: white;
+	margin-left: 25px;
+	margin-right: 15px;
+	margin-top: 20px;
+}
+
+.blue {
+	color: blue;
+}
+.green {
+	color: #22e0ae;
+}
+.pink {
+	color: #ff008a;
+}
+
+
+.domanda {
+	/*intro for paragraph*/
+	font-size: 13pt;
+	font-family: 'Inconsolata', sans-serif;
+	margin-top:10px;
+}
+
+.domanda2 {
+	/*intro for paragraph*/
+	font-size: 13pt;
+	font-family: 'Inconsolata', sans-serif;
+	margin-left:30px;
+	margin-top:10px;
+	color: #3cbcbc;
+
+}
+
+
+.domanda3 {
+	/*intro for paragraph*/
+	font-size: 13pt;
+	font-family: 'Inconsolata', sans-serif;
+	margin-left:60px;
+	margin-top:10px;
+}
+
+.domanda4 {
+	/*intro for paragraph*/
+	font-size: 13pt;
+	font-family: 'Inconsolata', sans-serif;
+	margin-left:90px;
+	margin-top:10px;
+	color: #ace5d2;
+}
+
+.domanda5 {
+	/*intro for paragraph*/
+	font-size: 13pt;
+	font-family: 'Inconsolata', sans-serif;
+	margin-left:120px;
+	margin-top:10px;
+	color: #beccc7;
+}
+
+
+.rispostaCentro {
+	background: white;
+	margin-right: 15px;
+	margin-top: 20px;
+	font-size: 12pt;
+	font-family: 'IBM Plex Serif', serif;
+	line-height: 25px;
+}
+
+.risposta {
+	background: white;
+	margin-left: 70px;
+	margin-right: 15px;
+	margin-top: 10px;
+	font-size: 12pt;
+	font-family: 'IBM Plex Serif', serif;
+	line-height: 25px;
+}
+
+
+/*
+.h1 {
+	background: white;
+	margin-left: 70px;
+	margin-right: 15px;
+	margin-top: 10px;
+	font-size: 12pt;
+	font-family: 'IBM Plex Serif', serif;
+	line-height: 25px;
+}
+*/
+/*
+a:hover {
+    color: #9ba9eb;
+    font-family: 'Rajdhani', sans-serif;
+}
+*/
+
+
+.elementFooter {
+	height: 50vh;
+}
+
+.blueFooter {
+}
+
+.pinkFooter {
+}
+
+.sliderFooter {
+	height: 20vh;
+}
+
+.rispostaSpeciale {
+	background: white;
+	margin-left: 0px;
+	margin-right: 15px;
+	margin-top: 10px;
+	font-size: 9pt;
+	font-family: 'IBM Plex Serif', serif;
+	line-height: 18px;
+}
+
+.formula1 {
+	margin-left: 40px;
+	margin-top: 15px;
+	font-size: 11pt;
+	font-family: 'IBM Plex Serif', serif;
+	line-height: 18px;
+}
+
+.formula2 {
+	padding-right: 0px;
+	padding-left: 0px;
+	margin-top: 15px;
+	font-size: 11pt;
+	font-family: 'IBM Plex Serif', serif;
+	line-height: 18px;
+}
+
+#footerGray {
+	background: darkgray;
+
+}
+
+.footerLeft {
+	margin-top: 10px;
+}
+.course {
+	margin-top: 10px;
+	font-size: 11pt;
+	font-family: 'IBM Plex Serif', serif;
+	line-height: 18px;
+}
+
+.spring {
+	margin-top: 5px;
+	font-size: 9pt;
+	font-family: 'Inconsolata', sans-serif;
+	line-height: 18px;
+	padding-bottom: 15px;
+}
+
+
+.etichettaDestra {
+	background: white;
+	margin-left: 15px;
+	margin-right: 15px;
+	margin-top: 119px;
+	font-size: 10pt;
+	font-family: 'Inconsolata', sans-serif;
+}
+
+.rispostaDestra {
+	background: white;
+	margin-left: 15vh;
+	margin-right: 0px;
+	margin-top: 10px;
+	font-size: 9pt;
+	font-family: 'IBM Plex Serif', serif;
+	line-height: 18px;
+}
+
+
+
+
+
+
+
+
