@@ -193,7 +193,7 @@
 		</div>
 
 		<div class="etichetta">
-			<div class="domanda blue"> 4. Mathematical modeling</div>
+			<div class="domanda blue"> 4. Model 1 : Cross-Lingual Aligned Word Embeddings</div>
 			<div class="domanda2">4.1 Bilingual word embeddings</div>
 			<div class="domanda3 green">4.1.1 Data preparation</div>
 			<div class="row justify-content-center spazioCentro">
@@ -223,7 +223,7 @@
 			<div class="domanda4">4.1.2.1 Neural network language modeling</div>
 			<div class="row justify-content-center spazioCentro">
 				<div class="col-9 spazioCentro risposta">
-					A statistical language model is a probability distribution over sequences of words. Given such a sequence, say of length m, it assigns a probability <span><img src="http://latex.codecogs.com/gif.latex?P(w_1,...,w_m)" title="P(w_1,...,w_m)" /></span> to the whole sequence. In our case, we have trained a Recurrent Neural Network word-level language model. That is, we gave to the RNN - precisely an LSTM (Long Short-Term Memory) - a sequence of words, coming from a social media post, and asked it to model the probability distribution of the next word in the sequence given a sequence of previous words, repeating this process for each post in our training corpus. In terms of inputs and expected outputs, for each padded sequence - detailed in chapter 4.1.1 - the neural network takes as input all the words in the sequence, but the last one, while the target is all the words in the sequence, but the first one. This way, for each word in input, the neural network tries to predict the next word in the sentence in output.
+					A language model is a probability distribution over sequences of words. Given such a sequence, say of length m, it assigns a probability <span><img src="http://latex.codecogs.com/gif.latex?P(w_1,...,w_m)" title="P(w_1,...,w_m)" /></span> to the whole sequence. In our case, we have trained a Recurrent Neural Network word-level language model. That is, we gave to the RNN - precisely an LSTM (Long Short-Term Memory) - a sequence of words, coming from a social media post, and asked it to model the probability distribution of the next word in the sequence given a sequence of previous words, repeating this process for each post in our training corpus. In terms of inputs and expected outputs, for each padded sequence - detailed in chapter 4.1.1 - the neural network takes as input all the words in the sequence, but the last one, while the target is all the words in the sequence, but the first one. This way, for each word in input, the neural network tries to predict the next word in the sentence in output. The reason why this model is suitable for learning word embeddings is the argument that if the model is able to learn a language(able to predict next word), its hidden layers should be able to map the context behind the words. Hence, we use the hidden layer vectors as our embeddings.
 				</div>
 				<div class="col-9 spazioCentro risposta">
 					Our primary task remains learning word embeddings. Because of this, the LSTM, instead of taking in input a one-hot-encoded version of each word, it is actually fed with 300 dimensional word embeddings. In this way, the NN is also able to tune these parameters so that each word’s semantic information is encoded in the vectorial representation, which is the main expectation that we have for our model.
@@ -419,7 +419,7 @@
 
 
 		<div class="etichetta">
-			<div class="domanda2">4.2 Cross-lingual latent model</div>
+			<div class="domanda2">4.2 Model 2 : Mixture of Word Translations</div>
 
 			<div class="row justify-content-center">
 				<div class="col-9 spazioCentro risposta">
