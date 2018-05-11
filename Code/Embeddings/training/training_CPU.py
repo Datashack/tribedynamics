@@ -10,7 +10,6 @@ import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
 import time
 import torch.backends.cudnn as cudnn
-import matplotlib.pyplot as plt
 
 # PARSER
 parser = argparse.ArgumentParser()
@@ -31,8 +30,7 @@ parser.add_argument("-lr", "--learn_rate", type=float, default=0.001,
 parser.add_argument("-verb", "--verbosity", type=int, default=10,
                     help='num iterations to wait for verbosity')
 
-MIN_COUNT = 10
-NUM_CHANNELS = 2
+NUM_CHANNELS = 2  # Static and Dynamic channels
 
 
 def main():
@@ -48,14 +46,13 @@ def main():
     TEXT_FILES_DATA_FOLDER = PATH_TO_DATA_FOLDER + "training_files/" + args.language + "/" + str(args.batch_size) + "_sized_split_files"
     PRE_TRAINED_WEIGHTS_FILENAME = PATH_TO_DATA_FOLDER + "training_files/" + args.language + "/pre-trained_weigths.npy"
     VOCAB_FILENAME = PATH_TO_DATA_FOLDER + "training_files/" + args.language + "/vocabulary.npy"
-
     MODEL_CHECKPOINT_FILENAME = PATH_TO_DATA_FOLDER + "trained_embeddings/" + args.language + "/model_checkpoint.pth"
 
-    # Verbosity
+    # Load the vocabulary file to output how many words need to be embedded
     vocabulary_size = len(np.load(VOCAB_FILENAME))
     print("Word embeddings to learn = {}".format(vocabulary_size))
 
-    # Set the model
+    # Create model instance
     model = LSTMLanguageModeler(num_channels=NUM_CHANNELS,
                                 hidden_dim=args.hidden_units,
                                 vocab_size=vocabulary_size,
@@ -79,7 +76,7 @@ def main():
         print("=> loading checkpoint '{}'".format(MODEL_CHECKPOINT_FILENAME))
         checkpoint = torch.load(MODEL_CHECKPOINT_FILENAME)
         starting_epoch = checkpoint['epoch']
-        sampled_data = checkpoint['data_files']
+        sampled_data = checkpoint['data_files']  # Load the same data that was used for training it previously
         model.load_state_dict(checkpoint['state_dict'])
         optimizer.load_state_dict(checkpoint['optimizer'])
         print("=> loaded checkpoint '{}' (epoch {})"
@@ -93,10 +90,10 @@ def main():
                                          shuffle=True,
                                          num_workers=args.num_workers)
 
-    # Verbosity
+    # Verbosity (output the number of training instances that were loaded)
     print("Training instances = {}".format(len(training_dataloader_obj) * args.batch_size))
 
-    # Set cudnn (for faster computation?)
+    # Set cudnn (for faster computation)
     cudnn.benchmark = True
 
     # Epochs to do
@@ -104,7 +101,7 @@ def main():
 
     # Loop over epochs
     for epoch in range(starting_epoch, epochs):
-        # Train for one epoch (returns avg loss at end of training epoch)
+        # Train for one epoch
         train(training_dataloader_obj, model, loss_function, optimizer, epoch, ntokens=vocabulary_size)
 
         # Save model checkpoint when epoch is over
@@ -119,7 +116,7 @@ def main():
     # Verbosity
     print("Training terminated")
 
-    # Save the final numpy array to hold our trained word embeddings
+    # Save the final numpy array to hold our trained word embeddings (dynamic embeddings)
     trained_embed_filename = PATH_TO_DATA_FOLDER + "trained_embeddings/" + args.language + "/embeddings_numpy_array.npy"
     np.save(trained_embed_filename, model.dynamic_embedding.cpu().weight.data.numpy())
     # Verbosity
@@ -133,7 +130,7 @@ def train(train_loader, model, criterion, optimizer, epoch, ntokens):
     data_time = AverageMeter()
     losses = AverageMeter()
 
-    # Switch to train mode (enables dropout)
+    # Switch to train mode (enables dropout - not used here)
     model.train()
 
     # Initialize hidden states to zero
@@ -196,23 +193,6 @@ def read_from_file(filename):
 def save_model_checkpoint(filename, state_dict):
     """Save model state to resume training"""
     torch.save(state_dict, filename)
-
-
-def strictly_decreasing(list_of_values):
-    """Check if all values of a list are strictly decreasing (Boolean result)"""
-    return all(x > y for x, y in zip(list_of_values, list_of_values[1:]))
-
-
-def plot_losses(filename, losses_list):
-    x = np.arange(len(losses_list), dtype=int)
-    plt.figure(figsize=(16, 9), dpi=150)
-    plt.plot(x, losses_list)
-    plt.grid()
-    plt.title("Training Cross Entropy Loss")
-    plt.xlabel("Epoch")
-    plt.xticks(x)
-    plt.ylabel("Loss")
-    plt.savefig(filename)
 
 
 def repackage_hidden(h):

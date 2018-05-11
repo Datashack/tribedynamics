@@ -17,7 +17,7 @@ parser.add_argument('-sp', '--save_plot', type=bool,
 # Dataset brand id (default on 'Dove' dataset)
 parser.add_argument('-id', '--brand_id', type=int,
                     help="Brand id of the dataset to retrieve from file",
-                    default=DOVE_DATASET_ID)
+                    default=ONE_DATASET_ID)
 # Languages to filter
 parser.add_argument('-lang', '--languages',
                     nargs='*',  # 0 or more values expected => creates a list

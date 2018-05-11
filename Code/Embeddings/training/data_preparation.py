@@ -14,30 +14,32 @@ import time
 ##############
 parser = argparse.ArgumentParser()
 parser.add_argument("-lang", "--language", type=str, required=True)
+parser.add_argument("-sm", "--social_media_chars", type=int, required=False, default=0,
+                    help="encode hashtags and mentions (1 true, 0 false)")
+parser.add_argument("-minf", "--min_word_freq", type=int, required=False, default=10,
+                    help="minimum word frequency of a word to be included in the vocabulary")
+parser.add_argument("-minl", "--min_seq_len", type=int, required=False, default=4,
+                    help="minimum sequence length (including <BOS> and <EOS>)")
+parser.add_argument("-maxl", "--max_seq_len", type=int, required=False, default=52,
+                    help="maximum sequence length (including <BOS> and <EOS>)")
 args = parser.parse_args()
 
-LANGUAGE = args.language
 
-
-ENCODE_SOCIAL_CHARS = False
-MIN_COUNT = 10
-MIN_NUM_TOKENS = 4  # Including <BOS> and <EOS>
-MAX_NUM_TOKENS = 52  # Including <BOS> and <EOS>
-UNKNOWN_KEY = "<UNK>"
-PADDING_KEY = "<PAD>"
+# CONSTANTS
 BOS_KEY = "<BOS>"
 EOS_KEY = "<EOS>"
+UNKNOWN_KEY = "<UNK>"
+PADDING_KEY = "<PAD>"
 
 PATH_TO_DATA_FOLDER = "../data/embeddings/"
+UNLABELED_DATASET_FILENAME = PATH_TO_DATA_FOLDER + "unlabeled_datasets/" + args.language + "/archive.csv"
+PRE_TRAINED_VOCAB_TO_LOAD_FILENAME = PATH_TO_DATA_FOLDER + "pre_trained_embeddings/" + args.language + "/pre-trained_vocab.npy"
+PRE_TRAINED_WEIGHTS_TO_LOAD_FILENAME = PATH_TO_DATA_FOLDER + "pre_trained_embeddings/" + args.language + "/pre-trained_weights.npy"
 
-UNLABELED_DATASET_FILENAME = PATH_TO_DATA_FOLDER + "unlabeled_datasets/" + LANGUAGE + "/archive.csv"
-PRE_TRAINED_VOCAB_TO_LOAD_FILENAME = PATH_TO_DATA_FOLDER + "pre_trained_embeddings/" + LANGUAGE + "/pre-trained_vocab.npy"
-PRE_TRAINED_WEIGHTS_TO_LOAD_FILENAME = PATH_TO_DATA_FOLDER + "pre_trained_embeddings/" + LANGUAGE + "/pre-trained_weights.npy"
-
-PRE_TRAINED_WEIGHTS_TO_SAVE_FILENAME = PATH_TO_DATA_FOLDER + "training_files/" + LANGUAGE + "/pre-trained_weigths.npy"
-WORD_TO_INDEX_TO_SAVE_FILENAME = PATH_TO_DATA_FOLDER + "trained_embeddings/" + LANGUAGE + "/word_to_index_dict.pkl"
-FINAL_VOCAB_TO_SAVE_FILENAME = PATH_TO_DATA_FOLDER + "training_files/" + LANGUAGE + "/vocabulary.npy"
-FINAL_TXT_FILE = PATH_TO_DATA_FOLDER + "training_files/" + LANGUAGE + "/padded_dataset.txt"
+PRE_TRAINED_WEIGHTS_TO_SAVE_FILENAME = PATH_TO_DATA_FOLDER + "training_files/" + args.language + "/pre-trained_weigths.npy"
+WORD_TO_INDEX_TO_SAVE_FILENAME = PATH_TO_DATA_FOLDER + "trained_embeddings/" + args.language + "/word_to_index_dict.pkl"
+FINAL_VOCAB_TO_SAVE_FILENAME = PATH_TO_DATA_FOLDER + "training_files/" + args.language + "/vocabulary.npy"
+FINAL_TXT_FILE = PATH_TO_DATA_FOLDER + "training_files/" + args.language + "/padded_dataset.txt"
 
 
 def get_corpus_from_csv_file(csv_filename):
@@ -124,7 +126,7 @@ def clean_corpus(corpus_list, encode_social_chars):
 
 
 def get_language_from_language_code(code):
-    # TODO Future improvement: Adapt it to all languages
+    # TODO Adapt it to all languages
     if code == 'it':
         return 'italian'
     else:  # code == 'en'
@@ -145,16 +147,13 @@ def save_to_file(filename, obj):
         pickle.dump(obj, fp)
 
 
-#def split_list(l, n):
-#    k, m = divmod(len(l), n)
-#    return (l[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(n))
-
-
 def get_list_of_tokenized_strings(corpus, bos_key, eos_key, language):
+    """Produce list where each element is a list of all the word tokens in the post (including <BOS> and <EOS>)"""
     return [[bos_key] + nltk.word_tokenize(sentence, language) + [eos_key] for sentence in corpus]
 
 
 def get_words_to_remove_by_frequency(words_list, min_count):
+    """Get the list of words that need to be removed because they don't occur enough times (set by min_count)"""
     # Key = "word" | Value = word_freq
     counter_obj = Counter(words_list)
 
@@ -167,15 +166,21 @@ def get_words_to_remove_by_frequency(words_list, min_count):
 
 
 def get_vocab_with_enough_frequency(words_list, min_count):
+    """Returns ordered vocabulary array containing only words that occur at least min_count times"""
+    # list(Counter(words_list).keys() finds the list of the unique words in the words_list
+    # Set difference is performed between list of unique words - list of words to remove
+    # np.unique used just to order them and to return a numpy array
     return np.unique(list(set(list(Counter(words_list).keys())) - set(get_words_to_remove_by_frequency(words_list, min_count))))
 
 
 def flatten_list(list_to_flatten):
-    # Flatten list of lists
+    """Flattens lists of list, meaning there will no longer be lists inside a list"""
     return [item for sublist in list_to_flatten for item in sublist]
 
 
 def get_pretrained_embeddings(matrix_filename, vocab_filename, reduced_vocab=None):
+    """Load the pretrained embeddings but keep only the rows corresponding to words that are in the reduced_vocab
+    (avoids keeping word embeddings of unnecessary words)"""
     pre_trained_weights = np.load(matrix_filename)
     pre_trained_vocabulary = np.load(vocab_filename)
     if reduced_vocab is None:
@@ -187,6 +192,8 @@ def get_pretrained_embeddings(matrix_filename, vocab_filename, reduced_vocab=Non
 
 
 def merge_vocab_in_order(pre_trained_vocab_np, vocab_to_merge, unknown_key, padding_key):
+    """Return vocabulary array where first are words in the pre-trained embeddings, then additional new words from our corpus,
+    finally unknown token and padding token"""
     # Return a boolean array the same length as ar1 that is False where an element of ar1 is in ar2 and True otherwise
     to_add_mask = np.in1d(ar1=vocab_to_merge, ar2=pre_trained_vocab_np, assume_unique=True, invert=True)
     # Apply mask
@@ -198,23 +205,20 @@ def merge_vocab_in_order(pre_trained_vocab_np, vocab_to_merge, unknown_key, padd
 
 
 def map_str_tokens_to_int(list_of_str_token_lists, word_to_ix, idx_of_unk):
+    """Map each word token with its corresponing index in the vocabulary"""
     return [[word_to_ix.get(word, idx_of_unk) for word in tokenized_sentence]
             for tokenized_sentence in list_of_str_token_lists]
 
 
-#def get_numpy_padded_array(list_of_int_token_lists, padding_ix, max_seq_length):
-#    padded_arr = np.full(shape=(len(list_of_int_token_lists), max_seq_length), fill_value=padding_ix, dtype=int)
-#    for idx in range(padded_arr.shape[0]):
-#        seq_len = len(list_of_int_token_lists[idx])
-#        padded_arr[idx, :seq_len] = list_of_int_token_lists[idx]
-#    return padded_arr
-
-
 def write_numpy_padded_array_to_file(filename, list_of_int_token_lists, padding_ix, max_seq_length):
+    """Sequentially write a txt file where each line is a padded sequence of integers representing a training instance"""
+    # Create array long as the maximum sequence length, filled with the padding index value
     padded_arr = np.full(shape=max_seq_length, fill_value=padding_ix, dtype=int)
 
     # Append it to the file one row at a time
     with open(filename, 'a') as f:
+        # Overwrite the padded_arr from the left until there are words, so that if they are not enough, they will
+        # remain filled with the padding value
         for list_obj in list_of_int_token_lists:
             arr_to_write = np.copy(padded_arr)
             seq_len = len(list_obj)
@@ -228,6 +232,7 @@ def get_max_seq_length(list_of_int_token_lists):
 
 
 def get_reduced_list_of_tokenized_strings(list_of_str_token_lists, min_length, max_length):
+    """Return list of tokens lists, which length is within min_length and max_length"""
     # List of all the lengths of each list of tokens
     lengths_list = [len(seq) for seq in list_of_str_token_lists]
     # Mask of indices to keep
@@ -250,21 +255,22 @@ print("[Partial: {:.2f} min | Total: {:.2f} min]".format((time.time()-start_part
 
 start_partial_t = time.time()
 # Sentence tokenize the whole corpus
-corpus = get_sentence_tokenized_corpus(corpus, LANGUAGE)  # Returns a list
+corpus = get_sentence_tokenized_corpus(corpus, args.language)  # Returns a list
 print("Corpus sentence tokenized (len = {})".format(len(corpus)))
 print("[Partial: {:.2f} min | Total: {:.2f} min]".format((time.time()-start_partial_t)/60,
                                                          (time.time() - start_t) / 60))
 
 start_partial_t = time.time()
 # Apply a set of regular expressions to clean the text (inline operation)
-clean_corpus(corpus, encode_social_chars=ENCODE_SOCIAL_CHARS)
+clean_corpus(corpus, encode_social_chars=args.social_media_chars)
 print("Cleaned corpus (len = {})".format(len(corpus)))
 print("[Partial: {:.2f} min | Total: {:.2f} min]".format((time.time()-start_partial_t)/60,
                                                          (time.time() - start_t) / 60))
 
 start_partial_t = time.time()
+# Tokenize each post and return a list that includes all posts tokenized
 list_of_str_token_lists = get_list_of_tokenized_strings(corpus, bos_key=BOS_KEY, eos_key=EOS_KEY,
-                                                        language=get_language_from_language_code(LANGUAGE))
+                                                        language=get_language_from_language_code(args.language))
 print("list_of_str_token_lists created (len = {})".format(len(list_of_str_token_lists)))
 print("[Partial: {:.2f} min | Total: {:.2f} min]".format((time.time()-start_partial_t)/60,
                                                          (time.time() - start_t) / 60))
@@ -272,14 +278,15 @@ print("[Partial: {:.2f} min | Total: {:.2f} min]".format((time.time()-start_part
 start_partial_t = time.time()
 # Remove too short and too long sentences
 list_of_str_token_lists = get_reduced_list_of_tokenized_strings(list_of_str_token_lists,
-                                                                min_length=MIN_NUM_TOKENS,
-                                                                max_length=MAX_NUM_TOKENS)
+                                                                min_length=args.min_seq_len,
+                                                                max_length=args.max_seq_len)
 print("reduced list_of_str_token_lists created (len = {})".format(len(list_of_str_token_lists)))
 print("[Partial: {:.2f} min | Total: {:.2f} min]".format((time.time()-start_partial_t)/60,
                                                          (time.time() - start_t) / 60))
 
 start_partial_t = time.time()
-vocab_np = get_vocab_with_enough_frequency(words_list=flatten_list(list_of_str_token_lists), min_count=MIN_COUNT)
+# Array of words that occur at least min_count times
+vocab_np = get_vocab_with_enough_frequency(words_list=flatten_list(list_of_str_token_lists), min_count=args.min_word_freq)
 print("Reduced vocab by word frequency created (len = {})".format(len(vocab_np)))
 print("[Partial: {:.2f} min | Total: {:.2f} min]".format((time.time()-start_partial_t)/60,
                                                          (time.time() - start_t) / 60))
@@ -306,6 +313,7 @@ print("[Partial: {:.2f} min | Total: {:.2f} min]".format((time.time()-start_part
                                                          (time.time() - start_t) / 60))
 
 start_partial_t = time.time()
+# Enumerate each word in the vocabulary with an increasing index
 word_to_ix = get_word_to_index_dictionary(vocabulary)
 save_to_file(WORD_TO_INDEX_TO_SAVE_FILENAME, word_to_ix)
 # Get the index assigned to the padding key
@@ -322,9 +330,11 @@ print("list_of_int_token_lists created (len = {})".format(len(list_of_int_token_
 print("[Partial: {:.2f} min | Total: {:.2f} min]".format((time.time()-start_partial_t)/60,
                                                          (time.time() - start_t) / 60))
 
+# Get value of the longest sequence in the corpus
 max_seq_length = get_max_seq_length(list_of_int_token_lists)
 
 start_partial_t = time.time()
+# Write to a txt file each training instance, padded according to the maximum sequence length
 write_numpy_padded_array_to_file(FINAL_TXT_FILE, list_of_int_token_lists, padding_ix, max_seq_length)
 print("[Partial: {:.2f} min | Total: {:.2f} min]".format((time.time()-start_partial_t)/60,
                                                          (time.time() - start_t) / 60))
